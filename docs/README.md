@@ -1,4 +1,4 @@
-# GitSyncMarks-Android Documentation
+# GitSyncMarks-Mobile Documentation
 
 **Start here when resuming work** – especially in a new IDE session or new Cursor window.
 

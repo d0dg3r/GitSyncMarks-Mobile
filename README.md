@@ -2,11 +2,11 @@
   <img src="https://raw.githubusercontent.com/d0dg3r/GitSyncMarks/main/icons/icon128.png" alt="GitSyncMarks Logo" width="128" height="128">
 </p>
 
-<h1 align="center">GitSyncMarks-Android</h1>
+<h1 align="center">GitSyncMarks-Mobile</h1>
 
 <p align="center">
-  <a href="https://github.com/d0dg3r/GitSyncMarks-Android/releases"><img src="https://img.shields.io/github/v/release/d0dg3r/GitSyncMarks-Android" alt="Release"></a>
-  <a href="https://github.com/d0dg3r/GitSyncMarks-Android/releases?q=pre"><img src="https://img.shields.io/github/v/release/d0dg3r/GitSyncMarks-Android?include_prereleases&label=pre-release&logo=github&style=flat-square" alt="Pre-release"></a>
+  <a href="https://github.com/d0dg3r/GitSyncMarks-Mobile/releases"><img src="https://img.shields.io/github/v/release/d0dg3r/GitSyncMarks-Mobile" alt="Release"></a>
+  <a href="https://github.com/d0dg3r/GitSyncMarks-Mobile/releases?q=pre"><img src="https://img.shields.io/github/v/release/d0dg3r/GitSyncMarks-Mobile?include_prereleases&label=pre-release&logo=github&style=flat-square" alt="Pre-release"></a>
 </p>
 
 <p align="center">
@@ -15,7 +15,7 @@
 </p>
 
 <p align="center">
-  <strong>Why GitSyncMarks-Android?</strong> View your <a href="https://github.com/d0dg3r/GitSyncMarks">GitSyncMarks</a> bookmarks on mobile. Uses the same per-file format — bookmarks live in <em>your</em> Git repo. Sync once, browse offline. Works with the browser extension's bookmark structure (toolbar, menu, other, mobile).
+  <strong>Why GitSyncMarks-Mobile?</strong> View your <a href="https://github.com/d0dg3r/GitSyncMarks">GitSyncMarks</a> bookmarks on mobile. Uses the same per-file format — bookmarks live in <em>your</em> Git repo. Sync once, browse offline. Works with the browser extension's bookmark structure (toolbar, menu, other, mobile).
 </p>
 
 See [CHANGELOG.md](CHANGELOG.md) for version history and release notes.
@@ -34,8 +34,8 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes.
 
 ## Installation
 
-1. Go to the [Releases page](https://github.com/d0dg3r/GitSyncMarks-Android/releases)
-2. Download `GitSyncMarks-Android-X.X.X.apk` (or a pre-release build for testing)
+1. Go to the [Releases page](https://github.com/d0dg3r/GitSyncMarks-Mobile/releases)
+2. Download `GitSyncMarks-Mobile-X.X.X.apk` (or a pre-release build for testing)
 3. Open the file on your Android device (allow from unknown sources if prompted)
 4. Install the app
 
@@ -68,7 +68,7 @@ The bookmark format comes from [GitSyncMarks](https://github.com/d0dg3r/GitSyncM
 
 2. **Get dependencies**:
    ```bash
-   cd GitSyncMarks-Android
+   cd GitSyncMarks-Mobile
    flutter pub get
    ```
 
@@ -86,7 +86,7 @@ git tag v0.2.0-beta.5
 git push origin v0.2.0-beta.5
 ```
 
-The APK appears under [Releases](https://github.com/d0dg3r/GitSyncMarks-Android/releases).
+The APK appears under [Releases](https://github.com/d0dg3r/GitSyncMarks-Mobile/releases).
 
 ## Documentation
 

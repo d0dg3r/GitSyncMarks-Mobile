@@ -8,7 +8,7 @@ import '../providers/bookmark_provider.dart';
 
 const String _gitSyncMarksUrl = 'https://github.com/d0dg3r/GitSyncMarks';
 const String _gitSyncMarksAndroidUrl =
-    'https://github.com/d0dg3r/GitSyncMarks-Android';
+    'https://github.com/d0dg3r/GitSyncMarks-Mobile';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});

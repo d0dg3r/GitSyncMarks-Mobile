@@ -1,14 +1,14 @@
-# Contributing to GitSyncMarks
+# Contributing to GitSyncMarks-Mobile
 
-Thank you for considering contributing to GitSyncMarks!
+Thank you for considering contributing to GitSyncMarks-Mobile!
 
 ## Development Setup
 
 1. Install Flutter SDK (3.0.0 or higher)
 2. Clone the repository:
    ```bash
-   git clone https://github.com/d0dg3r/GitSyncMarks-Android.git
-   cd GitSyncMarks-Android
+   git clone git@github.com:d0dg3r/GitSyncMarks-Mobile.git
+   cd GitSyncMarks-Mobile
    ```
 3. Install dependencies:
    ```bash

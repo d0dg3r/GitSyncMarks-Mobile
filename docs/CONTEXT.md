@@ -1,4 +1,4 @@
-# Project Context – GitSyncMarks-Android
+# Project Context – GitSyncMarks-Mobile
 
 This document captures the context and decisions from when the project was created. Read this when resuming work in a new session.
 

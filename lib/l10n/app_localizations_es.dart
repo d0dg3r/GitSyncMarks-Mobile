@@ -200,5 +200,5 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get gitSyncMarksAndroidIssues =>
-      'GitSyncMarks-Android (GitHub Issues)';
+      'GitSyncMarks-Mobile (GitHub Issues)';
 }

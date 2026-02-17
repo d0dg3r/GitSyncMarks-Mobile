@@ -63,5 +63,5 @@
   "repoFormatDescription": "Das Repo sollte dem Format von GitSyncMarks entsprechen: Base Path (z.B. \"bookmarks\") mit Unterordnern wie toolbar, menu, other, mobile. Jeder Ordner hat _order.json und JSON-Dateien pro Lesezeichen mit title und url.",
   "support": "Support",
   "supportText": "Fragen oder Fehlermeldungen? Öffne ein Issue im Projekt-Repository.",
-  "gitSyncMarksAndroidIssues": "GitSyncMarks-Android (GitHub Issues)"
+  "gitSyncMarksAndroidIssues": "GitSyncMarks-Mobile (GitHub Issues)"
 }
