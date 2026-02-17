@@ -390,11 +390,10 @@ class _AboutTab extends StatelessWidget {
       child: Column(
         children: [
           const SizedBox(height: 8),
-          Image.asset(
-            'assets/images/logo.png',
-            width: 56,
-            height: 56,
-            fit: BoxFit.contain,
+          Icon(
+            Icons.bookmark,
+            size: 56,
+            color: Theme.of(context).colorScheme.primary,
           ),
           const SizedBox(height: 8),
           Text(

@@ -197,6 +197,5 @@ class AppLocalizationsEn extends AppLocalizations {
       'Questions or error messages? Open an issue in the project repository.';
 
   @override
-  String get gitSyncMarksAndroidIssues =>
-      'GitSyncMarks-Mobile (GitHub Issues)';
+  String get gitSyncMarksAndroidIssues => 'GitSyncMarks-Mobile (GitHub Issues)';
 }

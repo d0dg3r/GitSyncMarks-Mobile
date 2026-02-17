@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0-beta.5] - 2026-02
+
+### Fixed
+
+- **First start**: App now shows Settings and "Open Settings" to configure GitHub credentials instead of a white error screen. Switched from simplified BookmarksScreen to full app flow (BookmarkListScreen, Settings, Provider, Hive).
+
+### Added
+
+- Full app flow: Settings button in app bar, empty state with "Configure GitHub connection in Settings", credential storage (flutter_secure_storage), local cache (Hive)
+
+---
+
 ## [0.2.0-beta.3] - 2026-02
 
 ### Fixed

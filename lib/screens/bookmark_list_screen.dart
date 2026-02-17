@@ -17,7 +17,7 @@ class BookmarkListScreen extends StatelessWidget {
       appBar: AppBar(
         leading: Padding(
           padding: const EdgeInsets.all(4),
-          child: Image.asset('assets/images/logo.png', fit: BoxFit.contain),
+          child: Icon(Icons.bookmark, color: Theme.of(context).colorScheme.primary),
         ),
         title: Text(AppLocalizations.of(context)!.appTitle),
         centerTitle: true,
