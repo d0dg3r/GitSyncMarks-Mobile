@@ -489,13 +489,32 @@ FodyWeavers.xsd
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-!.vscode/*.code-snippets
 
-# Local History for Visual Studio Code
-.history/
+# Cursor
+.cursor/
 
-# Built Visual Studio Code Extensions
-*.vsix
+# OS
+.DS_Store
+Thumbs.db
+
+# Android
+*.jks
+*.keystore
+android/local.properties
+android/**/gradle-wrapper.jar
+android/.gradle/
+
+# iOS/macOS
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+macos/Flutter/ephemeral/
+
+# Env / Secrets
+.env
+.env.*
+*.env
 
 # Windows Installer files from build outputs
 *.cab
