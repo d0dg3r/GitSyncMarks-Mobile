@@ -72,12 +72,12 @@ class GitSyncMarksApp extends StatelessWidget {
       cardTheme: CardThemeData(
         color: scheme.surface,
         elevation: 1,
-        shadowColor: Colors.black.withValues(alpha: 0.08),
+        shadowColor: Colors.black.withOpacity(0.08),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: scheme.surfaceContainerHighest.withValues(alpha: 0.5),
+        fillColor: scheme.surfaceContainerHighest.withOpacity(0.5),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
@@ -114,12 +114,12 @@ class GitSyncMarksApp extends StatelessWidget {
       cardTheme: CardThemeData(
         color: scheme.surface,
         elevation: 1,
-        shadowColor: Colors.black.withValues(alpha: 0.3),
+        shadowColor: Colors.black.withOpacity(0.3),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: scheme.surfaceContainerHighest.withValues(alpha: 0.5),
+        fillColor: scheme.surfaceContainerHighest.withOpacity(0.5),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
