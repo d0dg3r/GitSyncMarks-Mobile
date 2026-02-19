@@ -124,7 +124,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get syncBookmarks => 'Sync Bookmarks';
 
   @override
-  String get version => 'Version 0.1.0';
+  String version(String appVersion) {
+    return 'Version $appVersion';
+  }
 
   @override
   String get authorBy => 'Von Joe Mild';

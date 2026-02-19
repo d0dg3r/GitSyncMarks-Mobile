@@ -41,7 +41,12 @@
   "save": "Speichern",
   "testConnection": "Test Connection",
   "syncBookmarks": "Sync Bookmarks",
-  "version": "Version 0.1.0",
+  "version": "Version {appVersion}",
+  "@version": {
+    "placeholders": {
+      "appVersion": {"type": "String"}
+    }
+  },
   "authorBy": "Von Joe Mild",
   "aboutDescription": "Mobile App für GitSyncMarks – Lesezeichen aus deinem GitHub-Repo anzeigen und im Browser öffnen.",
   "projects": "Projekte",

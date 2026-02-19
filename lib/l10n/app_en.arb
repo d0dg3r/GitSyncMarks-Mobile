@@ -41,7 +41,12 @@
   "save": "Save",
   "testConnection": "Test Connection",
   "syncBookmarks": "Sync Bookmarks",
-  "version": "Version 0.1.0",
+  "version": "Version {appVersion}",
+  "@version": {
+    "placeholders": {
+      "appVersion": {"type": "String"}
+    }
+  },
   "authorBy": "By Joe Mild",
   "aboutDescription": "Mobile app for GitSyncMarks – view bookmarks from your GitHub repo and open them in your browser.",
   "projects": "Projects",

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -402,11 +403,17 @@ class _AboutTab extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
           ),
-          Text(
-            AppLocalizations.of(context)!.version,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: scheme.outline,
-                ),
+          FutureBuilder<PackageInfo>(
+            future: PackageInfo.fromPlatform(),
+            builder: (context, snapshot) {
+              final v = snapshot.data?.version ?? '...';
+              return Text(
+                AppLocalizations.of(context)!.version(v),
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: scheme.outline,
+                    ),
+              );
+            },
           ),
           const SizedBox(height: 2),
           Text(

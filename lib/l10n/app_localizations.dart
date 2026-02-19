@@ -321,8 +321,8 @@ abstract class AppLocalizations {
   /// No description provided for @version.
   ///
   /// In en, this message translates to:
-  /// **'Version 0.1.0'**
-  String get version;
+  /// **'Version {appVersion}'**
+  String version(String appVersion);
 
   /// No description provided for @authorBy.
   ///

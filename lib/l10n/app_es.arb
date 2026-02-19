@@ -41,7 +41,12 @@
   "save": "Guardar",
   "testConnection": "Test Connection",
   "syncBookmarks": "Sync Bookmarks",
-  "version": "Versión 0.1.0",
+  "version": "Versión {appVersion}",
+  "@version": {
+    "placeholders": {
+      "appVersion": {"type": "String"}
+    }
+  },
   "authorBy": "Por Joe Mild",
   "aboutDescription": "App móvil para GitSyncMarks – ver marcadores de tu repositorio GitHub y abrirlos en el navegador.",
   "projects": "Proyectos",
