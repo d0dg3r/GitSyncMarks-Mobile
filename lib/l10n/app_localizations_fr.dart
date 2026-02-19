@@ -203,4 +203,122 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get gitSyncMarksAndroidIssues => 'GitSyncMarks-Mobile (GitHub Issues)';
+
+  @override
+  String get profiles => 'Profils';
+
+  @override
+  String get profile => 'Profil';
+
+  @override
+  String get activeProfile => 'Profil actif';
+
+  @override
+  String get addProfile => 'Ajouter un profil';
+
+  @override
+  String get renameProfile => 'Renommer le profil';
+
+  @override
+  String get deleteProfile => 'Supprimer le profil';
+
+  @override
+  String deleteProfileConfirm(String name) {
+    return 'Supprimer le profil \"$name\" ?';
+  }
+
+  @override
+  String get profileName => 'Nom du profil';
+
+  @override
+  String profileCount(int count, int max) {
+    return '$count/$max profils';
+  }
+
+  @override
+  String maxProfilesReached(int max) {
+    return 'Nombre maximum de profils atteint ($max)';
+  }
+
+  @override
+  String profileAdded(String name) {
+    return 'Profil \"$name\" ajouté';
+  }
+
+  @override
+  String profileRenamed(String name) {
+    return 'Profil renommé en \"$name\"';
+  }
+
+  @override
+  String get profileDeleted => 'Profil supprimé';
+
+  @override
+  String get cannotDeleteLastProfile =>
+      'Impossible de supprimer le dernier profil';
+
+  @override
+  String get importExport => 'Importer / Exporter';
+
+  @override
+  String get importSettings => 'Importer les paramètres';
+
+  @override
+  String get exportSettings => 'Exporter les paramètres';
+
+  @override
+  String get importSettingsDesc =>
+      'Importer des profils depuis un fichier de paramètres GitSyncMarks (JSON)';
+
+  @override
+  String get exportSettingsDesc =>
+      'Exporter tous les profils en fichier de paramètres GitSyncMarks';
+
+  @override
+  String importSuccess(int count) {
+    return '$count profil(s) importé(s)';
+  }
+
+  @override
+  String importFailed(String error) {
+    return 'Échec de l\'importation : $error';
+  }
+
+  @override
+  String importConfirm(int count) {
+    return 'Importer $count profil(s) ? Tous les profils existants seront remplacés.';
+  }
+
+  @override
+  String get exportSuccess => 'Paramètres exportés';
+
+  @override
+  String get cancel => 'Annuler';
+
+  @override
+  String get delete => 'Supprimer';
+
+  @override
+  String get rename => 'Renommer';
+
+  @override
+  String get add => 'Ajouter';
+
+  @override
+  String get import_ => 'Importer';
+
+  @override
+  String get replace => 'Remplacer';
+
+  @override
+  String get bookmarks => 'Favoris';
+
+  @override
+  String get info => 'Info';
+
+  @override
+  String get connection => 'Connexion';
+
+  @override
+  String get folders => 'Dossiers';
 }

@@ -1,67 +1,30 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../config/github_credentials.dart';
 import '../l10n/app_localizations.dart';
+import '../models/profile.dart';
 import '../providers/bookmark_provider.dart';
+import '../services/settings_import_export.dart';
 
-const String _gitSyncMarksUrl = 'https://github.com/d0dg3r/GitSyncMarks';
-const String _gitSyncMarksAndroidUrl =
-    'https://github.com/d0dg3r/GitSyncMarks-Mobile';
-
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
 
-  Future<void> _launchUrl(String url) async {
-    final uri = Uri.parse(url);
-    try {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    } catch (_) {}
-  }
-
   @override
-  Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      initialIndex: 0,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(AppLocalizations.of(context)!.settings),
-          bottom: TabBar(
-            isScrollable: false,
-            labelStyle: Theme.of(context).textTheme.labelSmall,
-            tabs: [
-              Tab(icon: const Icon(Icons.settings), text: AppLocalizations.of(context)!.settings),
-              Tab(icon: const Icon(Icons.info_outline), text: AppLocalizations.of(context)!.about),
-              Tab(icon: const Icon(Icons.help_outline), text: AppLocalizations.of(context)!.help),
-            ],
-          ),
-        ),
-        body: TabBarView(
-          children: [
-            _SettingsTabContent(),
-            _AboutTab(launchUrl: _launchUrl),
-            _HelpTab(launchUrl: _launchUrl),
-          ],
-        ),
-      ),
-    );
-  }
+  State<SettingsScreen> createState() => _SettingsScreenState();
 }
 
-class _SettingsTabContent extends StatefulWidget {
-  @override
-  State<_SettingsTabContent> createState() => _SettingsTabContentState();
-}
-
-class _SettingsTabContentState extends State<_SettingsTabContent> {
+class _SettingsScreenState extends State<SettingsScreen> {
   final _tokenController = TextEditingController();
   final _ownerController = TextEditingController();
   final _repoController = TextEditingController();
   final _branchController = TextEditingController();
   final _basePathController = TextEditingController();
+  final _importExport = SettingsImportExportService();
+  String? _loadedProfileId;
 
   @override
   void initState() {
@@ -71,6 +34,7 @@ class _SettingsTabContentState extends State<_SettingsTabContent> {
 
   void _loadFromProvider() {
     final provider = context.read<BookmarkProvider>();
+    _loadedProfileId = provider.activeProfileId;
     if (provider.credentials != null) {
       final c = provider.credentials!;
       _tokenController.text = c.token;
@@ -79,6 +43,9 @@ class _SettingsTabContentState extends State<_SettingsTabContent> {
       _branchController.text = c.branch;
       _basePathController.text = c.basePath;
     } else {
+      _tokenController.text = '';
+      _ownerController.text = '';
+      _repoController.text = '';
       _branchController.text = 'main';
       _basePathController.text = 'bookmarks';
     }
@@ -108,49 +75,45 @@ class _SettingsTabContentState extends State<_SettingsTabContent> {
     );
   }
 
+  void _showSnackBar(String text, {bool isError = false}) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(text),
+        backgroundColor:
+            isError ? Theme.of(context).colorScheme.errorContainer : null,
+      ),
+    );
+  }
+
   Future<void> _onSave() async {
     final creds = _buildCredentials();
     if (!creds.isValid) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(AppLocalizations.of(context)!.pleaseFillTokenOwnerRepo)),
-        );
-      }
+      _showSnackBar(AppLocalizations.of(context)!.pleaseFillTokenOwnerRepo);
       return;
     }
     await context.read<BookmarkProvider>().updateCredentials(creds, save: true);
     if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(AppLocalizations.of(context)!.settingsSaved)),
-        );
+      _showSnackBar(AppLocalizations.of(context)!.settingsSaved);
     }
   }
 
   Future<void> _onTestConnection() async {
     final creds = _buildCredentials();
     if (!creds.isValid) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(AppLocalizations.of(context)!.pleaseFillTokenOwnerRepo)),
-        );
-      }
+      _showSnackBar(AppLocalizations.of(context)!.pleaseFillTokenOwnerRepo);
       return;
     }
-
     final success =
         await context.read<BookmarkProvider>().testConnection(creds);
     if (mounted) {
       final provider = context.read<BookmarkProvider>();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            success
-                ? (provider.lastSuccessMessage ?? AppLocalizations.of(context)!.connectionSuccessful)
-                : (provider.error ?? AppLocalizations.of(context)!.connectionFailed),
-          ),
-          backgroundColor:
-              success ? null : Theme.of(context).colorScheme.errorContainer,
-        ),
+      _showSnackBar(
+        success
+            ? (provider.lastSuccessMessage ??
+                AppLocalizations.of(context)!.connectionSuccessful)
+            : (provider.error ??
+                AppLocalizations.of(context)!.connectionFailed),
+        isError: !success,
       );
     }
   }
@@ -158,474 +121,512 @@ class _SettingsTabContentState extends State<_SettingsTabContent> {
   Future<void> _onSync() async {
     final creds = _buildCredentials();
     if (!creds.isValid) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(AppLocalizations.of(context)!.pleaseFillTokenOwnerRepo)),
-        );
-      }
+      _showSnackBar(AppLocalizations.of(context)!.pleaseFillTokenOwnerRepo);
       return;
     }
-
     final provider = context.read<BookmarkProvider>();
-    final messenger = ScaffoldMessenger.of(context);
-    final navigator = Navigator.of(context);
-
     await provider.updateCredentials(creds, save: true);
     final success = await provider.syncBookmarks(creds);
-
     if (!mounted) return;
-    messenger.showSnackBar(
-      SnackBar(
-        content: Text(
-              success
-              ? (provider.lastSuccessMessage ?? AppLocalizations.of(context)!.syncComplete)
-              : (provider.error ?? AppLocalizations.of(context)!.syncFailed),
+    _showSnackBar(
+      success
+          ? (provider.lastSuccessMessage ??
+              AppLocalizations.of(context)!.syncComplete)
+          : (provider.error ?? AppLocalizations.of(context)!.syncFailed),
+      isError: !success,
+    );
+  }
+
+  Future<String?> _showTextDialog(
+    BuildContext context, {
+    required String title,
+    required String label,
+    required String action,
+    String? initialValue,
+  }) async {
+    final controller = TextEditingController(text: initialValue);
+    final result = await showDialog<String>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(title),
+        content: TextField(
+          controller: controller,
+          decoration: InputDecoration(labelText: label),
+          autofocus: true,
+          onSubmitted: (v) => Navigator.pop(ctx, v),
         ),
-        backgroundColor:
-            success ? null : Theme.of(context).colorScheme.errorContainer,
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: Text(AppLocalizations.of(context)!.cancel),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(ctx, controller.text),
+            child: Text(action),
+          ),
+        ],
       ),
     );
-    if (success) {
-      navigator.pop();
+    return result;
+  }
+
+  Future<void> _onImport() async {
+    final l = AppLocalizations.of(context)!;
+    try {
+      final result = await FilePicker.platform.pickFiles(type: FileType.any);
+      if (result == null || result.files.isEmpty) return;
+      final path = result.files.single.path;
+      if (path == null) return;
+      final content = await File(path).readAsString();
+      final parsed = _importExport.parseSettingsJson(content);
+      if (!mounted) return;
+      final confirmed = await showDialog<bool>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text(l.importSettings),
+          content: Text(l.importConfirm(parsed.profiles.length)),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: Text(l.cancel),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.pop(ctx, true),
+              child: Text(l.replace),
+            ),
+          ],
+        ),
+      );
+      if (confirmed != true || !mounted) return;
+      await context.read<BookmarkProvider>().replaceProfiles(
+            parsed.profiles,
+            activeId: parsed.activeProfileId,
+          );
+      if (mounted) {
+        _showSnackBar(l.importSuccess(parsed.profiles.length));
+      }
+    } catch (e) {
+      if (mounted) {
+        _showSnackBar(l.importFailed(e.toString()), isError: true);
+      }
+    }
+  }
+
+  Future<void> _onExport() async {
+    final l = AppLocalizations.of(context)!;
+    try {
+      final provider = context.read<BookmarkProvider>();
+      await _importExport.exportAndShare(
+        provider.profiles,
+        provider.activeProfileId ?? provider.profiles.first.id,
+      );
+      if (mounted) _showSnackBar(l.exportSuccess);
+    } catch (e) {
+      if (mounted) _showSnackBar(e.toString(), isError: true);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     final scheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Consumer<BookmarkProvider>(
       builder: (context, provider, _) {
-        return ListView(
-          padding: const EdgeInsets.all(12),
-          children: [
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(Icons.cloud, color: scheme.primary, size: 20),
-                        const SizedBox(width: 8),
-                        Text(
-                          AppLocalizations.of(context)!.githubConnection,
-                          style: Theme.of(context).textTheme.titleSmall
-                              ?.copyWith(fontWeight: FontWeight.w600),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    TextField(
-                      controller: _tokenController,
-                      decoration: InputDecoration(
-                        labelText: AppLocalizations.of(context)!.personalAccessToken,
-                        hintText: AppLocalizations.of(context)!.tokenHint,
-                        helperText: AppLocalizations.of(context)!.tokenHelper,
-                        isDense: true,
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 10,
-                        ),
-                      ),
-                      obscureText: true,
-                    ),
-                    const SizedBox(height: 8),
-                    TextField(
-                      controller: _ownerController,
-                      decoration: InputDecoration(
-                        labelText: AppLocalizations.of(context)!.repositoryOwner,
-                        hintText: AppLocalizations.of(context)!.ownerHint,
-                        isDense: true,
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 10,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    TextField(
-                      controller: _repoController,
-                      decoration: InputDecoration(
-                        labelText: AppLocalizations.of(context)!.repositoryName,
-                        hintText: AppLocalizations.of(context)!.repoHint,
-                        isDense: true,
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 10,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    TextField(
-                      controller: _branchController,
-                      decoration: InputDecoration(
-                        labelText: AppLocalizations.of(context)!.branch,
-                        hintText: AppLocalizations.of(context)!.branchHint,
-                        isDense: true,
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 10,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    TextField(
-                      controller: _basePathController,
-                      decoration: InputDecoration(
-                        labelText: AppLocalizations.of(context)!.basePath,
-                        hintText: AppLocalizations.of(context)!.basePathHint,
-                        isDense: true,
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 10,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            if (provider.availableRootFolderNames.isNotEmpty) ...[
-              const SizedBox(height: 10),
+        if (_loadedProfileId != provider.activeProfileId) {
+          WidgetsBinding.instance
+              .addPostFrameCallback((_) => _loadFromProvider());
+        }
+
+        return Scaffold(
+          appBar: AppBar(title: Text(l.settings)),
+          body: ListView(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            children: [
+              // ── Section: Connection ──
+              _SectionHeader(title: l.githubConnection),
               Card(
                 child: Padding(
-                  padding: const EdgeInsets.all(12),
+                  padding: const EdgeInsets.all(16),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
+                      TextField(
+                        controller: _tokenController,
+                        decoration: InputDecoration(
+                          labelText: l.personalAccessToken,
+                          hintText: l.tokenHint,
+                          helperText: l.tokenHelper,
+                          helperMaxLines: 3,
+                        ),
+                        obscureText: true,
+                      ),
+                      const SizedBox(height: 14),
+                      TextField(
+                        controller: _ownerController,
+                        decoration: InputDecoration(
+                          labelText: l.repositoryOwner,
+                          hintText: l.ownerHint,
+                        ),
+                      ),
+                      const SizedBox(height: 14),
+                      TextField(
+                        controller: _repoController,
+                        decoration: InputDecoration(
+                          labelText: l.repositoryName,
+                          hintText: l.repoHint,
+                        ),
+                      ),
+                      const SizedBox(height: 14),
                       Row(
                         children: [
-                          Icon(Icons.folder_open, color: scheme.primary, size: 20),
-                          const SizedBox(width: 8),
-                          Text(
-                            AppLocalizations.of(context)!.displayedFolders,
-                            style: Theme.of(context).textTheme.titleSmall
-                                ?.copyWith(fontWeight: FontWeight.w600),
+                          Expanded(
+                            child: TextField(
+                              controller: _branchController,
+                              decoration: InputDecoration(
+                                labelText: l.branch,
+                                hintText: l.branchHint,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: TextField(
+                              controller: _basePathController,
+                              decoration: InputDecoration(
+                                labelText: l.basePath,
+                                hintText: l.basePathHint,
+                              ),
+                            ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 6),
-                      Text(
-                        AppLocalizations.of(context)!.displayedFoldersHelp,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: scheme.outline,
-                            ),
+                      const SizedBox(height: 20),
+                      if (provider.isLoading)
+                        const Center(
+                          child: Padding(
+                            padding: EdgeInsets.all(8),
+                            child: CircularProgressIndicator(),
+                          ),
+                        )
+                      else ...[
+                        FilledButton(
+                          onPressed: _onSave,
+                          child: Text(l.save),
+                        ),
+                        const SizedBox(height: 8),
+                        OutlinedButton(
+                          onPressed: _onTestConnection,
+                          child: Text(l.testConnection),
+                        ),
+                        const SizedBox(height: 8),
+                        FilledButton.tonal(
+                          onPressed: _onSync,
+                          child: Text(l.syncBookmarks),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 24),
+
+              // ── Section: Profile ──
+              _SectionHeader(
+                title: l.profile,
+                trailing: Text(
+                  l.profileCount(provider.profiles.length, maxProfiles),
+                  style: textTheme.bodySmall?.copyWith(color: scheme.outline),
+                ),
+              ),
+              Card(
+                child: Column(
+                  children: [
+                    for (final (i, profile)
+                        in provider.profiles.indexed) ...[
+                      if (i > 0)
+                        Divider(
+                            height: 1,
+                            indent: 16,
+                            endIndent: 16,
+                            color: scheme.outlineVariant),
+                      _ProfileTile(
+                        profile: profile,
+                        isActive:
+                            profile.id == provider.activeProfileId,
+                        onSelect: () =>
+                            provider.switchProfile(profile.id),
+                        onRename: () async {
+                          final name = await _showTextDialog(
+                            context,
+                            title: l.renameProfile,
+                            label: l.profileName,
+                            action: l.rename,
+                            initialValue: profile.name,
+                          );
+                          if (name == null || name.trim().isEmpty) return;
+                          await provider.renameProfile(
+                              profile.id, name.trim());
+                          if (context.mounted) {
+                            _showSnackBar(
+                                l.profileRenamed(name.trim()));
+                          }
+                        },
+                        onDelete: provider.profiles.length > 1
+                            ? () async {
+                                final confirmed =
+                                    await showDialog<bool>(
+                                  context: context,
+                                  builder: (ctx) => AlertDialog(
+                                    title: Text(l.deleteProfile),
+                                    content: Text(
+                                        l.deleteProfileConfirm(
+                                            profile.name)),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(ctx, false),
+                                        child: Text(l.cancel),
+                                      ),
+                                      FilledButton(
+                                        style: FilledButton.styleFrom(
+                                          backgroundColor: scheme.error,
+                                        ),
+                                        onPressed: () =>
+                                            Navigator.pop(ctx, true),
+                                        child: Text(l.delete),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                                if (confirmed != true) return;
+                                await provider.deleteProfile(profile.id);
+                                if (context.mounted) {
+                                  _showSnackBar(l.profileDeleted);
+                                }
+                              }
+                            : null,
                       ),
-                      const SizedBox(height: 8),
-                      Wrap(
-                        spacing: 6,
-                        runSpacing: 6,
-                        children: provider.availableRootFolderNames
-                            .map(
-                              (name) => FilterChip(
-                                label: Text(name),
-                                selected:
-                                    provider.selectedRootFolders.contains(name),
-                                materialTapTargetSize:
-                                    MaterialTapTargetSize.shrinkWrap,
-                                visualDensity: VisualDensity.compact,
-                                onSelected: (selected) {
-                                  final current = List<String>.from(
-                                      provider.selectedRootFolders);
-                                  if (selected) {
-                                    current.add(name);
-                                  } else {
-                                    current.remove(name);
-                                  }
-                                  provider.setSelectedRootFolders(
-                                      current, save: true);
-                                },
-                              ),
-                            )
-                            .toList(),
+                    ],
+                  ],
+                ),
+              ),
+              if (provider.canAddProfile)
+                Padding(
+                  padding: const EdgeInsets.only(top: 12),
+                  child: OutlinedButton.icon(
+                    onPressed: () async {
+                      final name = await _showTextDialog(
+                        context,
+                        title: l.addProfile,
+                        label: l.profileName,
+                        action: l.add,
+                      );
+                      if (name == null || name.trim().isEmpty) return;
+                      final profile =
+                          await provider.addProfile(name.trim());
+                      if (context.mounted) {
+                        _showSnackBar(l.profileAdded(profile.name));
+                      }
+                    },
+                    icon: const Icon(Icons.add, size: 18),
+                    label: Text(l.addProfile),
+                  ),
+                ),
+
+              const SizedBox(height: 24),
+
+              // ── Section: Folders ──
+              if (provider.availableRootFolderNames.isNotEmpty) ...[
+                _SectionHeader(title: l.displayedFolders),
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          l.displayedFoldersHelp,
+                          style: textTheme.bodySmall
+                              ?.copyWith(color: scheme.outline),
+                        ),
+                        const SizedBox(height: 12),
+                        Wrap(
+                          spacing: 8,
+                          runSpacing: 8,
+                          children: provider.availableRootFolderNames
+                              .map((name) {
+                            final selected = provider.selectedRootFolders
+                                .contains(name);
+                            return FilterChip(
+                              label: Text(name),
+                              selected: selected,
+                              showCheckmark: true,
+                              onSelected: (sel) {
+                                final current = List<String>.from(
+                                    provider.selectedRootFolders);
+                                if (sel) {
+                                  current.add(name);
+                                } else {
+                                  current.remove(name);
+                                }
+                                provider.setSelectedRootFolders(current,
+                                    save: true);
+                              },
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 24),
+              ],
+
+              // ── Section: Import / Export ──
+              _SectionHeader(title: l.importExport),
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        l.importSettingsDesc,
+                        style: textTheme.bodySmall
+                            ?.copyWith(color: scheme.outline),
+                      ),
+                      const SizedBox(height: 14),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: OutlinedButton.icon(
+                              onPressed: _onImport,
+                              icon: const Icon(Icons.file_download, size: 18),
+                              label: Text(l.importSettings),
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: OutlinedButton.icon(
+                              onPressed: _onExport,
+                              icon: const Icon(Icons.file_upload, size: 18),
+                              label: Text(l.exportSettings),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ),
               ),
+
+              const SizedBox(height: 32),
             ],
-            const SizedBox(height: 12),
-            if (provider.isLoading)
-              const Center(child: CircularProgressIndicator())
-            else
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  FilledButton.icon(
-                    onPressed: _onSave,
-                    icon: const Icon(Icons.save, size: 18),
-                    label: Text(AppLocalizations.of(context)!.save),
-                  ),
-                  const SizedBox(height: 8),
-                  FilledButton.tonalIcon(
-                    onPressed: _onTestConnection,
-                    icon: const Icon(Icons.link, size: 18),
-                    label: Text(AppLocalizations.of(context)!.testConnection),
-                  ),
-                  const SizedBox(height: 8),
-                  FilledButton.icon(
-                    onPressed: _onSync,
-                    icon: const Icon(Icons.sync, size: 18),
-                    label: Text(AppLocalizations.of(context)!.syncBookmarks),
-                  ),
-                ],
-              ),
-          ],
+          ),
         );
       },
     );
   }
 }
 
-class _AboutTab extends StatelessWidget {
-  const _AboutTab({required this.launchUrl});
+// =============================================================================
+// Section header
+// =============================================================================
 
-  final Future<void> Function(String url) launchUrl;
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(12),
-      child: Column(
-        children: [
-          const SizedBox(height: 8),
-          Icon(
-            Icons.bookmark,
-            size: 56,
-            color: Theme.of(context).colorScheme.primary,
-          ),
-          const SizedBox(height: 8),
-          Text(
-            AppLocalizations.of(context)!.appTitle,
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-          ),
-          FutureBuilder<PackageInfo>(
-            future: PackageInfo.fromPlatform(),
-            builder: (context, snapshot) {
-              final v = snapshot.data?.version ?? '...';
-              return Text(
-                AppLocalizations.of(context)!.version(v),
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: scheme.outline,
-                    ),
-              );
-            },
-          ),
-          const SizedBox(height: 2),
-          Text(
-            AppLocalizations.of(context)!.authorBy,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: scheme.outline,
-                ),
-          ),
-          const SizedBox(height: 12),
-          Text(
-            AppLocalizations.of(context)!.aboutDescription,
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-          const SizedBox(height: 16),
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.projects,
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontWeight: FontWeight.w600,
-                        ),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    AppLocalizations.of(context)!.formatFromGitSyncMarks,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: scheme.outline,
-                        ),
-                  ),
-                  const SizedBox(height: 8),
-                  InkWell(
-                    onTap: () => launchUrl(_gitSyncMarksUrl),
-                    borderRadius: BorderRadius.circular(8),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 4),
-                      child: Row(
-                        children: [
-                          Icon(Icons.extension, color: scheme.primary, size: 20),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  AppLocalizations.of(context)!.appTitle,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall
-                                      ?.copyWith(
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                ),
-                                Text(
-                                  AppLocalizations.of(context)!.gitSyncMarksDesc,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodySmall
-                                      ?.copyWith(
-                                        color: scheme.outline,
-                                      ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Icon(Icons.open_in_new,
-                              size: 18, color: scheme.outline),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(height: 12),
-          Text(
-            AppLocalizations.of(context)!.licenseMit,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: scheme.outline,
-                ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _HelpTab extends StatelessWidget {
-  const _HelpTab({required this.launchUrl});
-
-  final Future<void> Function(String url) launchUrl;
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            AppLocalizations.of(context)!.quickGuide,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-          ),
-          const SizedBox(height: 8),
-          _HelpSection(
-            title: AppLocalizations.of(context)!.help1Title,
-            body: AppLocalizations.of(context)!.help1Body,
-          ),
-          _HelpSection(
-            title: AppLocalizations.of(context)!.help2Title,
-            body: AppLocalizations.of(context)!.help2Body,
-          ),
-          _HelpSection(
-            title: AppLocalizations.of(context)!.help3Title,
-            body: AppLocalizations.of(context)!.help3Body,
-          ),
-          _HelpSection(
-            title: AppLocalizations.of(context)!.help4Title,
-            body: AppLocalizations.of(context)!.help4Body,
-          ),
-          _HelpSection(
-            title: AppLocalizations.of(context)!.help5Title,
-            body: AppLocalizations.of(context)!.help5Body,
-          ),
-          const SizedBox(height: 12),
-          Text(
-            AppLocalizations.of(context)!.whichRepoFormat,
-            style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            AppLocalizations.of(context)!.repoFormatDescription,
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-          const SizedBox(height: 16),
-          Text(
-            AppLocalizations.of(context)!.support,
-            style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            AppLocalizations.of(context)!.supportText,
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-          const SizedBox(height: 4),
-          InkWell(
-            onTap: () => launchUrl(_gitSyncMarksAndroidUrl),
-            borderRadius: BorderRadius.circular(8),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4),
-              child: Row(
-                children: [
-                  Icon(Icons.bug_report, color: scheme.primary, size: 20),
-                  const SizedBox(width: 8),
-                  Text(
-                    AppLocalizations.of(context)!.gitSyncMarksAndroidIssues,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: scheme.primary,
-                          decoration: TextDecoration.underline,
-                        ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _HelpSection extends StatelessWidget {
-  const _HelpSection({
-    required this.title,
-    required this.body,
-  });
+class _SectionHeader extends StatelessWidget {
+  const _SectionHeader({required this.title, this.trailing});
 
   final String title;
-  final String body;
+  final Widget? trailing;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      padding: const EdgeInsets.only(left: 4, right: 4, bottom: 8, top: 4),
+      child: Row(
         children: [
           Text(
-            title,
-            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+            title.toUpperCase(),
+            style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.outline,
                   fontWeight: FontWeight.w600,
+                  letterSpacing: 0.8,
                 ),
           ),
-          const SizedBox(height: 2),
-          Text(
-            body,
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
+          if (trailing != null) ...[
+            const Spacer(),
+            trailing!,
+          ],
         ],
       ),
+    );
+  }
+}
+
+// =============================================================================
+// Profile tile
+// =============================================================================
+
+class _ProfileTile extends StatelessWidget {
+  const _ProfileTile({
+    required this.profile,
+    required this.isActive,
+    required this.onSelect,
+    required this.onRename,
+    this.onDelete,
+  });
+
+  final Profile profile;
+  final bool isActive;
+  final VoidCallback onSelect;
+  final VoidCallback onRename;
+  final VoidCallback? onDelete;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return ListTile(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+      leading: Icon(
+        isActive ? Icons.radio_button_checked : Icons.radio_button_unchecked,
+        color: isActive ? scheme.primary : scheme.outline,
+        size: 20,
+      ),
+      title: Text(
+        profile.name,
+        style: TextStyle(
+          fontWeight: isActive ? FontWeight.w600 : FontWeight.normal,
+        ),
+      ),
+      subtitle: profile.credentials.isValid
+          ? Text(
+              '${profile.credentials.owner}/${profile.credentials.repo}',
+              style: Theme.of(context)
+                  .textTheme
+                  .bodySmall
+                  ?.copyWith(color: scheme.outline),
+            )
+          : null,
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          IconButton(
+            icon: Icon(Icons.edit_outlined, size: 18, color: scheme.outline),
+            onPressed: onRename,
+            visualDensity: VisualDensity.compact,
+          ),
+          if (onDelete != null)
+            IconButton(
+              icon: Icon(Icons.delete_outline, size: 18, color: scheme.error),
+              onPressed: onDelete,
+              visualDensity: VisualDensity.compact,
+            ),
+        ],
+      ),
+      onTap: isActive ? null : onSelect,
     );
   }
 }

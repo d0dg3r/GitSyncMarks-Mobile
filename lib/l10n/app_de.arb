@@ -68,5 +68,81 @@
   "repoFormatDescription": "Das Repo sollte dem Format von GitSyncMarks entsprechen: Base Path (z.B. \"bookmarks\") mit Unterordnern wie toolbar, menu, other, mobile. Jeder Ordner hat _order.json und JSON-Dateien pro Lesezeichen mit title und url.",
   "support": "Support",
   "supportText": "Fragen oder Fehlermeldungen? Öffne ein Issue im Projekt-Repository.",
-  "gitSyncMarksAndroidIssues": "GitSyncMarks-Mobile (GitHub Issues)"
+  "gitSyncMarksAndroidIssues": "GitSyncMarks-Mobile (GitHub Issues)",
+
+  "profiles": "Profile",
+  "profile": "Profil",
+  "activeProfile": "Aktives Profil",
+  "addProfile": "Profil hinzufügen",
+  "renameProfile": "Profil umbenennen",
+  "deleteProfile": "Profil löschen",
+  "deleteProfileConfirm": "Profil \"{name}\" löschen?",
+  "@deleteProfileConfirm": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "profileName": "Profilname",
+  "profileCount": "{count}/{max} Profile",
+  "@profileCount": {
+    "placeholders": {
+      "count": {"type": "int"},
+      "max": {"type": "int"}
+    }
+  },
+  "maxProfilesReached": "Maximale Anzahl an Profilen erreicht ({max})",
+  "@maxProfilesReached": {
+    "placeholders": {
+      "max": {"type": "int"}
+    }
+  },
+  "profileAdded": "Profil \"{name}\" hinzugefügt",
+  "@profileAdded": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "profileRenamed": "Profil umbenannt zu \"{name}\"",
+  "@profileRenamed": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "profileDeleted": "Profil gelöscht",
+  "cannotDeleteLastProfile": "Das letzte Profil kann nicht gelöscht werden",
+
+  "importExport": "Import / Export",
+  "importSettings": "Einstellungen importieren",
+  "exportSettings": "Einstellungen exportieren",
+  "importSettingsDesc": "Profile aus einer GitSyncMarks-Einstellungsdatei (JSON) importieren",
+  "exportSettingsDesc": "Alle Profile als GitSyncMarks-Einstellungsdatei exportieren",
+  "importSuccess": "{count} Profil(e) importiert",
+  "@importSuccess": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "importFailed": "Import fehlgeschlagen: {error}",
+  "@importFailed": {
+    "placeholders": {
+      "error": {"type": "String"}
+    }
+  },
+  "importConfirm": "{count} Profil(e) importieren? Alle bestehenden Profile werden ersetzt.",
+  "@importConfirm": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "exportSuccess": "Einstellungen exportiert",
+  "cancel": "Abbrechen",
+  "delete": "Löschen",
+  "rename": "Umbenennen",
+  "add": "Hinzufügen",
+  "import_": "Importieren",
+  "replace": "Ersetzen",
+  "bookmarks": "Lesezeichen",
+  "info": "Info",
+  "connection": "Verbindung",
+  "folders": "Ordner"
 }

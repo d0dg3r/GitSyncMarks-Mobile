@@ -203,4 +203,122 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get gitSyncMarksAndroidIssues => 'GitSyncMarks-Mobile (GitHub Issues)';
+
+  @override
+  String get profiles => 'Profile';
+
+  @override
+  String get profile => 'Profil';
+
+  @override
+  String get activeProfile => 'Aktives Profil';
+
+  @override
+  String get addProfile => 'Profil hinzufügen';
+
+  @override
+  String get renameProfile => 'Profil umbenennen';
+
+  @override
+  String get deleteProfile => 'Profil löschen';
+
+  @override
+  String deleteProfileConfirm(String name) {
+    return 'Profil \"$name\" löschen?';
+  }
+
+  @override
+  String get profileName => 'Profilname';
+
+  @override
+  String profileCount(int count, int max) {
+    return '$count/$max Profile';
+  }
+
+  @override
+  String maxProfilesReached(int max) {
+    return 'Maximale Anzahl an Profilen erreicht ($max)';
+  }
+
+  @override
+  String profileAdded(String name) {
+    return 'Profil \"$name\" hinzugefügt';
+  }
+
+  @override
+  String profileRenamed(String name) {
+    return 'Profil umbenannt zu \"$name\"';
+  }
+
+  @override
+  String get profileDeleted => 'Profil gelöscht';
+
+  @override
+  String get cannotDeleteLastProfile =>
+      'Das letzte Profil kann nicht gelöscht werden';
+
+  @override
+  String get importExport => 'Import / Export';
+
+  @override
+  String get importSettings => 'Einstellungen importieren';
+
+  @override
+  String get exportSettings => 'Einstellungen exportieren';
+
+  @override
+  String get importSettingsDesc =>
+      'Profile aus einer GitSyncMarks-Einstellungsdatei (JSON) importieren';
+
+  @override
+  String get exportSettingsDesc =>
+      'Alle Profile als GitSyncMarks-Einstellungsdatei exportieren';
+
+  @override
+  String importSuccess(int count) {
+    return '$count Profil(e) importiert';
+  }
+
+  @override
+  String importFailed(String error) {
+    return 'Import fehlgeschlagen: $error';
+  }
+
+  @override
+  String importConfirm(int count) {
+    return '$count Profil(e) importieren? Alle bestehenden Profile werden ersetzt.';
+  }
+
+  @override
+  String get exportSuccess => 'Einstellungen exportiert';
+
+  @override
+  String get cancel => 'Abbrechen';
+
+  @override
+  String get delete => 'Löschen';
+
+  @override
+  String get rename => 'Umbenennen';
+
+  @override
+  String get add => 'Hinzufügen';
+
+  @override
+  String get import_ => 'Importieren';
+
+  @override
+  String get replace => 'Ersetzen';
+
+  @override
+  String get bookmarks => 'Lesezeichen';
+
+  @override
+  String get info => 'Info';
+
+  @override
+  String get connection => 'Verbindung';
+
+  @override
+  String get folders => 'Ordner';
 }

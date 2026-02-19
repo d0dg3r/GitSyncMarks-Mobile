@@ -68,5 +68,81 @@
   "repoFormatDescription": "El repositorio debe seguir el formato GitSyncMarks: Base Path (ej. \"bookmarks\") con subcarpetas como toolbar, menu, other, mobile. Cada carpeta tiene _order.json y archivos JSON por marcador con title y url.",
   "support": "Soporte",
   "supportText": "¿Preguntas o mensajes de error? Abre un issue en el repositorio del proyecto.",
-  "gitSyncMarksAndroidIssues": "GitSyncMarks-Mobile (GitHub Issues)"
+  "gitSyncMarksAndroidIssues": "GitSyncMarks-Mobile (GitHub Issues)",
+
+  "profiles": "Perfiles",
+  "profile": "Perfil",
+  "activeProfile": "Perfil activo",
+  "addProfile": "Añadir perfil",
+  "renameProfile": "Renombrar perfil",
+  "deleteProfile": "Eliminar perfil",
+  "deleteProfileConfirm": "¿Eliminar perfil \"{name}\"?",
+  "@deleteProfileConfirm": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "profileName": "Nombre del perfil",
+  "profileCount": "{count}/{max} perfiles",
+  "@profileCount": {
+    "placeholders": {
+      "count": {"type": "int"},
+      "max": {"type": "int"}
+    }
+  },
+  "maxProfilesReached": "Número máximo de perfiles alcanzado ({max})",
+  "@maxProfilesReached": {
+    "placeholders": {
+      "max": {"type": "int"}
+    }
+  },
+  "profileAdded": "Perfil \"{name}\" añadido",
+  "@profileAdded": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "profileRenamed": "Perfil renombrado a \"{name}\"",
+  "@profileRenamed": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "profileDeleted": "Perfil eliminado",
+  "cannotDeleteLastProfile": "No se puede eliminar el último perfil",
+
+  "importExport": "Importar / Exportar",
+  "importSettings": "Importar ajustes",
+  "exportSettings": "Exportar ajustes",
+  "importSettingsDesc": "Importar perfiles desde un archivo de ajustes GitSyncMarks (JSON)",
+  "exportSettingsDesc": "Exportar todos los perfiles como archivo de ajustes GitSyncMarks",
+  "importSuccess": "{count} perfil(es) importado(s)",
+  "@importSuccess": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "importFailed": "Importación fallida: {error}",
+  "@importFailed": {
+    "placeholders": {
+      "error": {"type": "String"}
+    }
+  },
+  "importConfirm": "¿Importar {count} perfil(es)? Se reemplazarán todos los perfiles existentes.",
+  "@importConfirm": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "exportSuccess": "Ajustes exportados",
+  "cancel": "Cancelar",
+  "delete": "Eliminar",
+  "rename": "Renombrar",
+  "add": "Añadir",
+  "import_": "Importar",
+  "replace": "Reemplazar",
+  "bookmarks": "Marcadores",
+  "info": "Info",
+  "connection": "Conexión",
+  "folders": "Carpetas"
 }

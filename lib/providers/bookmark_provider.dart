@@ -1,14 +1,14 @@
 import 'package:flutter/foundation.dart';
-import 'package:meta/meta.dart';
 
 import '../config/github_credentials.dart';
 import '../models/bookmark_node.dart';
+import '../models/profile.dart';
 import '../repositories/bookmark_repository.dart';
 import '../services/bookmark_cache.dart';
 import '../services/github_api.dart';
 import '../services/storage_service.dart';
 
-/// App state: credentials, bookmarks, sync status.
+/// App state: profiles, credentials, bookmarks, sync status.
 class BookmarkProvider extends ChangeNotifier {
   BookmarkProvider({
     StorageService? storage,
@@ -22,6 +22,9 @@ class BookmarkProvider extends ChangeNotifier {
   final BookmarkRepository _repository;
   final BookmarkCacheService _cache;
 
+  List<Profile> _profiles = [];
+  String? _activeProfileId;
+
   GithubCredentials? _credentials;
   List<BookmarkFolder> _rootFolders = [];
   List<String> _discoveredRootFolderNames = [];
@@ -30,6 +33,21 @@ class BookmarkProvider extends ChangeNotifier {
   String? _error;
   String? _lastSuccessMessage;
 
+  // ---------------------------------------------------------------------------
+  // Getters
+  // ---------------------------------------------------------------------------
+
+  List<Profile> get profiles => List.unmodifiable(_profiles);
+  String? get activeProfileId => _activeProfileId;
+
+  Profile? get activeProfile {
+    if (_profiles.isEmpty) return null;
+    return _profiles.cast<Profile?>().firstWhere(
+          (p) => p!.id == _activeProfileId,
+          orElse: () => _profiles.first,
+        );
+  }
+
   GithubCredentials? get credentials => _credentials;
 
   List<BookmarkFolder> get rootFolders => _rootFolders;
@@ -37,9 +55,7 @@ class BookmarkProvider extends ChangeNotifier {
   List<BookmarkFolder> get displayedRootFolders {
     if (_selectedRootFolders.isEmpty) return _rootFolders;
     final names = _selectedRootFolders.toSet();
-    return _rootFolders
-        .where((f) => names.contains(f.title))
-        .toList();
+    return _rootFolders.where((f) => names.contains(f.title)).toList();
   }
 
   List<String> get availableRootFolderNames =>
@@ -59,11 +75,35 @@ class BookmarkProvider extends ChangeNotifier {
 
   bool get hasBookmarks => _rootFolders.isNotEmpty;
 
-  /// Loads saved credentials and selected root folders from storage.
-  /// Also loads cached bookmarks if credentials are valid.
+  bool get canAddProfile => _profiles.length < maxProfiles;
+
+  // ---------------------------------------------------------------------------
+  // Load / init
+  // ---------------------------------------------------------------------------
+
+  /// Loads saved profiles, migrates legacy credentials if needed, and loads
+  /// cached bookmarks for the active profile.
   Future<void> loadCredentials() async {
-    _credentials = await _storage.loadCredentials();
-    _selectedRootFolders = await _storage.loadSelectedRootFolders();
+    _profiles = await _storage.loadProfiles();
+
+    if (_profiles.isEmpty) {
+      final migrated = await _storage.migrateLegacyCredentials();
+      if (migrated != null) {
+        _profiles = [migrated];
+      }
+    }
+
+    _activeProfileId = await _storage.loadActiveProfileId();
+
+    final active = activeProfile;
+    if (active != null) {
+      _credentials = active.credentials;
+      _selectedRootFolders = active.selectedRootFolders;
+    } else {
+      _credentials = null;
+      _selectedRootFolders = [];
+    }
+
     _error = null;
     if (_credentials != null && _credentials!.isValid) {
       await loadFromCache();
@@ -73,7 +113,6 @@ class BookmarkProvider extends ChangeNotifier {
   }
 
   /// Loads bookmarks from local cache for current credentials.
-  /// Does nothing if credentials are missing or invalid.
   Future<void> loadFromCache() async {
     final c = _credentials;
     if (c == null || !c.isValid) {
@@ -87,36 +126,159 @@ class BookmarkProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Updates selected root folders (empty = show all) and optionally persists.
+  // ---------------------------------------------------------------------------
+  // Profile CRUD
+  // ---------------------------------------------------------------------------
+
+  Future<Profile> addProfile(String name) async {
+    final id = DateTime.now().microsecondsSinceEpoch.toRadixString(36);
+    final profile = Profile(
+      id: id,
+      name: name,
+      credentials: GithubCredentials(
+        token: '',
+        owner: '',
+        repo: '',
+        branch: 'main',
+        basePath: 'bookmarks',
+      ),
+    );
+    _profiles = [..._profiles, profile];
+    await _storage.saveProfiles(_profiles);
+    await switchProfile(id);
+    return profile;
+  }
+
+  Future<void> renameProfile(String id, String newName) async {
+    _profiles = _profiles.map((p) {
+      if (p.id == id) return p.copyWith(name: newName);
+      return p;
+    }).toList();
+    await _storage.saveProfiles(_profiles);
+    notifyListeners();
+  }
+
+  Future<void> deleteProfile(String id) async {
+    if (_profiles.length <= 1) return;
+    _profiles = _profiles.where((p) => p.id != id).toList();
+    await _storage.saveProfiles(_profiles);
+
+    if (_activeProfileId == id) {
+      await switchProfile(_profiles.first.id);
+    } else {
+      notifyListeners();
+    }
+  }
+
+  Future<void> switchProfile(String id) async {
+    _saveCurrentProfileLocally();
+
+    _activeProfileId = id;
+    await _storage.saveActiveProfileId(id);
+
+    final active = activeProfile;
+    if (active != null) {
+      _credentials = active.credentials;
+      _selectedRootFolders = active.selectedRootFolders;
+    } else {
+      _credentials = null;
+      _selectedRootFolders = [];
+    }
+
+    _rootFolders = [];
+    _discoveredRootFolderNames = [];
+    _error = null;
+    _lastSuccessMessage = null;
+
+    if (_credentials != null && _credentials!.isValid) {
+      await loadFromCache();
+    } else {
+      notifyListeners();
+    }
+  }
+
+  /// Replaces all profiles (used by import).
+  Future<void> replaceProfiles(
+    List<Profile> profiles, {
+    required String activeId,
+  }) async {
+    _profiles = profiles;
+    await _storage.saveProfiles(_profiles);
+    await switchProfile(activeId);
+  }
+
+  /// Persists current form state back into the in-memory profile list
+  /// so switching profiles doesn't lose unsaved edits.
+  void _saveCurrentProfileLocally() {
+    if (_activeProfileId == null || _credentials == null) return;
+    _profiles = _profiles.map((p) {
+      if (p.id == _activeProfileId) {
+        return p.copyWith(
+          credentials: _credentials,
+          selectedRootFolders: _selectedRootFolders,
+        );
+      }
+      return p;
+    }).toList();
+  }
+
+  // ---------------------------------------------------------------------------
+  // Selected root folders
+  // ---------------------------------------------------------------------------
+
   Future<void> setSelectedRootFolders(List<String> names, {bool save = false}) async {
     _selectedRootFolders = names.toList();
     if (save) {
-      await _storage.saveSelectedRootFolders(_selectedRootFolders);
+      _updateActiveProfileFolders(names);
+      await _storage.saveProfiles(_profiles);
     }
     notifyListeners();
   }
 
-  /// Updates credentials (from Settings form) and optionally persists.
+  void _updateActiveProfileFolders(List<String> names) {
+    _profiles = _profiles.map((p) {
+      if (p.id == _activeProfileId) {
+        return p.copyWith(selectedRootFolders: names);
+      }
+      return p;
+    }).toList();
+  }
+
+  // ---------------------------------------------------------------------------
+  // Credentials update (from Settings form)
+  // ---------------------------------------------------------------------------
+
   Future<void> updateCredentials(GithubCredentials creds, {bool save = false}) async {
     _credentials = creds;
     if (save) {
-      await _storage.saveCredentials(creds);
+      _profiles = _profiles.map((p) {
+        if (p.id == _activeProfileId) return p.copyWith(credentials: creds);
+        return p;
+      }).toList();
+      await _storage.saveProfiles(_profiles);
     }
     _error = null;
     notifyListeners();
   }
 
-  /// Saves current credentials to storage.
   Future<void> saveCredentials() async {
     if (_credentials != null) {
-      await _storage.saveCredentials(_credentials!);
+      _profiles = _profiles.map((p) {
+        if (p.id == _activeProfileId) {
+          return p.copyWith(credentials: _credentials);
+        }
+        return p;
+      }).toList();
+      await _storage.saveProfiles(_profiles);
       _lastSuccessMessage = 'Settings saved';
       notifyListeners();
     }
   }
 
-  /// Tests connection without fetching full bookmarks.
-  /// On success, stores discovered root folder names for the folder selection UI.
+  // ---------------------------------------------------------------------------
+  // Test connection / sync
+  // ---------------------------------------------------------------------------
+
   Future<bool> testConnection(GithubCredentials creds) async {
     _isLoading = true;
     _error = null;
@@ -124,8 +286,7 @@ class BookmarkProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      _discoveredRootFolderNames =
-          await _repository.testConnection(creds);
+      _discoveredRootFolderNames = await _repository.testConnection(creds);
       _lastSuccessMessage = 'Connection successful';
       notifyListeners();
       return true;
@@ -147,7 +308,6 @@ class BookmarkProvider extends ChangeNotifier {
     }
   }
 
-  /// Fetches bookmarks from GitHub and updates state.
   Future<bool> syncBookmarks([GithubCredentials? creds]) async {
     final c = creds ?? _credentials;
     if (c == null || !c.isValid) {
@@ -185,13 +345,21 @@ class BookmarkProvider extends ChangeNotifier {
     }
   }
 
+  // ---------------------------------------------------------------------------
+  // Misc
+  // ---------------------------------------------------------------------------
+
   void clearError() {
     _error = null;
     notifyListeners();
   }
 
+  void clearSuccessMessage() {
+    _lastSuccessMessage = null;
+    notifyListeners();
+  }
+
   /// Seeds the provider with test data for screenshot generation.
-  /// Use in test/screenshot_test.dart only.
   @visibleForTesting
   void seedWith(
     List<BookmarkFolder> folders, {
@@ -205,15 +373,22 @@ class BookmarkProvider extends ChangeNotifier {
           repo: 'bookmarks',
           branch: 'main',
         );
-    _selectedRootFolders =
-        folders.map((f) => f.title).toList();
+    _selectedRootFolders = folders.map((f) => f.title).toList();
     _error = null;
     _isLoading = false;
-    notifyListeners();
-  }
 
-  void clearSuccessMessage() {
-    _lastSuccessMessage = null;
+    if (_profiles.isEmpty) {
+      _profiles = [
+        Profile(
+          id: 'default',
+          name: 'Default',
+          credentials: _credentials!,
+          selectedRootFolders: _selectedRootFolders,
+        ),
+      ];
+      _activeProfileId = 'default';
+    }
+
     notifyListeners();
   }
 

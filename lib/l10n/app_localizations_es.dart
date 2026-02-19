@@ -202,4 +202,121 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get gitSyncMarksAndroidIssues => 'GitSyncMarks-Mobile (GitHub Issues)';
+
+  @override
+  String get profiles => 'Perfiles';
+
+  @override
+  String get profile => 'Perfil';
+
+  @override
+  String get activeProfile => 'Perfil activo';
+
+  @override
+  String get addProfile => 'Añadir perfil';
+
+  @override
+  String get renameProfile => 'Renombrar perfil';
+
+  @override
+  String get deleteProfile => 'Eliminar perfil';
+
+  @override
+  String deleteProfileConfirm(String name) {
+    return '¿Eliminar perfil \"$name\"?';
+  }
+
+  @override
+  String get profileName => 'Nombre del perfil';
+
+  @override
+  String profileCount(int count, int max) {
+    return '$count/$max perfiles';
+  }
+
+  @override
+  String maxProfilesReached(int max) {
+    return 'Número máximo de perfiles alcanzado ($max)';
+  }
+
+  @override
+  String profileAdded(String name) {
+    return 'Perfil \"$name\" añadido';
+  }
+
+  @override
+  String profileRenamed(String name) {
+    return 'Perfil renombrado a \"$name\"';
+  }
+
+  @override
+  String get profileDeleted => 'Perfil eliminado';
+
+  @override
+  String get cannotDeleteLastProfile => 'No se puede eliminar el último perfil';
+
+  @override
+  String get importExport => 'Importar / Exportar';
+
+  @override
+  String get importSettings => 'Importar ajustes';
+
+  @override
+  String get exportSettings => 'Exportar ajustes';
+
+  @override
+  String get importSettingsDesc =>
+      'Importar perfiles desde un archivo de ajustes GitSyncMarks (JSON)';
+
+  @override
+  String get exportSettingsDesc =>
+      'Exportar todos los perfiles como archivo de ajustes GitSyncMarks';
+
+  @override
+  String importSuccess(int count) {
+    return '$count perfil(es) importado(s)';
+  }
+
+  @override
+  String importFailed(String error) {
+    return 'Importación fallida: $error';
+  }
+
+  @override
+  String importConfirm(int count) {
+    return '¿Importar $count perfil(es)? Se reemplazarán todos los perfiles existentes.';
+  }
+
+  @override
+  String get exportSuccess => 'Ajustes exportados';
+
+  @override
+  String get cancel => 'Cancelar';
+
+  @override
+  String get delete => 'Eliminar';
+
+  @override
+  String get rename => 'Renombrar';
+
+  @override
+  String get add => 'Añadir';
+
+  @override
+  String get import_ => 'Importar';
+
+  @override
+  String get replace => 'Reemplazar';
+
+  @override
+  String get bookmarks => 'Marcadores';
+
+  @override
+  String get info => 'Info';
+
+  @override
+  String get connection => 'Conexión';
+
+  @override
+  String get folders => 'Carpetas';
 }

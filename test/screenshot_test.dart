@@ -19,14 +19,14 @@ import 'package:gitsyncmarks/screens/settings_screen.dart';
 import 'package:gitsyncmarks/l10n/app_localizations.dart';
 
 final _sampleFolders = [
-  BookmarkFolder(
+  const BookmarkFolder(
     title: 'toolbar',
     children: [
-      const Bookmark(title: 'GitHub', url: 'https://github.com'),
-      const Bookmark(title: 'Flutter Docs', url: 'https://docs.flutter.dev'),
+      Bookmark(title: 'GitHub', url: 'https://github.com'),
+      Bookmark(title: 'Flutter Docs', url: 'https://docs.flutter.dev'),
       BookmarkFolder(
         title: 'Dev',
-        children: const [
+        children: [
           Bookmark(title: 'Pub.dev', url: 'https://pub.dev'),
         ],
       ),

@@ -200,4 +200,121 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get gitSyncMarksAndroidIssues => 'GitSyncMarks-Mobile (GitHub Issues)';
+
+  @override
+  String get profiles => 'Profiles';
+
+  @override
+  String get profile => 'Profile';
+
+  @override
+  String get activeProfile => 'Active Profile';
+
+  @override
+  String get addProfile => 'Add Profile';
+
+  @override
+  String get renameProfile => 'Rename Profile';
+
+  @override
+  String get deleteProfile => 'Delete Profile';
+
+  @override
+  String deleteProfileConfirm(String name) {
+    return 'Delete profile \"$name\"?';
+  }
+
+  @override
+  String get profileName => 'Profile name';
+
+  @override
+  String profileCount(int count, int max) {
+    return '$count/$max profiles';
+  }
+
+  @override
+  String maxProfilesReached(int max) {
+    return 'Maximum number of profiles reached ($max)';
+  }
+
+  @override
+  String profileAdded(String name) {
+    return 'Profile \"$name\" added';
+  }
+
+  @override
+  String profileRenamed(String name) {
+    return 'Profile renamed to \"$name\"';
+  }
+
+  @override
+  String get profileDeleted => 'Profile deleted';
+
+  @override
+  String get cannotDeleteLastProfile => 'Cannot delete the last profile';
+
+  @override
+  String get importExport => 'Import / Export';
+
+  @override
+  String get importSettings => 'Import Settings';
+
+  @override
+  String get exportSettings => 'Export Settings';
+
+  @override
+  String get importSettingsDesc =>
+      'Import profiles from a GitSyncMarks settings file (JSON)';
+
+  @override
+  String get exportSettingsDesc =>
+      'Export all profiles as a GitSyncMarks settings file';
+
+  @override
+  String importSuccess(int count) {
+    return 'Imported $count profile(s)';
+  }
+
+  @override
+  String importFailed(String error) {
+    return 'Import failed: $error';
+  }
+
+  @override
+  String importConfirm(int count) {
+    return 'Import $count profile(s)? This will replace all existing profiles.';
+  }
+
+  @override
+  String get exportSuccess => 'Settings exported';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get rename => 'Rename';
+
+  @override
+  String get add => 'Add';
+
+  @override
+  String get import_ => 'Import';
+
+  @override
+  String get replace => 'Replace';
+
+  @override
+  String get bookmarks => 'Bookmarks';
+
+  @override
+  String get info => 'Info';
+
+  @override
+  String get connection => 'Connection';
+
+  @override
+  String get folders => 'Folders';
 }

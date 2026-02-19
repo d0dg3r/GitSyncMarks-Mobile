@@ -9,12 +9,11 @@ void main() {
     expect(find.text('GitSyncMarks'), findsWidgets);
   });
 
-  testWidgets('App shows settings button', (WidgetTester tester) async {
+  testWidgets('App shows settings in bottom navigation', (WidgetTester tester) async {
     await tester.pumpWidget(const GitSyncMarksApp());
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
 
-    // Settings icon is visible (app bar or tabs)
-    expect(find.byIcon(Icons.settings), findsWidgets);
+    expect(find.byIcon(Icons.settings_outlined), findsWidgets);
   });
 }

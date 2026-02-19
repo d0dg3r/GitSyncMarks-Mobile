@@ -455,6 +455,204 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'GitSyncMarks-Mobile (GitHub Issues)'**
   String get gitSyncMarksAndroidIssues;
+
+  /// No description provided for @profiles.
+  ///
+  /// In en, this message translates to:
+  /// **'Profiles'**
+  String get profiles;
+
+  /// No description provided for @profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profile;
+
+  /// No description provided for @activeProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Profile'**
+  String get activeProfile;
+
+  /// No description provided for @addProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Profile'**
+  String get addProfile;
+
+  /// No description provided for @renameProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename Profile'**
+  String get renameProfile;
+
+  /// No description provided for @deleteProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Profile'**
+  String get deleteProfile;
+
+  /// No description provided for @deleteProfileConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete profile \"{name}\"?'**
+  String deleteProfileConfirm(String name);
+
+  /// No description provided for @profileName.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile name'**
+  String get profileName;
+
+  /// No description provided for @profileCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}/{max} profiles'**
+  String profileCount(int count, int max);
+
+  /// No description provided for @maxProfilesReached.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum number of profiles reached ({max})'**
+  String maxProfilesReached(int max);
+
+  /// No description provided for @profileAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile \"{name}\" added'**
+  String profileAdded(String name);
+
+  /// No description provided for @profileRenamed.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile renamed to \"{name}\"'**
+  String profileRenamed(String name);
+
+  /// No description provided for @profileDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile deleted'**
+  String get profileDeleted;
+
+  /// No description provided for @cannotDeleteLastProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot delete the last profile'**
+  String get cannotDeleteLastProfile;
+
+  /// No description provided for @importExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Import / Export'**
+  String get importExport;
+
+  /// No description provided for @importSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Import Settings'**
+  String get importSettings;
+
+  /// No description provided for @exportSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Export Settings'**
+  String get exportSettings;
+
+  /// No description provided for @importSettingsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Import profiles from a GitSyncMarks settings file (JSON)'**
+  String get importSettingsDesc;
+
+  /// No description provided for @exportSettingsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Export all profiles as a GitSyncMarks settings file'**
+  String get exportSettingsDesc;
+
+  /// No description provided for @importSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Imported {count} profile(s)'**
+  String importSuccess(int count);
+
+  /// No description provided for @importFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Import failed: {error}'**
+  String importFailed(String error);
+
+  /// No description provided for @importConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Import {count} profile(s)? This will replace all existing profiles.'**
+  String importConfirm(int count);
+
+  /// No description provided for @exportSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings exported'**
+  String get exportSuccess;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @rename.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename'**
+  String get rename;
+
+  /// No description provided for @add.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get add;
+
+  /// No description provided for @import_.
+  ///
+  /// In en, this message translates to:
+  /// **'Import'**
+  String get import_;
+
+  /// No description provided for @replace.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace'**
+  String get replace;
+
+  /// No description provided for @bookmarks.
+  ///
+  /// In en, this message translates to:
+  /// **'Bookmarks'**
+  String get bookmarks;
+
+  /// No description provided for @info.
+  ///
+  /// In en, this message translates to:
+  /// **'Info'**
+  String get info;
+
+  /// No description provided for @connection.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection'**
+  String get connection;
+
+  /// No description provided for @folders.
+  ///
+  /// In en, this message translates to:
+  /// **'Folders'**
+  String get folders;
 }
 
 class _AppLocalizationsDelegate
