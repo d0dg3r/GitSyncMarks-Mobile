@@ -147,10 +147,20 @@ git push origin v0.3.0
 
 Artifacts appear under [Releases](https://github.com/d0dg3r/GitSyncMarks-Mobile/releases): APK (Android), Flatpak + ZIP (Linux), ZIP (Windows, macOS).
 
+### Flatpak-only test
+
+To test the Flatpak build without running the full release workflow (Windows, macOS, release job):
+
+- **Manual**: Go to Actions → "Flatpak test" → Run workflow
+- **Tag**: Push `v0.3.0-flatpak-test.1` (or any `v*-flatpak-test*` tag)
+
+This runs only `build-android-linux` and `build-flatpak`. The `.flatpak` artifact can be downloaded from the workflow run.
+
 ## Roadmap
 
-- [ ] iOS app (planned for a future release)
+- [x] iOS app
 - [x] Desktop: Windows, macOS, Linux (single codebase; Share-from-browser on mobile only)
+- [ ] iOS build in CI (requires macOS runner)
 
 ## Documentation
 

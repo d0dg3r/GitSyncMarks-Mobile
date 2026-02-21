@@ -8,8 +8,9 @@
 | 2 – GitHub API | Done | 1 week |
 | 3 – Local Cache | Done | 3–4 days |
 | 4 – Bookmark UI | Done | 1 week |
-| 5 – Browser Selection | Pending | 2–3 days |
+| 5 – Browser Selection | Done | 2–3 days |
 | 6 – Polish | Done | 3–5 days |
+| 7 – Flatpak/CI | Done | 1 week |
 
 ---
 
@@ -52,11 +53,11 @@
 
 ---
 
-## Phase 5: Browser Selection
+## Phase 5: Browser Selection – Done
 
-- [ ] Android: detect installed browsers
-- [ ] Settings: pick preferred browser
-- [ ] Use `url_launcher` with `LaunchMode.externalApplication`
+- [x] Android: detect installed browsers
+- [x] Settings: pick preferred browser
+- [x] Use `url_launcher` with `LaunchMode.externalApplication`
 
 ---
 
@@ -102,9 +103,19 @@ lib/
 
 ---
 
+## Phase 7: Flatpak/CI – Done
+
+- [x] Linux bundle as tar.gz + separate artifact in release workflow
+- [x] Flatpak manifest (io.github.d0dg3r.GitSyncMarksMobile)
+- [x] `flatpak/build-flatpak.sh`: build script with tar `--no-same-owner`, icon fallback, error handling
+- [x] CI job `build-flatpak` in release workflow
+- [x] Release job: APK, Flatpak, ZIP (Linux, Windows, macOS) on tag push `v*`
+- [x] Workflow "Flatpak test": `workflow_dispatch` or tag `v*-flatpak-test*` for isolated Flatpak build
+
+---
+
 ## Next Steps (Immediate)
 
 1. Install Flutter (if not done): `paru -S flutter` or https://docs.flutter.dev/get-started/install
 2. Run: `flutter create . --org com.gitsyncmarks` (if android/ and ios/ missing)
 3. Run: `flutter pub get` and `flutter run`
-4. Phase 3: Add `hive` or `sqflite` for local cache (when ready)

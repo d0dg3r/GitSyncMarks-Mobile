@@ -14,9 +14,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Reorder bookmarks**: Drag-and-drop to reorder in root folders and subfolders; changes persisted to `_order.json`
 - **Share link as bookmark**: Receive shared URLs (e.g. from Chrome) and add as bookmark
 - **Recursive folder display**: Subfolders and nested bookmarks now displayed correctly
+- **Workflow "Flatpak test":** Isolated Flatpak build via `workflow_dispatch` or tag `v*-flatpak-test*` (no full release)
 
 ### Changed
 
+- **Flatpak icon:** Fallback to `flutter_assets/assets/images/app_icon.png` when standard path missing
 - Settings Sync UI aligned with Chrome extension: main toggle, sync mode (Global/Individual), Save password, Import from other device
 - Status (last sync, bookmark count) moved above search bar
 - Removed redundant blue "Sync now" button (Sync icon in AppBar remains)
@@ -24,6 +26,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **Flatpak CI:** Prepare step finds Linux bundle tar.gz after download-artifact (path fix)
+- **Flatpak build:** Tar extraction uses `--no-same-owner`; creation uses `--owner=root --group=root` to avoid ownership errors
 - Folder picker for move: Unterordner des Quellordners werden angezeigt (vorher ausgefiltert)
 - Infinite height layout error in ReorderableListView
 - Debug instrumentation removed

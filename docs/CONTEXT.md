@@ -31,13 +31,14 @@ This document captures the context and decisions from when the project was creat
 - Navigation between screens
 - No persistence yet, no API calls
 
-## Tech Stack (Planned)
+## Tech Stack (Implemented)
 
-- **HTTP:** `http` or `dio`
+- **HTTP:** `http`
 - **Token storage:** `flutter_secure_storage`
-- **Local cache:** `hive` or `sqflite`
+- **Local cache:** `hive` (BookmarkCacheService)
 - **URLs:** `url_launcher` with `LaunchMode.externalApplication`
-- **State:** `provider` or `riverpod`
+- **State:** `provider` (BookmarkProvider)
+- **Settings sync:** `pointycastle` (PBKDF2, AES-256-GCM, extension-compatible)
 
 ## Bookmark Format (from GitSyncMarks)
 
@@ -67,9 +68,15 @@ Token: GitHub PAT with `repo` scope.
 
 ## UI Decisions
 
-- **Bookmark list:** Expandable tree (folders + bookmarks)
-- **Folder picker:** N/A (we read from repo; no folder selection)
-- **Settings:** Token, Owner, Repo, Branch, Base Path, Browser choice (Phase 5)
+- **Bookmark list:** Expandable tree (folders + bookmarks), ReorderableListView, move-to-folder (long-press)
+- **Folder picker:** Hierarchical picker for move; root folder tabs (toolbar, menu, other, mobile)
+- **Settings:** Token, Owner, Repo, Branch, Base Path, Browser choice; 5 tabs (GitHub, Sync, Files, Help, About)
+
+## Platforms
+
+- **Android, iOS:** Full support (Share-Intent on mobile only)
+- **Windows, macOS, Linux:** Same codebase; Share-Intent bypassed on desktop; direct HomeScreen
+- **Linux distribution:** Flatpak (recommended) + ZIP fallback; CI builds both on tag push
 
 ## Conversation Notes
 

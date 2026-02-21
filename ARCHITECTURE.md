@@ -66,9 +66,9 @@ Application entry point.
 ```
 User Action (Open App/Refresh)
          ↓
-BookmarksScreen._loadBookmarks()
+BookmarkListScreen via BookmarkProvider
          ↓
-BookmarkService.fetchBookmarks()
+BookmarkRepository.fetchBookmarks()
          ↓
 ┌────────────────────────────┐
 │ Check Cache (if not force) │
@@ -98,7 +98,7 @@ User Taps Bookmark
          ↓
 BookmarkTile.onTap()
          ↓
-BookmarksScreen._openUrl()
+BookmarkListScreen._openUrl()
          ↓
 url_launcher.launchUrl()
          ↓
@@ -158,12 +158,34 @@ The app uses `provider` with `BookmarkProvider` (ChangeNotifier).
 ### Core Dependencies
 - `flutter`: SDK framework
 - `http`: Network requests
-- `shared_preferences`: Local storage
+- `hive`: Bookmark cache (offline)
+- `flutter_secure_storage`: Credentials, profiles, settings sync password
+- `provider`: State management (BookmarkProvider)
 - `url_launcher`: External browser integration
+- `pointycastle`: Settings sync encryption (PBKDF2, AES-256-GCM)
+- `receive_sharing_intent`: Share link as bookmark (Android/iOS)
 
 ### Dev Dependencies
 - `flutter_test`: Testing framework
 - `flutter_lints`: Code analysis
+
+## CI / Release
+
+### Release Workflow (`.github/workflows/release.yml`)
+- **Trigger:** Tag push `v*`
+- **Artifacts:** APK (Android), Flatpak + ZIP (Linux), ZIP (Windows, macOS)
+- **Linux bundle:** Flutter Linux build packed as tar.gz with `--owner=root --group=root`
+- **Prepare Flatpak step:** Uses `find` to locate tar.gz after `download-artifact` (extracts to workspace root)
+
+### Flatpak Test Workflow (`.github/workflows/flatpak-test.yml`)
+- **Trigger:** `workflow_dispatch` or tag `v*-flatpak-test*`
+- **Jobs:** `build-android-linux` → `build-flatpak` only (no Windows, macOS, release job)
+- **Purpose:** Test Flatpak build without full release
+
+### Flatpak Build Script (`flatpak/build-flatpak.sh`)
+- Tar extraction with `--no-same-owner` (avoids uid/gid errors in build container)
+- Icon path fallback: `flutter_assets/assets/images/app_icon.png`
+- Error handling when tar.gz is missing
 
 ## Testing Strategy
 

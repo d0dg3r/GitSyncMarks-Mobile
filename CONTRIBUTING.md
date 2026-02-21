@@ -4,7 +4,7 @@ Thank you for considering contributing to GitSyncMarks-Mobile!
 
 ## Development Setup
 
-1. Install Flutter SDK (3.0.0 or higher)
+1. Install Flutter SDK (3.2.0 or higher)
 2. Clone the repository:
    ```bash
    git clone git@github.com:d0dg3r/GitSyncMarks-Mobile.git
@@ -25,6 +25,21 @@ flutter run -d android
 ### iOS (macOS only)
 ```bash
 flutter run -d ios
+```
+
+### Linux
+```bash
+flutter run -d linux
+```
+
+### Windows (Windows host only)
+```bash
+flutter run -d windows
+```
+
+### macOS (macOS host only)
+```bash
+flutter run -d macos
 ```
 
 ### Chrome (for web testing)
@@ -60,9 +75,13 @@ dart format .
 
 ```
 lib/
-├── models/          # Data models
-├── services/        # Business logic and API services
-├── screens/         # UI screens
+├── config/          # Configuration (credentials)
+├── models/          # Data models (bookmark_node, profile)
+├── services/        # GitHub API, cache, settings sync, storage
+├── repositories/    # Bookmark repository (orchestration)
+├── providers/       # State management (BookmarkProvider)
+├── screens/         # bookmark_list_screen, settings_screen, home_screen
+├── utils/           # Favicon, filename helpers
 ├── widgets/         # Reusable widgets
 └── main.dart        # App entry point
 
@@ -70,6 +89,15 @@ test/                # Unit and widget tests
 android/             # Android-specific files
 ios/                 # iOS-specific files
 ```
+
+## Flatpak Test Workflow
+
+To test the Flatpak build without running the full release (Windows, macOS, release job):
+
+- **Manual:** Go to Actions → "Flatpak test" → Run workflow
+- **Tag:** Push `v0.3.0-flatpak-test.1` (or any `v*-flatpak-test*` tag)
+
+Downloads only `build-android-linux` and `build-flatpak`. The `.flatpak` artifact is available from the workflow run.
 
 ## Adding New Features
 

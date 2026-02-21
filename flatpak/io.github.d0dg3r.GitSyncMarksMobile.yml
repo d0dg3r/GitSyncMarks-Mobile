@@ -2,9 +2,9 @@
 
 ---
 app-id: io.github.d0dg3r.GitSyncMarksMobile
-runtime: org.freedesktop.Platform
-runtime-version: "24.08"
-sdk: org.freedesktop.Sdk
+runtime: org.gnome.Platform
+runtime-version: "47"
+sdk: org.gnome.Sdk
 command: gitsyncmarks_app
 separate-locales: false
 finish-args:
