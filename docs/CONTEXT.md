@@ -8,7 +8,7 @@ This document captures the context and decisions from when the project was creat
 
 **Parent project:** [GitSyncMarks](https://github.com/d0dg3r/GitSyncMarks) – a browser extension that syncs bookmarks with a GitHub repo. Each bookmark is stored as a JSON file; directory structure mirrors the bookmark tree.
 
-**This app:** Companion mobile app (iOS + Android) for users who want to:
+**This app:** Cross-platform companion app (Android, iOS, Windows, macOS, Linux) for users who want to:
 1. View their synced bookmarks on mobile
 2. Open links in their preferred browser
 3. Move, reorder, add bookmarks (synced to repo)
@@ -18,7 +18,7 @@ This document captures the context and decisions from when the project was creat
 
 | Topic | Decision |
 |-------|----------|
-| **Platform** | Flutter (iOS + Android from one codebase) |
+| **Platform** | Flutter (Android, iOS, Windows, macOS, Linux from one codebase) |
 | **Scope** | Sync, display tree, open in browser; move/reorder/add bookmarks; settings sync |
 | **Storage** | GitHub repo (same format as extension); local cache for offline |
 | **Browser** | User selects preferred browser; URLs open via `url_launcher` |

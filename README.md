@@ -10,8 +10,8 @@
 </p>
 
 <p align="center">
-  Mobile app (iOS + Android) that syncs bookmarks from your GitHub repo and opens URLs in your preferred browser.<br>
-  Companion to the <a href="https://github.com/d0dg3r/GitSyncMarks">GitSyncMarks</a> browser extension. Supports move, reorder, add via share, and encrypted settings sync.
+  Cross-platform app (Android, iOS, Windows, macOS, Linux) that syncs bookmarks from your GitHub repo and opens URLs in your preferred browser.<br>
+  Companion to the <a href="https://github.com/d0dg3r/GitSyncMarks">GitSyncMarks</a> browser extension. Supports move, reorder, add via share (mobile), and encrypted settings sync.
 </p>
 
 <p align="center">
@@ -38,7 +38,7 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes.
 - **Settings Sync to Git**: Encrypted sync (extension-compatible), Global/Individual mode, Import from other device
 - **Move bookmarks**: Long-press to move bookmarks to any folder (including subfolders)
 - **Reorder bookmarks**: Drag-and-drop to reorder; changes persisted to repo
-- **Share link as bookmark**: Add shared URLs from browser or other apps as bookmarks
+- **Share link as bookmark** (Android/iOS): Add shared URLs from browser or other apps as bookmarks; on desktop use "Add bookmark" dialog
 - **Local cache**: Bookmarks saved after sync, loaded from cache on app start (offline-capable)
 - **GitHub Personal Access Token**: Secure authentication with `repo` scope
 - **Folder selection**: Choose which root folders to display (toolbar, menu, mobile, other)
@@ -91,9 +91,19 @@ The bookmark format comes from [GitSyncMarks](https://github.com/d0dg3r/GitSyncM
 3. **Run on device/emulator**:
    ```bash
    flutter run -d android
+   flutter run -d linux      # Linux desktop
+   flutter run -d windows    # Windows (on Windows host)
+   flutter run -d macos     # macOS (on macOS host)
    ```
 
-4. **Regenerate screenshots** (optional):
+4. **Build standalone executable** (no Flutter runtime needed):
+   ```bash
+   flutter build linux      # → build/linux/x64/release/bundle/
+   flutter build windows    # → build/windows/x64/runner/Release/ (Windows host only)
+   flutter build macos     # → build/macos/Build/Products/Release/ (macOS host only)
+   ```
+
+5. **Regenerate screenshots** (optional):
    ```bash
    flutter test --update-goldens test/screenshot_test.dart
    ```
@@ -112,6 +122,7 @@ The APK appears under [Releases](https://github.com/d0dg3r/GitSyncMarks-Mobile/r
 ## Roadmap
 
 - [ ] iOS app (planned for a future release)
+- [x] Desktop: Windows, macOS, Linux (single codebase; Share-from-browser on mobile only)
 
 ## Documentation
 

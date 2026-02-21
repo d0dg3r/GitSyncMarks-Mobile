@@ -94,6 +94,14 @@ lib/
 
 ---
 
+## Desktop Support (Done)
+
+- [x] Windows, macOS, Linux builds from same codebase
+- [x] `app.dart`: Share-Intent only on Android/iOS; desktop uses `HomeScreen` directly
+- [x] Builds: `flutter build linux`, `flutter build windows` (Windows host), `flutter build macos` (macOS host)
+
+---
+
 ## Next Steps (Immediate)
 
 1. Install Flutter (if not done): `paru -S flutter` or https://docs.flutter.dev/get-started/install

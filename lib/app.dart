@@ -47,7 +47,9 @@ class GitSyncMarksApp extends StatelessWidget {
           GlobalCupertinoLocalizations.delegate,
         ],
         supportedLocales: AppLocalizations.supportedLocales,
-        home: _ShareIntentWrapper(bookmarkProvider: bookmarkProvider),
+        home: (Platform.isAndroid || Platform.isIOS)
+            ? _ShareIntentWrapper(bookmarkProvider: bookmarkProvider)
+            : const HomeScreen(),
       ),
     );
   }
