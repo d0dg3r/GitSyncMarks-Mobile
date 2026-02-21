@@ -157,9 +157,11 @@ jobs:
 
       - name: Prepare Flatpak build
         run: |
-          cp linux-bundle/GitSyncMarks-Mobile-Linux-Portable.tar.gz flatpak/ 2>/dev/null || \
-            cp linux-bundle/build/release/GitSyncMarks-Mobile-Linux-Portable.tar.gz flatpak/ 2>/dev/null || \
-            cp "$(find linux-bundle -name '*.tar.gz' | head -1)" flatpak/GitSyncMarks-Mobile-Linux-Portable.tar.gz
+          TAR="$(find . -maxdepth 2 -name 'GitSyncMarks-Mobile-Linux-Portable.tar.gz' | head -1)"
+          if [ -z "$TAR" ]; then
+            TAR="$(find . -maxdepth 3 -name '*.tar.gz' | head -1)"
+          fi
+          cp "$TAR" flatpak/GitSyncMarks-Mobile-Linux-Portable.tar.gz
           chmod +x flatpak/build-flatpak.sh
 
       - name: Build Flatpak
