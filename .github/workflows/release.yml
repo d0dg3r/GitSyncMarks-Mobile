@@ -63,7 +63,7 @@ jobs:
           cp build/app/outputs/flutter-apk/app-release.apk build/release/GitSyncMarks-Mobile-${{ steps.version.outputs.VERSION }}.apk
           cd build/linux/x64/release/bundle
           zip -r ../../../../release/GitSyncMarks-Mobile-${{ steps.version.outputs.VERSION }}-linux-x64.zip .
-          tar -czf ../../../../release/GitSyncMarks-Mobile-Linux-Portable.tar.gz .
+          tar -czf ../../../../release/GitSyncMarks-Mobile-Linux-Portable.tar.gz . --owner=root --group=root
           cd -
 
       - name: Upload Android + Linux
@@ -160,6 +160,10 @@ jobs:
           TAR="$(find . -maxdepth 2 -name 'GitSyncMarks-Mobile-Linux-Portable.tar.gz' | head -1)"
           if [ -z "$TAR" ]; then
             TAR="$(find . -maxdepth 3 -name '*.tar.gz' | head -1)"
+          fi
+          if [ -z "$TAR" ]; then
+            echo "::error::Linux bundle tar.gz not found after download"
+            exit 1
           fi
           cp "$TAR" flatpak/GitSyncMarks-Mobile-Linux-Portable.tar.gz
           chmod +x flatpak/build-flatpak.sh

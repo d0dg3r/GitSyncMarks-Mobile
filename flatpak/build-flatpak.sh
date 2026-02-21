@@ -10,7 +10,7 @@ executableName=gitsyncmarks_app
 
 # Extract portable Flutter build
 mkdir -p "$projectName"
-tar -xf GitSyncMarks-Mobile-Linux-Portable.tar.gz -C "$projectName"
+tar -xf GitSyncMarks-Mobile-Linux-Portable.tar.gz -C "$projectName" --no-same-owner
 
 # Copy the portable app to the Flatpak location
 cp -r "$projectName" /app/
@@ -21,7 +21,7 @@ ln -s "/app/$projectName/$executableName" /app/bin/$executableName
 # Install the icon (128x128)
 iconDir=/app/share/icons/hicolor/128x128/apps
 mkdir -p "$iconDir"
-for icon in app_icon.png assets/images/app_icon.png ../assets/images/app_icon.png; do
+for icon in app_icon.png assets/images/app_icon.png ../assets/images/app_icon.png "$projectName/data/flutter_assets/assets/images/app_icon.png"; do
   if [ -f "$icon" ]; then
     cp "$icon" "$iconDir/$projectId.png"
     break
