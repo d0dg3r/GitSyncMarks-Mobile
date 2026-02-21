@@ -112,35 +112,40 @@ class BookmarkProvider extends ChangeNotifier {
   /// Loads saved profiles, migrates legacy credentials if needed, and loads
   /// cached bookmarks for the active profile.
   Future<void> loadCredentials() async {
-    _profiles = await _storage.loadProfiles();
+    try {
+      _profiles = await _storage.loadProfiles();
 
-    if (_profiles.isEmpty) {
-      final migrated = await _storage.migrateLegacyCredentials();
-      if (migrated != null) {
-        _profiles = [migrated];
+      if (_profiles.isEmpty) {
+        final migrated = await _storage.migrateLegacyCredentials();
+        if (migrated != null) {
+          _profiles = [migrated];
+        }
       }
-    }
 
-    _activeProfileId = await _storage.loadActiveProfileId();
+      _activeProfileId = await _storage.loadActiveProfileId();
 
-    final active = activeProfile;
-    if (active != null) {
-      _credentials = active.credentials;
-      _selectedRootFolders = active.selectedRootFolders;
-    } else {
-      _credentials = null;
-      _selectedRootFolders = [];
-    }
-
-    _error = null;
-    if (_credentials != null && _credentials!.isValid) {
-      await loadFromCache();
       final active = activeProfile;
-      if (active != null && active.syncOnStart) {
-        await syncBookmarks();
+      if (active != null) {
+        _credentials = active.credentials;
+        _selectedRootFolders = active.selectedRootFolders;
+      } else {
+        _credentials = null;
+        _selectedRootFolders = [];
       }
-      _startOrStopAutoSync();
-    } else {
+
+      _error = null;
+      if (_credentials != null && _credentials!.isValid) {
+        await loadFromCache();
+        final active = activeProfile;
+        if (active != null && active.syncOnStart) {
+          await syncBookmarks();
+        }
+        _startOrStopAutoSync();
+      } else {
+        notifyListeners();
+      }
+    } catch (e) {
+      _error = e.toString();
       notifyListeners();
     }
   }
