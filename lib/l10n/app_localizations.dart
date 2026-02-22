@@ -1103,6 +1103,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Select Root Folder'**
   String get selectRootFolder;
+
+  /// No description provided for @exportPasswordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Export Password'**
+  String get exportPasswordTitle;
+
+  /// No description provided for @exportPasswordHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave empty for unencrypted export'**
+  String get exportPasswordHint;
+
+  /// No description provided for @importPasswordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypted File'**
+  String get importPasswordTitle;
+
+  /// No description provided for @importPasswordHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the encryption password'**
+  String get importPasswordHint;
+
+  /// No description provided for @importSettingsAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Import Settings'**
+  String get importSettingsAction;
+
+  /// No description provided for @orImportExisting.
+  ///
+  /// In en, this message translates to:
+  /// **'or import existing settings'**
+  String get orImportExisting;
+
+  /// No description provided for @wrongPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong password. Please try again.'**
+  String get wrongPassword;
+
+  /// No description provided for @export_.
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get export_;
 }
 
 class _AppLocalizationsDelegate

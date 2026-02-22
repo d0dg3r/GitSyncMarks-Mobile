@@ -225,5 +225,13 @@
   "rootFolder": "Root Folder",
   "rootFolderHelp": "Select a folder whose subfolders become the tabs. Default shows all top-level folders.",
   "allFolders": "All Folders",
-  "selectRootFolder": "Select Root Folder"
+  "selectRootFolder": "Select Root Folder",
+  "exportPasswordTitle": "Export Password",
+  "exportPasswordHint": "Leave empty for unencrypted export",
+  "importPasswordTitle": "Encrypted File",
+  "importPasswordHint": "Enter the encryption password",
+  "importSettingsAction": "Import Settings",
+  "orImportExisting": "or import existing settings",
+  "wrongPassword": "Wrong password. Please try again.",
+  "export_": "Export"
 }

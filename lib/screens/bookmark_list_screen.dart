@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -8,6 +10,8 @@ import 'package:url_launcher/url_launcher.dart';
 import '../l10n/app_localizations.dart';
 import '../models/bookmark_node.dart';
 import '../providers/bookmark_provider.dart';
+import '../services/settings_crypto.dart';
+import '../services/settings_import_export.dart';
 import '../utils/favicon_utils.dart';
 import 'settings_screen.dart';
 
@@ -18,6 +22,99 @@ class _AppIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image.asset('assets/images/app_icon.png', width: size, height: size);
+  }
+}
+
+Future<void> _handleImport(BuildContext context) async {
+  final l = AppLocalizations.of(context)!;
+  final importExport = SettingsImportExportService();
+  try {
+    final result = await FilePicker.platform.pickFiles(type: FileType.any);
+    if (result == null || result.files.isEmpty) return;
+    final path = result.files.single.path;
+    if (path == null) return;
+    var content = await File(path).readAsString();
+
+    if (SettingsImportExportService.isEncrypted(content)) {
+      if (!context.mounted) return;
+      final controller = TextEditingController();
+      final password = await showDialog<String>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text(l.importPasswordTitle),
+          content: TextField(
+            controller: controller,
+            obscureText: true,
+            decoration: InputDecoration(hintText: l.importPasswordHint),
+            autofocus: true,
+            onSubmitted: (v) => Navigator.pop(ctx, v),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: Text(l.cancel),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.pop(ctx, controller.text),
+              child: Text(l.import_),
+            ),
+          ],
+        ),
+      );
+      if (password == null || password.isEmpty) return;
+      try {
+        content = await SettingsCrypto.decryptWithPassword(content, password);
+      } on FormatException {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(l.wrongPassword),
+              backgroundColor: Theme.of(context).colorScheme.errorContainer,
+            ),
+          );
+        }
+        return;
+      }
+    }
+
+    final parsed = importExport.parseSettingsJson(content);
+    if (!context.mounted) return;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l.importSettings),
+        content: Text(l.importConfirm(parsed.profiles.length)),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: Text(l.cancel),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            child: Text(l.replace),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true || !context.mounted) return;
+    await context.read<BookmarkProvider>().replaceProfiles(
+          parsed.profiles,
+          activeId: parsed.activeProfileId,
+        );
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(l.importSuccess(parsed.profiles.length))),
+      );
+    }
+  } catch (e) {
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(l.importFailed(e.toString())),
+          backgroundColor: Theme.of(context).colorScheme.errorContainer,
+        ),
+      );
+    }
   }
 }
 
@@ -44,7 +141,10 @@ class BookmarkListScreen extends StatelessWidget {
         if (!provider.hasCredentials) {
           return Scaffold(
             appBar: _buildAppBar(context, provider),
-            body: const _EmptyState(onOpenSettings: null),
+            body: _EmptyState(
+              onOpenSettings: null,
+              onImport: () => _handleImport(context),
+            ),
           );
         }
 
@@ -639,11 +739,13 @@ class _EmptyState extends StatelessWidget {
     this.hasCredentials = false,
     this.onSync,
     this.onOpenSettings,
+    this.onImport,
   });
 
   final bool hasCredentials;
   final VoidCallback? onSync;
   final VoidCallback? onOpenSettings;
+  final VoidCallback? onImport;
 
   @override
   Widget build(BuildContext context) {
@@ -685,6 +787,21 @@ class _EmptyState extends StatelessWidget {
                 icon: const Icon(Icons.sync, size: 18),
                 label: Text(l.sync),
               ),
+            if (!hasCredentials && onImport != null) ...[
+              const SizedBox(height: 8),
+              Text(
+                l.orImportExisting,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: scheme.outline,
+                    ),
+              ),
+              const SizedBox(height: 8),
+              OutlinedButton.icon(
+                onPressed: onImport,
+                icon: const Icon(Icons.file_download, size: 18),
+                label: Text(l.importSettingsAction),
+              ),
+            ],
           ],
         ),
       ),

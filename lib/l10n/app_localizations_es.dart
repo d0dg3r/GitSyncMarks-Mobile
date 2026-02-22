@@ -562,4 +562,28 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get selectRootFolder => 'Seleccionar carpeta raíz';
+
+  @override
+  String get exportPasswordTitle => 'Contraseña de exportación';
+
+  @override
+  String get exportPasswordHint => 'Dejar vacío para exportación sin cifrar';
+
+  @override
+  String get importPasswordTitle => 'Archivo cifrado';
+
+  @override
+  String get importPasswordHint => 'Introduce la contraseña de cifrado';
+
+  @override
+  String get importSettingsAction => 'Importar ajustes';
+
+  @override
+  String get orImportExisting => 'o importar ajustes existentes';
+
+  @override
+  String get wrongPassword => 'Contraseña incorrecta. Inténtalo de nuevo.';
+
+  @override
+  String get export_ => 'Exportar';
 }

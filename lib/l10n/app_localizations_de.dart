@@ -567,4 +567,28 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get selectRootFolder => 'Stammordner wählen';
+
+  @override
+  String get exportPasswordTitle => 'Export-Passwort';
+
+  @override
+  String get exportPasswordHint => 'Leer lassen für unverschlüsselten Export';
+
+  @override
+  String get importPasswordTitle => 'Verschlüsselte Datei';
+
+  @override
+  String get importPasswordHint => 'Verschlüsselungs-Passwort eingeben';
+
+  @override
+  String get importSettingsAction => 'Einstellungen importieren';
+
+  @override
+  String get orImportExisting => 'oder vorhandene Einstellungen importieren';
+
+  @override
+  String get wrongPassword => 'Falsches Passwort. Bitte erneut versuchen.';
+
+  @override
+  String get export_ => 'Exportieren';
 }

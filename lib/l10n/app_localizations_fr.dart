@@ -568,4 +568,28 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get selectRootFolder => 'Sélectionner le dossier racine';
+
+  @override
+  String get exportPasswordTitle => 'Mot de passe d\'export';
+
+  @override
+  String get exportPasswordHint => 'Laisser vide pour un export non chiffré';
+
+  @override
+  String get importPasswordTitle => 'Fichier chiffré';
+
+  @override
+  String get importPasswordHint => 'Entrez le mot de passe de chiffrement';
+
+  @override
+  String get importSettingsAction => 'Importer les paramètres';
+
+  @override
+  String get orImportExisting => 'ou importer des paramètres existants';
+
+  @override
+  String get wrongPassword => 'Mot de passe incorrect. Veuillez réessayer.';
+
+  @override
+  String get export_ => 'Exporter';
 }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -39,13 +40,24 @@ class BookmarkExportService {
     final now = DateTime.now();
     final datePart =
         '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}';
-    final file = File('${dir.path}/gitsyncmarks-bookmarks-$datePart.json');
+    final fileName = 'gitsyncmarks-bookmarks-$datePart.json';
+    final file = File('${dir.path}/$fileName');
     await file.writeAsString(jsonString);
 
-    // ignore: deprecated_member_use
-    await Share.shareXFiles(
-      [XFile(file.path)],
-      subject: 'GitSyncMarks Bookmarks',
-    );
+    final isDesktop = Platform.isLinux || Platform.isWindows || Platform.isMacOS;
+    if (isDesktop) {
+      final savePath = await FilePicker.platform.saveFile(
+        dialogTitle: 'Save Bookmarks',
+        fileName: fileName,
+      );
+      if (savePath == null) return;
+      await file.copy(savePath);
+    } else {
+      // ignore: deprecated_member_use
+      await Share.shareXFiles(
+        [XFile(file.path)],
+        subject: 'GitSyncMarks Bookmarks',
+      );
+    }
   }
 }

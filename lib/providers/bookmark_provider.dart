@@ -301,10 +301,14 @@ class BookmarkProvider extends ChangeNotifier {
   Future<void> replaceProfiles(
     List<Profile> profiles, {
     required String activeId,
+    bool triggerSync = true,
   }) async {
     _profiles = profiles;
     await _storage.saveProfiles(_profiles);
     await switchProfile(activeId);
+    if (triggerSync && _credentials != null && _credentials!.isValid) {
+      await syncBookmarks();
+    }
   }
 
   /// Persists current form state back into the in-memory profile list
@@ -544,7 +548,7 @@ class BookmarkProvider extends ChangeNotifier {
               if (result.settingsSyncMode != null) {
                 await _storage.saveSettingsSyncMode(result.settingsSyncMode!);
               }
-              await replaceProfiles(result.profiles, activeId: result.activeProfileId);
+              await replaceProfiles(result.profiles, activeId: result.activeProfileId, triggerSync: false);
             } catch (_) {
               // settings.enc may not exist yet; ignore
             }

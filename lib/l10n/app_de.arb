@@ -225,5 +225,13 @@
   "rootFolder": "Stammordner",
   "rootFolderHelp": "Wähle einen Ordner, dessen Unterordner als Tabs angezeigt werden. Standard zeigt alle Ordner der obersten Ebene.",
   "allFolders": "Alle Ordner",
-  "selectRootFolder": "Stammordner wählen"
+  "selectRootFolder": "Stammordner wählen",
+  "exportPasswordTitle": "Export-Passwort",
+  "exportPasswordHint": "Leer lassen für unverschlüsselten Export",
+  "importPasswordTitle": "Verschlüsselte Datei",
+  "importPasswordHint": "Verschlüsselungs-Passwort eingeben",
+  "importSettingsAction": "Einstellungen importieren",
+  "orImportExisting": "oder vorhandene Einstellungen importieren",
+  "wrongPassword": "Falsches Passwort. Bitte erneut versuchen.",
+  "export_": "Exportieren"
 }

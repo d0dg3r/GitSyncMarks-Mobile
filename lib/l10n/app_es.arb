@@ -225,5 +225,13 @@
   "rootFolder": "Carpeta raíz",
   "rootFolderHelp": "Selecciona una carpeta cuyos subcarpetas se muestran como pestañas. Por defecto muestra todas las carpetas de nivel superior.",
   "allFolders": "Todas las carpetas",
-  "selectRootFolder": "Seleccionar carpeta raíz"
+  "selectRootFolder": "Seleccionar carpeta raíz",
+  "exportPasswordTitle": "Contraseña de exportación",
+  "exportPasswordHint": "Dejar vacío para exportación sin cifrar",
+  "importPasswordTitle": "Archivo cifrado",
+  "importPasswordHint": "Introduce la contraseña de cifrado",
+  "importSettingsAction": "Importar ajustes",
+  "orImportExisting": "o importar ajustes existentes",
+  "wrongPassword": "Contraseña incorrecta. Inténtalo de nuevo.",
+  "export_": "Exportar"
 }

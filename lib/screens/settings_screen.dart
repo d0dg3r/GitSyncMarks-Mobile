@@ -14,6 +14,7 @@ import '../l10n/app_localizations.dart';
 import '../models/profile.dart';
 import '../providers/bookmark_provider.dart';
 import '../services/bookmark_export.dart';
+import '../services/settings_crypto.dart';
 import '../services/settings_import_export.dart';
 
 const String _gitSyncMarksUrl = 'https://github.com/d0dg3r/GitSyncMarks';
@@ -203,7 +204,26 @@ class _SettingsScreenState extends State<SettingsScreen>
       if (result == null || result.files.isEmpty) return;
       final path = result.files.single.path;
       if (path == null) return;
-      final content = await File(path).readAsString();
+      var content = await File(path).readAsString();
+
+      if (SettingsImportExportService.isEncrypted(content)) {
+        if (!mounted) return;
+        final password = await _showPasswordDialog(
+          context,
+          title: l.importPasswordTitle,
+          hint: l.importPasswordHint,
+          action: l.import_,
+          allowEmpty: false,
+        );
+        if (password == null || password.isEmpty) return;
+        try {
+          content = await SettingsCrypto.decryptWithPassword(content, password);
+        } on FormatException {
+          if (mounted) _showSnackBar(l.wrongPassword, isError: true);
+          return;
+        }
+      }
+
       final parsed = _importExport.parseSettingsJson(content);
       if (!mounted) return;
       final confirmed = await showDialog<bool>(
@@ -228,7 +248,10 @@ class _SettingsScreenState extends State<SettingsScreen>
             parsed.profiles,
             activeId: parsed.activeProfileId,
           );
-      if (mounted) _showSnackBar(l.importSuccess(parsed.profiles.length));
+      if (mounted) {
+        _loadFromProvider();
+        _showSnackBar(l.importSuccess(parsed.profiles.length));
+      }
     } catch (e) {
       if (mounted) _showSnackBar(l.importFailed(e.toString()), isError: true);
     }
@@ -242,14 +265,58 @@ class _SettingsScreenState extends State<SettingsScreen>
         _showSnackBar(l.noBookmarksYet, isError: true);
         return;
       }
+
+      final password = await _showPasswordDialog(
+        context,
+        title: l.exportPasswordTitle,
+        hint: l.exportPasswordHint,
+        action: l.export_,
+      );
+      if (password == null) return;
+
       await _importExport.exportAndShare(
         provider.profiles,
         provider.activeProfileId ?? provider.profiles.first.id,
+        password: password.isEmpty ? null : password,
       );
       if (mounted) _showSnackBar(l.exportSuccess);
     } catch (e) {
       if (mounted) _showSnackBar(e.toString(), isError: true);
     }
+  }
+
+  Future<String?> _showPasswordDialog(
+    BuildContext context, {
+    required String title,
+    required String hint,
+    required String action,
+    bool allowEmpty = true,
+  }) async {
+    final controller = TextEditingController();
+    final result = await showDialog<String>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(title),
+        content: TextField(
+          controller: controller,
+          obscureText: true,
+          decoration: InputDecoration(hintText: hint),
+          autofocus: true,
+          onSubmitted: (v) => Navigator.pop(ctx, v),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: Text(AppLocalizations.of(context)!.cancel),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(ctx, controller.text),
+            child: Text(action),
+          ),
+        ],
+      ),
+    );
+    return result;
   }
 
   Future<void> _onExportBookmarks() async {

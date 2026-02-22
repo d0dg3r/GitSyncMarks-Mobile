@@ -557,4 +557,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get selectRootFolder => 'Select Root Folder';
+
+  @override
+  String get exportPasswordTitle => 'Export Password';
+
+  @override
+  String get exportPasswordHint => 'Leave empty for unencrypted export';
+
+  @override
+  String get importPasswordTitle => 'Encrypted File';
+
+  @override
+  String get importPasswordHint => 'Enter the encryption password';
+
+  @override
+  String get importSettingsAction => 'Import Settings';
+
+  @override
+  String get orImportExisting => 'or import existing settings';
+
+  @override
+  String get wrongPassword => 'Wrong password. Please try again.';
+
+  @override
+  String get export_ => 'Export';
 }
