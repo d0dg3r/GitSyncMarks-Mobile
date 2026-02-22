@@ -10,7 +10,6 @@ permissions:
 
 jobs:
   build-android-linux:
-    if: ${{ !contains(github.ref_name, '-') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -80,7 +79,6 @@ jobs:
           path: build/release/GitSyncMarks-Mobile-Linux-Portable.tar.gz
 
   build-windows:
-    if: ${{ !contains(github.ref_name, '-') }}
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
@@ -112,7 +110,6 @@ jobs:
           path: build/release/
 
   build-macos:
-    if: ${{ !contains(github.ref_name, '-') }}
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
@@ -145,7 +142,6 @@ jobs:
           path: build/release/
 
   build-flatpak:
-    if: ${{ !contains(github.ref_name, '-') }}
     runs-on: ubuntu-latest
     needs: build-android-linux
     container:
@@ -187,7 +183,6 @@ jobs:
           path: "**/GitSyncMarks-Mobile-*.flatpak"
 
   release:
-    if: ${{ !contains(github.ref_name, '-') }}
     runs-on: ubuntu-latest
     needs: [build-android-linux, build-windows, build-macos, build-flatpak]
     steps:
@@ -213,7 +208,8 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           name: "GitSyncMarks-Mobile ${{ github.ref_name }}"
-          prerelease: false
+          prerelease: ${{ contains(github.ref_name, '-') }}
+          make_latest: ${{ !contains(github.ref_name, '-') }}
           body: |
             ## GitSyncMarks-Mobile ${{ github.ref_name }}
 
