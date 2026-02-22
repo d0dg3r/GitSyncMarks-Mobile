@@ -217,5 +217,13 @@
   "moveToFolder": "Mover a carpeta",
   "moveToFolderSuccess": "Marcador movido",
   "moveToFolderFailed": "Error al mover el marcador",
-  "orderUpdated": "Orden actualizado"
+  "deleteBookmark": "Eliminar marcador",
+  "deleteBookmarkConfirm": "¿Eliminar marcador \"{title}\"?",
+  "@deleteBookmarkConfirm": {"placeholders": {"title": {"type": "String"}}},
+  "bookmarkDeleted": "Marcador eliminado",
+  "orderUpdated": "Orden actualizado",
+  "rootFolder": "Carpeta raíz",
+  "rootFolderHelp": "Selecciona una carpeta cuyos subcarpetas se muestran como pestañas. Por defecto muestra todas las carpetas de nivel superior.",
+  "allFolders": "Todas las carpetas",
+  "selectRootFolder": "Seleccionar carpeta raíz"
 }

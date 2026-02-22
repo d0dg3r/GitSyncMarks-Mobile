@@ -217,5 +217,13 @@
   "moveToFolder": "In Ordner verschieben",
   "moveToFolderSuccess": "Lesezeichen verschoben",
   "moveToFolderFailed": "Lesezeichen konnte nicht verschoben werden",
-  "orderUpdated": "Sortierung aktualisiert"
+  "deleteBookmark": "Lesezeichen entfernen",
+  "deleteBookmarkConfirm": "Lesezeichen \"{title}\" entfernen?",
+  "@deleteBookmarkConfirm": {"placeholders": {"title": {"type": "String"}}},
+  "bookmarkDeleted": "Lesezeichen entfernt",
+  "orderUpdated": "Sortierung aktualisiert",
+  "rootFolder": "Stammordner",
+  "rootFolderHelp": "Wähle einen Ordner, dessen Unterordner als Tabs angezeigt werden. Standard zeigt alle Ordner der obersten Ebene.",
+  "allFolders": "Alle Ordner",
+  "selectRootFolder": "Stammordner wählen"
 }

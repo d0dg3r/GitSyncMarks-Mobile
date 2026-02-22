@@ -1056,11 +1056,53 @@ abstract class AppLocalizations {
   /// **'Failed to move bookmark'**
   String get moveToFolderFailed;
 
+  /// No description provided for @deleteBookmark.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Bookmark'**
+  String get deleteBookmark;
+
+  /// No description provided for @deleteBookmarkConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete bookmark \"{title}\"?'**
+  String deleteBookmarkConfirm(String title);
+
+  /// No description provided for @bookmarkDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Bookmark deleted'**
+  String get bookmarkDeleted;
+
   /// No description provided for @orderUpdated.
   ///
   /// In en, this message translates to:
   /// **'Order updated'**
   String get orderUpdated;
+
+  /// No description provided for @rootFolder.
+  ///
+  /// In en, this message translates to:
+  /// **'Root Folder'**
+  String get rootFolder;
+
+  /// No description provided for @rootFolderHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a folder whose subfolders become the tabs. Default shows all top-level folders.'**
+  String get rootFolderHelp;
+
+  /// No description provided for @allFolders.
+  ///
+  /// In en, this message translates to:
+  /// **'All Folders'**
+  String get allFolders;
+
+  /// No description provided for @selectRootFolder.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Root Folder'**
+  String get selectRootFolder;
 }
 
 class _AppLocalizationsDelegate

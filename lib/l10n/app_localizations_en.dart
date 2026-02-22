@@ -532,5 +532,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String get moveToFolderFailed => 'Failed to move bookmark';
 
   @override
+  String get deleteBookmark => 'Delete Bookmark';
+
+  @override
+  String deleteBookmarkConfirm(String title) {
+    return 'Delete bookmark \"$title\"?';
+  }
+
+  @override
+  String get bookmarkDeleted => 'Bookmark deleted';
+
+  @override
   String get orderUpdated => 'Order updated';
+
+  @override
+  String get rootFolder => 'Root Folder';
+
+  @override
+  String get rootFolderHelp =>
+      'Select a folder whose subfolders become the tabs. Default shows all top-level folders.';
+
+  @override
+  String get allFolders => 'All Folders';
+
+  @override
+  String get selectRootFolder => 'Select Root Folder';
 }

@@ -542,5 +542,29 @@ class AppLocalizationsDe extends AppLocalizations {
   String get moveToFolderFailed => 'Lesezeichen konnte nicht verschoben werden';
 
   @override
+  String get deleteBookmark => 'Lesezeichen entfernen';
+
+  @override
+  String deleteBookmarkConfirm(String title) {
+    return 'Lesezeichen \"$title\" entfernen?';
+  }
+
+  @override
+  String get bookmarkDeleted => 'Lesezeichen entfernt';
+
+  @override
   String get orderUpdated => 'Sortierung aktualisiert';
+
+  @override
+  String get rootFolder => 'Stammordner';
+
+  @override
+  String get rootFolderHelp =>
+      'Wähle einen Ordner, dessen Unterordner als Tabs angezeigt werden. Standard zeigt alle Ordner der obersten Ebene.';
+
+  @override
+  String get allFolders => 'Alle Ordner';
+
+  @override
+  String get selectRootFolder => 'Stammordner wählen';
 }

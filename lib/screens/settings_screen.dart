@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../config/github_credentials.dart';
+import '../models/bookmark_node.dart';
 import '../services/settings_sync_service.dart';
 import '../services/storage_service.dart';
 import '../l10n/app_localizations.dart';
@@ -237,6 +238,10 @@ class _SettingsScreenState extends State<SettingsScreen>
     final l = AppLocalizations.of(context)!;
     try {
       final provider = context.read<BookmarkProvider>();
+      if (provider.profiles.isEmpty) {
+        _showSnackBar(l.noBookmarksYet, isError: true);
+        return;
+      }
       await _importExport.exportAndShare(
         provider.profiles,
         provider.activeProfileId ?? provider.profiles.first.id,
@@ -650,6 +655,39 @@ class _ConnectionSubTab extends StatelessWidget {
             ),
           ),
         ),
+        if (provider.fullRootFolders.isNotEmpty) ...[
+          const SizedBox(height: 24),
+          _SectionHeader(title: l.rootFolder),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    l.rootFolderHelp,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall
+                        ?.copyWith(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .outline),
+                  ),
+                  const SizedBox(height: 12),
+                  ListTile(
+                    leading: const Icon(Icons.folder_open),
+                    title: Text(
+                      provider.viewRootFolder ?? l.allFolders,
+                    ),
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: () => _showRootFolderPicker(context, provider, l),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
         if (provider.availableRootFolderNames.isNotEmpty) ...[
           const SizedBox(height: 24),
           _SectionHeader(title: l.displayedFolders),
@@ -703,6 +741,102 @@ class _ConnectionSubTab extends StatelessWidget {
         const SizedBox(height: 32),
       ],
     );
+  }
+
+  void _showRootFolderPicker(
+    BuildContext context,
+    BookmarkProvider provider,
+    AppLocalizations l,
+  ) {
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      builder: (ctx) {
+        return DraggableScrollableSheet(
+          expand: false,
+          initialChildSize: 0.5,
+          minChildSize: 0.3,
+          maxChildSize: 0.85,
+          builder: (_, scrollController) {
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                  child: Text(
+                    l.selectRootFolder,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+                const Divider(),
+                Expanded(
+                  child: ListView(
+                    controller: scrollController,
+                    children: [
+                      ListTile(
+                        leading: const Icon(Icons.folder_copy),
+                        title: Text(l.allFolders),
+                        selected: provider.viewRootFolder == null,
+                        onTap: () {
+                          provider.setViewRootFolder(null, save: true);
+                          Navigator.pop(ctx);
+                        },
+                      ),
+                      const Divider(),
+                      ..._buildFolderTree(
+                        ctx,
+                        provider,
+                        provider.fullRootFolders,
+                        '',
+                        0,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  List<Widget> _buildFolderTree(
+    BuildContext context,
+    BookmarkProvider provider,
+    List<BookmarkFolder> folders,
+    String parentPath,
+    int depth,
+  ) {
+    final widgets = <Widget>[];
+    for (final folder in folders) {
+      final dirName = folder.dirName ?? folder.title;
+      final path = parentPath.isEmpty ? dirName : '$parentPath/$dirName';
+      final subfolders =
+          folder.children.whereType<BookmarkFolder>().toList();
+      final isSelected = provider.viewRootFolder == path;
+
+      widgets.add(
+        ListTile(
+          contentPadding: EdgeInsets.only(left: 16.0 + depth * 24.0, right: 16),
+          leading: Icon(
+            subfolders.isNotEmpty ? Icons.folder : Icons.folder_outlined,
+          ),
+          title: Text(folder.title),
+          selected: isSelected,
+          onTap: () {
+            provider.setViewRootFolder(path, save: true);
+            Navigator.pop(context);
+          },
+        ),
+      );
+
+      if (subfolders.isNotEmpty) {
+        widgets.addAll(
+          _buildFolderTree(context, provider, subfolders, path, depth + 1),
+        );
+      }
+    }
+    return widgets;
   }
 }
 
@@ -777,14 +911,6 @@ class _SyncTab extends StatelessWidget {
                   value: active?.syncOnStart ?? false,
                   onChanged: (v) {
                     provider.updateSyncSettings(syncOnStart: v);
-                  },
-                ),
-                SwitchListTile(
-                  title: Text(l.allowMoveReorder),
-                  subtitle: Text(l.allowMoveReorderDesc),
-                  value: active?.allowMoveReorder ?? true,
-                  onChanged: (v) {
-                    provider.updateSyncSettings(allowMoveReorder: v);
                   },
                 ),
               ],

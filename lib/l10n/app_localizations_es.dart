@@ -537,5 +537,29 @@ class AppLocalizationsEs extends AppLocalizations {
   String get moveToFolderFailed => 'Error al mover el marcador';
 
   @override
+  String get deleteBookmark => 'Eliminar marcador';
+
+  @override
+  String deleteBookmarkConfirm(String title) {
+    return '¿Eliminar marcador \"$title\"?';
+  }
+
+  @override
+  String get bookmarkDeleted => 'Marcador eliminado';
+
+  @override
   String get orderUpdated => 'Orden actualizado';
+
+  @override
+  String get rootFolder => 'Carpeta raíz';
+
+  @override
+  String get rootFolderHelp =>
+      'Selecciona una carpeta cuyos subcarpetas se muestran como pestañas. Por defecto muestra todas las carpetas de nivel superior.';
+
+  @override
+  String get allFolders => 'Todas las carpetas';
+
+  @override
+  String get selectRootFolder => 'Seleccionar carpeta raíz';
 }

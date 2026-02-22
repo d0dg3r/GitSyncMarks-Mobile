@@ -543,5 +543,29 @@ class AppLocalizationsFr extends AppLocalizations {
   String get moveToFolderFailed => 'Échec du déplacement du favori';
 
   @override
+  String get deleteBookmark => 'Supprimer le favori';
+
+  @override
+  String deleteBookmarkConfirm(String title) {
+    return 'Supprimer le favori \"$title\" ?';
+  }
+
+  @override
+  String get bookmarkDeleted => 'Favori supprimé';
+
+  @override
   String get orderUpdated => 'Ordre mis à jour';
+
+  @override
+  String get rootFolder => 'Dossier racine';
+
+  @override
+  String get rootFolderHelp =>
+      'Sélectionnez un dossier dont les sous-dossiers deviennent les onglets. Par défaut, tous les dossiers de premier niveau sont affichés.';
+
+  @override
+  String get allFolders => 'Tous les dossiers';
+
+  @override
+  String get selectRootFolder => 'Sélectionner le dossier racine';
 }

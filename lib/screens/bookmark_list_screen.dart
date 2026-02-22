@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -135,8 +137,11 @@ class _TabbedBookmarkView extends StatefulWidget {
 }
 
 class _TabbedBookmarkViewState extends State<_TabbedBookmarkView> {
+  static const _editLockDuration = Duration(seconds: 60);
+
   late TextEditingController _searchController;
   bool _searchExpanded = false;
+  Timer? _editLockTimer;
 
   @override
   void initState() {
@@ -155,8 +160,29 @@ class _TabbedBookmarkViewState extends State<_TabbedBookmarkView> {
 
   @override
   void dispose() {
+    _editLockTimer?.cancel();
     _searchController.dispose();
     super.dispose();
+  }
+
+  void _startEditLockTimer() {
+    _editLockTimer?.cancel();
+    _editLockTimer = Timer(_editLockDuration, () {
+      if (mounted) {
+        widget.provider.updateSyncSettings(allowMoveReorder: false);
+      }
+    });
+  }
+
+  void _cancelEditLockTimer() {
+    _editLockTimer?.cancel();
+    _editLockTimer = null;
+  }
+
+  void _onEditAction() {
+    if (widget.provider.activeProfile?.allowMoveReorder ?? false) {
+      _startEditLockTimer();
+    }
   }
 
   @override
@@ -190,20 +216,23 @@ class _TabbedBookmarkViewState extends State<_TabbedBookmarkView> {
             if (provider.hasCredentials)
               IconButton(
                 icon: Icon(
-                  (activeProfile?.allowMoveReorder ?? true)
+                  (activeProfile?.allowMoveReorder ?? false)
                       ? Icons.reorder
                       : Icons.lock_outline,
-                  color: (activeProfile?.allowMoveReorder ?? true)
+                  color: (activeProfile?.allowMoveReorder ?? false)
                       ? null
                       : scheme.outline,
                 ),
                 onPressed: () {
-                  provider.updateSyncSettings(
-                    allowMoveReorder:
-                        !(activeProfile?.allowMoveReorder ?? true),
-                  );
+                  final unlocking = !(activeProfile?.allowMoveReorder ?? false);
+                  provider.updateSyncSettings(allowMoveReorder: unlocking);
+                  if (unlocking) {
+                    _startEditLockTimer();
+                  } else {
+                    _cancelEditLockTimer();
+                  }
                 },
-                tooltip: (activeProfile?.allowMoveReorder ?? true)
+                tooltip: (activeProfile?.allowMoveReorder ?? false)
                     ? l.allowMoveReorderDisable
                     : l.allowMoveReorderEnable,
               ),
@@ -273,7 +302,8 @@ class _TabbedBookmarkViewState extends State<_TabbedBookmarkView> {
                             folder: folder,
                             provider: provider,
                             canReorder: provider.searchQuery.trim().isEmpty &&
-                                (provider.activeProfile?.allowMoveReorder ?? true),
+                                (provider.activeProfile?.allowMoveReorder ?? false),
+                            onEditAction: _onEditAction,
                           ),
                         );
                       }).toList(),
@@ -495,11 +525,13 @@ class _FolderContentList extends StatelessWidget {
     required this.folder,
     required this.provider,
     this.canReorder = true,
+    this.onEditAction,
   });
 
   final BookmarkFolder folder;
   final BookmarkProvider provider;
   final bool canReorder;
+  final VoidCallback? onEditAction;
 
   @override
   Widget build(BuildContext context) {
@@ -527,11 +559,13 @@ class _FolderContentList extends StatelessWidget {
                 level: 0,
                 initiallyExpanded: index == 0,
                 provider: provider,
+                onEditAction: onEditAction,
               ),
             Bookmark() => _BookmarkTile(
                 bookmark: node,
                 sourceFolder: folder,
                 provider: provider,
+                onEditAction: onEditAction,
               ),
           };
         },
@@ -547,6 +581,7 @@ class _FolderContentList extends StatelessWidget {
         final adj = oldIndex < newIndex ? newIndex - 1 : newIndex;
         final folderPath = provider.getFolderPath(folder);
         if (folderPath != null) {
+          onEditAction?.call();
           provider.reorderInFolder(folder, folderPath, oldIndex, adj).then((ok) {
             if (context.mounted) {
               final l = AppLocalizations.of(context)!;
@@ -579,6 +614,7 @@ class _FolderContentList extends StatelessWidget {
               provider: provider,
               folderPath: provider.getFolderPath(node),
               canReorder: canReorder,
+              onEditAction: onEditAction,
             ),
           Bookmark() => _ReorderableBookmarkTile(
               key: key,
@@ -586,6 +622,7 @@ class _FolderContentList extends StatelessWidget {
               index: index,
               sourceFolder: folder,
               provider: provider,
+              onEditAction: onEditAction,
             ),
         };
       },
@@ -839,6 +876,7 @@ class _FolderTile extends StatelessWidget {
     this.provider,
     this.folderPath,
     this.canReorder = false,
+    this.onEditAction,
   });
 
   final BookmarkFolder folder;
@@ -848,6 +886,7 @@ class _FolderTile extends StatelessWidget {
   final BookmarkProvider? provider;
   final String? folderPath;
   final bool canReorder;
+  final VoidCallback? onEditAction;
 
   @override
   Widget build(BuildContext context) {
@@ -919,11 +958,13 @@ class _FolderTile extends StatelessWidget {
               folder: entry.value as BookmarkFolder,
               level: level + 1,
               provider: p,
+              onEditAction: onEditAction,
             ),
           Bookmark() => _BookmarkTile(
               bookmark: entry.value as Bookmark,
               sourceFolder: folder,
               provider: p,
+              onEditAction: onEditAction,
             ),
         };
       }).toList();
@@ -939,6 +980,7 @@ class _FolderTile extends StatelessWidget {
         itemCount: folder.children.length,
         onReorder: (oldIndex, newIndex) {
           final adj = oldIndex < newIndex ? newIndex - 1 : newIndex;
+          onEditAction?.call();
           prov.reorderInFolder(folder, c, oldIndex, adj).then((ok) {
             if (context.mounted) {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -968,6 +1010,7 @@ class _FolderTile extends StatelessWidget {
                 folderPath: '$c/${node.dirName ?? node.title}',
                 canReorder: true,
                 reorderIndex: index,
+                onEditAction: onEditAction,
               ),
             Bookmark() => _ReorderableBookmarkTile(
                 key: key,
@@ -975,6 +1018,7 @@ class _FolderTile extends StatelessWidget {
                 index: index,
                 sourceFolder: folder,
                 provider: prov,
+                onEditAction: onEditAction,
               ),
           };
         },
@@ -994,12 +1038,14 @@ class _ReorderableBookmarkTile extends StatelessWidget {
     required this.index,
     required this.sourceFolder,
     required this.provider,
+    this.onEditAction,
   });
 
   final Bookmark bookmark;
   final int index;
   final BookmarkFolder sourceFolder;
   final BookmarkProvider provider;
+  final VoidCallback? onEditAction;
 
   @override
   Widget build(BuildContext context) {
@@ -1025,6 +1071,7 @@ class _ReorderableBookmarkTile extends StatelessWidget {
               bookmark: bookmark,
               sourceFolder: sourceFolder,
               provider: provider,
+              onEditAction: onEditAction,
             ),
           ),
         ],
@@ -1039,11 +1086,13 @@ class _BookmarkTile extends StatelessWidget {
     required this.bookmark,
     this.sourceFolder,
     this.provider,
+    this.onEditAction,
   });
 
   final Bookmark bookmark;
   final BookmarkFolder? sourceFolder;
   final BookmarkProvider? provider;
+  final VoidCallback? onEditAction;
 
   Widget _buildLeading(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
@@ -1072,10 +1121,11 @@ class _BookmarkTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final l = AppLocalizations.of(context)!;
-    final canMove = sourceFolder != null &&
+    final hasCredentials = sourceFolder != null &&
         provider != null &&
-        provider!.hasCredentials &&
-        (provider!.activeProfile?.allowMoveReorder ?? true);
+        provider!.hasCredentials;
+    final canMove = hasCredentials &&
+        (provider!.activeProfile?.allowMoveReorder ?? false);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
@@ -1101,28 +1151,86 @@ class _BookmarkTile extends StatelessWidget {
               ),
         ),
         onTap: () => _openUrl(context, bookmark.url),
-        onLongPress: canMove
+        onLongPress: hasCredentials
             ? () => showModalBottomSheet<void>(
                   context: context,
-                  builder: (context) => SafeArea(
-                    child: ListTile(
-                      leading: const Icon(Icons.drive_file_move),
-                      title: Text(l.moveToFolder),
-                      onTap: () {
-                        Navigator.pop(context);
-                        _showMoveToFolderDialog(
-                          context,
-                          bookmark,
-                          sourceFolder!,
-                          provider!,
-                        );
-                      },
+                  builder: (ctx) => SafeArea(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (canMove)
+                          ListTile(
+                            leading: const Icon(Icons.drive_file_move),
+                            title: Text(l.moveToFolder),
+                            onTap: () {
+                              Navigator.pop(ctx);
+                              onEditAction?.call();
+                              _showMoveToFolderDialog(
+                                context,
+                                bookmark,
+                                sourceFolder!,
+                                provider!,
+                              );
+                            },
+                          ),
+                        ListTile(
+                          leading: Icon(Icons.delete_outline,
+                              color: scheme.error),
+                          title: Text(l.deleteBookmark,
+                              style: TextStyle(color: scheme.error)),
+                          onTap: () {
+                            Navigator.pop(ctx);
+                            onEditAction?.call();
+                            _confirmDeleteBookmark(
+                              context,
+                              bookmark,
+                              sourceFolder!,
+                              provider!,
+                            );
+                          },
+                        ),
+                      ],
                     ),
                   ),
                 )
             : null,
       ),
     );
+  }
+
+  Future<void> _confirmDeleteBookmark(
+    BuildContext context,
+    Bookmark bookmark,
+    BookmarkFolder sourceFolder,
+    BookmarkProvider provider,
+  ) async {
+    final l = AppLocalizations.of(context)!;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l.deleteBookmark),
+        content: Text(l.deleteBookmarkConfirm(bookmark.title)),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: Text(l.cancel),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            child: Text(l.delete,
+                style: TextStyle(color: Theme.of(context).colorScheme.error)),
+          ),
+        ],
+      ),
+    );
+    if (confirmed == true && context.mounted) {
+      final ok = await provider.deleteBookmark(bookmark, sourceFolder);
+      if (ok && context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(l.bookmarkDeleted)),
+        );
+      }
+    }
   }
 
   Future<void> _openUrl(BuildContext context, String url) async {

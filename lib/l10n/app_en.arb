@@ -217,5 +217,13 @@
   "moveToFolder": "Move to folder",
   "moveToFolderSuccess": "Bookmark moved",
   "moveToFolderFailed": "Failed to move bookmark",
-  "orderUpdated": "Order updated"
+  "deleteBookmark": "Delete Bookmark",
+  "deleteBookmarkConfirm": "Delete bookmark \"{title}\"?",
+  "@deleteBookmarkConfirm": {"placeholders": {"title": {"type": "String"}}},
+  "bookmarkDeleted": "Bookmark deleted",
+  "orderUpdated": "Order updated",
+  "rootFolder": "Root Folder",
+  "rootFolderHelp": "Select a folder whose subfolders become the tabs. Default shows all top-level folders.",
+  "allFolders": "All Folders",
+  "selectRootFolder": "Select Root Folder"
 }
