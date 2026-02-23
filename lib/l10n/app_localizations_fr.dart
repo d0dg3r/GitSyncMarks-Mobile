@@ -592,4 +592,17 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get export_ => 'Exporter';
+
+  @override
+  String get resetAll => 'Réinitialiser toutes les données';
+
+  @override
+  String get resetConfirmTitle => 'Réinitialiser l\'application ?';
+
+  @override
+  String get resetConfirmMessage =>
+      'Tous les profils, paramètres et favoris en cache seront supprimés. L\'application reviendra à son état initial.';
+
+  @override
+  String get resetSuccess => 'Toutes les données ont été réinitialisées';
 }

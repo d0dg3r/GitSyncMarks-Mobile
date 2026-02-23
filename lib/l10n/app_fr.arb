@@ -233,5 +233,9 @@
   "importSettingsAction": "Importer les paramètres",
   "orImportExisting": "ou importer des paramètres existants",
   "wrongPassword": "Mot de passe incorrect. Veuillez réessayer.",
-  "export_": "Exporter"
+  "export_": "Exporter",
+  "resetAll": "Réinitialiser toutes les données",
+  "resetConfirmTitle": "Réinitialiser l'application ?",
+  "resetConfirmMessage": "Tous les profils, paramètres et favoris en cache seront supprimés. L'application reviendra à son état initial.",
+  "resetSuccess": "Toutes les données ont été réinitialisées"
 }

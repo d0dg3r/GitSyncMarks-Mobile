@@ -233,5 +233,9 @@
   "importSettingsAction": "Einstellungen importieren",
   "orImportExisting": "oder vorhandene Einstellungen importieren",
   "wrongPassword": "Falsches Passwort. Bitte erneut versuchen.",
-  "export_": "Exportieren"
+  "export_": "Exportieren",
+  "resetAll": "Alle Daten zurücksetzen",
+  "resetConfirmTitle": "App zurücksetzen?",
+  "resetConfirmMessage": "Alle Profile, Einstellungen und gecachte Lesezeichen werden gelöscht. Die App startet im Ausgangszustand.",
+  "resetSuccess": "Alle Daten wurden zurückgesetzt"
 }

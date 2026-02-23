@@ -586,4 +586,17 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get export_ => 'Exportar';
+
+  @override
+  String get resetAll => 'Restablecer todos los datos';
+
+  @override
+  String get resetConfirmTitle => '¿Restablecer la aplicación?';
+
+  @override
+  String get resetConfirmMessage =>
+      'Se eliminarán todos los perfiles, ajustes y marcadores en caché. La aplicación volverá a su estado inicial.';
+
+  @override
+  String get resetSuccess => 'Todos los datos han sido restablecidos';
 }

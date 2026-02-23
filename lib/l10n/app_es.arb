@@ -233,5 +233,9 @@
   "importSettingsAction": "Importar ajustes",
   "orImportExisting": "o importar ajustes existentes",
   "wrongPassword": "Contraseña incorrecta. Inténtalo de nuevo.",
-  "export_": "Exportar"
+  "export_": "Exportar",
+  "resetAll": "Restablecer todos los datos",
+  "resetConfirmTitle": "¿Restablecer la aplicación?",
+  "resetConfirmMessage": "Se eliminarán todos los perfiles, ajustes y marcadores en caché. La aplicación volverá a su estado inicial.",
+  "resetSuccess": "Todos los datos han sido restablecidos"
 }

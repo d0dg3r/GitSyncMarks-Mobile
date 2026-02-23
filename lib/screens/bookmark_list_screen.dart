@@ -100,11 +100,16 @@ Future<void> _handleImport(BuildContext context) async {
     await context.read<BookmarkProvider>().replaceProfiles(
           parsed.profiles,
           activeId: parsed.activeProfileId,
+          triggerSync: false,
         );
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(l.importSuccess(parsed.profiles.length))),
       );
+      final provider = context.read<BookmarkProvider>();
+      if (provider.hasCredentials) {
+        provider.syncBookmarks();
+      }
     }
   } catch (e) {
     if (context.mounted) {

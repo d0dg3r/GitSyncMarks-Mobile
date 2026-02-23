@@ -596,6 +596,26 @@ class BookmarkProvider extends ChangeNotifier {
   // Misc
   // ---------------------------------------------------------------------------
 
+  /// Resets all data (profiles, credentials, cache) to factory state.
+  Future<void> resetAll() async {
+    _stopAutoSync();
+    await _storage.resetAll();
+    await _cache.clearCache();
+    _profiles = [];
+    _activeProfileId = null;
+    _credentials = null;
+    _rootFolders = [];
+    _discoveredRootFolderNames = [];
+    _selectedRootFolders = [];
+    _viewRootFolder = null;
+    _error = null;
+    _lastSuccessMessage = null;
+    _searchQuery = '';
+    _lastSyncTime = null;
+    _nextAutoSyncAt = null;
+    notifyListeners();
+  }
+
   void clearError() {
     _error = null;
     notifyListeners();

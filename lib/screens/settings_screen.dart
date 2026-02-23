@@ -247,10 +247,15 @@ class _SettingsScreenState extends State<SettingsScreen>
       await context.read<BookmarkProvider>().replaceProfiles(
             parsed.profiles,
             activeId: parsed.activeProfileId,
+            triggerSync: false,
           );
       if (mounted) {
         _loadFromProvider();
         _showSnackBar(l.importSuccess(parsed.profiles.length));
+        final provider = context.read<BookmarkProvider>();
+        if (provider.hasCredentials) {
+          provider.syncBookmarks();
+        }
       }
     } catch (e) {
       if (mounted) _showSnackBar(l.importFailed(e.toString()), isError: true);
@@ -344,6 +349,37 @@ class _SettingsScreenState extends State<SettingsScreen>
     }
   }
 
+  Future<void> _onReset() async {
+    final l = AppLocalizations.of(context)!;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l.resetConfirmTitle),
+        content: Text(l.resetConfirmMessage),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: Text(l.cancel),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.error,
+            ),
+            onPressed: () => Navigator.pop(ctx, true),
+            child: Text(l.resetAll),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true || !mounted) return;
+    await context.read<BookmarkProvider>().resetAll();
+    if (mounted) {
+      _loadFromProvider();
+      _showSnackBar(l.resetSuccess);
+      Navigator.of(context).pop();
+    }
+  }
+
   Future<void> _launchUrl(String url) async {
     final uri = Uri.parse(url);
     try {
@@ -403,7 +439,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                 subTabController: _filesSubTabController,
               ),
               _HelpTab(),
-              _AboutTab(launchUrl: _launchUrl),
+              _AboutTab(launchUrl: _launchUrl, onReset: _onReset),
             ],
           ),
         );
@@ -1761,9 +1797,10 @@ class _HelpLink extends StatelessWidget {
 // =============================================================================
 
 class _AboutTab extends StatelessWidget {
-  const _AboutTab({required this.launchUrl});
+  const _AboutTab({required this.launchUrl, required this.onReset});
 
   final Future<void> Function(String) launchUrl;
+  final VoidCallback onReset;
 
   @override
   Widget build(BuildContext context) {
@@ -1893,6 +1930,28 @@ class _AboutTab extends StatelessWidget {
                             size: 18, color: scheme.outline),
                       ],
                     ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 24),
+        Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                OutlinedButton.icon(
+                  onPressed: onReset,
+                  icon: Icon(Icons.delete_forever, size: 18, color: scheme.error),
+                  label: Text(
+                    l.resetAll,
+                    style: TextStyle(color: scheme.error),
+                  ),
+                  style: OutlinedButton.styleFrom(
+                    side: BorderSide(color: scheme.error.withValues(alpha: 0.5)),
                   ),
                 ),
               ],

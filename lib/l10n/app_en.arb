@@ -233,5 +233,9 @@
   "importSettingsAction": "Import Settings",
   "orImportExisting": "or import existing settings",
   "wrongPassword": "Wrong password. Please try again.",
-  "export_": "Export"
+  "export_": "Export",
+  "resetAll": "Reset all data",
+  "resetConfirmTitle": "Reset App?",
+  "resetConfirmMessage": "This will delete all profiles, settings and cached bookmarks. The app will return to its initial state.",
+  "resetSuccess": "All data has been reset"
 }

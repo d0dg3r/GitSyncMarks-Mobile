@@ -1151,6 +1151,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Export'**
   String get export_;
+
+  /// No description provided for @resetAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset all data'**
+  String get resetAll;
+
+  /// No description provided for @resetConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset App?'**
+  String get resetConfirmTitle;
+
+  /// No description provided for @resetConfirmMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'This will delete all profiles, settings and cached bookmarks. The app will return to its initial state.'**
+  String get resetConfirmMessage;
+
+  /// No description provided for @resetSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'All data has been reset'**
+  String get resetSuccess;
 }
 
 class _AppLocalizationsDelegate
