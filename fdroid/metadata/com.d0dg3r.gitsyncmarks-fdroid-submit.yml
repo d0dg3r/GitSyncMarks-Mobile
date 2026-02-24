@@ -1,0 +1,59 @@
+# F-Droid Submit-Metadaten – nur stabile Versionen (keine Pre-Releases)
+# Wird von submit-to-gitlab.sh nach metadata/com.d0dg3r.gitsyncmarks.yml kopiert.
+
+Categories:
+  - Internet
+License: MIT
+AuthorName: Joe Mild
+SourceCode: https://github.com/d0dg3r/GitSyncMarks-Mobile
+IssueTracker: https://github.com/d0dg3r/GitSyncMarks-Mobile/issues
+
+AutoName: GitSyncMarks
+
+RepoType: git
+Repo: https://github.com/d0dg3r/GitSyncMarks-Mobile
+
+Builds:
+  - versionName: 0.3.0
+    versionCode: 7
+    commit: 989a798dfddab0efe5dc3987e6414b3fb068c91a
+    output: build/app/outputs/flutter-apk/app-release.apk
+    srclibs:
+      - flutter@3.41.1
+    rm:
+      - ios
+    prebuild:
+      - export PUB_CACHE=$(pwd)/.pub-cache
+      - $$flutter$$/bin/flutter config --no-analytics
+      - $$flutter$$/bin/flutter pub get
+      - $$flutter$$/bin/flutter gen-l10n
+    scandelete:
+      - .pub-cache
+    build:
+      - export PUB_CACHE=$(pwd)/.pub-cache
+      - $$flutter$$/bin/flutter build apk
+
+  - versionName: 0.2.0
+    versionCode: 6
+    commit: 9ed8ecea448a47b9cc49c98d5333d3782a48d5a6
+    output: build/app/outputs/flutter-apk/app-release.apk
+    srclibs:
+      - flutter@3.41.1
+    rm:
+      - ios
+    prebuild:
+      - export PUB_CACHE=$(pwd)/.pub-cache
+      - $$flutter$$/bin/flutter config --no-analytics
+      - $$flutter$$/bin/flutter pub get
+      - $$flutter$$/bin/flutter gen-l10n
+    scandelete:
+      - .pub-cache
+    build:
+      - export PUB_CACHE=$(pwd)/.pub-cache
+      - $$flutter$$/bin/flutter build apk
+
+AutoUpdateMode: Version
+UpdateCheckMode: Tags
+UpdateCheckData: pubspec.yaml|version:\s.+\+(\d+)|.|version:\s(.+)\+
+CurrentVersion: 0.3.0
+CurrentVersionCode: 7

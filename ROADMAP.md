@@ -30,20 +30,14 @@ This document shows where GitSyncMarks-Mobile stands and where it is headed. For
 - Recursive folder display
 - Flatpak build, CI improvements
 
-### v0.3.0-beta.7
-- Password-protected export/import of settings
-- Configurable root folder for tab navigation
-- Auto-lock edit mode (60s inactivity)
-- Delete bookmarks (long-press, even when locked)
-- Post-import auto-sync, reset all data
-- Import on empty state
-- Import spinner during decrypt/parse
-- Pre-release CI tags
-- CI screenshot generation, F-Droid metadata updates
+### v0.3.0 (stable)
+- All of the above plus: password-protected export/import, configurable root folder,
+  auto-lock edit mode, delete bookmarks, post-import auto-sync, reset all data,
+  import on empty state, golden_toolkit for screenshots, F-Droid screenshots/icon
 
 ---
 
-## Current (v0.3.0-beta.7)
+## Current (v0.3.0)
 
 - **Features:** Bookmark sync, move, reorder, delete, add via share; Settings Sync to Git; encrypted export/import; configurable root folder; auto-lock edit mode; reset all data; import on empty state
 - **Platforms:** Android (stable), iOS, Windows, macOS, Linux (alpha)

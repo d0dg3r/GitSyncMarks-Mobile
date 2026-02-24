@@ -40,12 +40,22 @@ fi
 echo "3. Creating branch com.d0dg3r.gitsyncmarks..."
 git checkout -B com.d0dg3r.gitsyncmarks 2>/dev/null || git checkout com.d0dg3r.gitsyncmarks
 
-# Step 4: Copy metadata
-echo "4. Copying metadata..."
-cp "$PROJECT_DIR/fdroid/metadata/com.d0dg3r.gitsyncmarks.yml" metadata/
+# Step 4: Validate submit metadata (no pre-releases)
+SUBMIT_FILE="$PROJECT_DIR/fdroid/metadata/com.d0dg3r.gitsyncmarks-fdroid-submit.yml"
+echo "4. Validating submit metadata (no pre-releases allowed)..."
+if grep -E '(CurrentVersion|versionName:).*-(beta|alpha|rc|test|dev)[.-]' "$SUBMIT_FILE" >/dev/null 2>&1; then
+  echo "   ERROR: Submit metadata contains pre-release versions (-beta, -alpha, -rc, etc.)."
+  echo "   F-Droid accepts only stable releases. Fix $SUBMIT_FILE and try again."
+  exit 1
+fi
+echo "   OK: Only stable versions in submit metadata."
 
-# Step 5: Commit
-echo "5. Committing..."
+# Step 5: Copy metadata (submit file → fdroiddata expects com.d0dg3r.gitsyncmarks.yml)
+echo "5. Copying metadata..."
+cp "$SUBMIT_FILE" metadata/com.d0dg3r.gitsyncmarks.yml
+
+# Step 6: Commit
+echo "6. Committing..."
 git add metadata/com.d0dg3r.gitsyncmarks.yml
 if git diff --cached --quiet; then
   echo "   No changes (file may already be committed)"
@@ -53,8 +63,8 @@ else
   git commit -m "New App: com.d0dg3r.gitsyncmarks"
 fi
 
-# Step 6: Push
-echo "6. Pushing to GitLab..."
+# Step 7: Push
+echo "7. Pushing to GitLab..."
 git push -u origin com.d0dg3r.gitsyncmarks
 
 echo ""

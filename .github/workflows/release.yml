@@ -141,8 +141,35 @@ jobs:
           name: release-macos
           path: build/release/
 
-  # generate-screenshots: deaktiviert – Screenshots lokal generieren, committen, dann Tag pushen
-  # Vor Release: flutter test test/screenshot_test.dart --update-goldens && cp test/goldens/*.png flatpak/screenshots/
+  generate-screenshots:
+    if: false  # Aktivieren: if entfernen; release-job braucht dann needs: [..., generate-screenshots]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.41.1'
+          channel: 'stable'
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Generate golden screenshots (golden_toolkit loads Roboto/Material icons)
+        run: flutter test test/screenshot_test.dart --update-goldens
+
+      - name: Copy screenshots to flatpak dir (for artifact)
+        run: |
+          mkdir -p flatpak/screenshots
+          cp test/goldens/*.png flatpak/screenshots/
+
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: flatpak/screenshots/
 
   build-flatpak:
     runs-on: ubuntu-latest

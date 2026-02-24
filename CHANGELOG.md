@@ -13,49 +13,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [0.3.0-beta.7] - 2026-02-21
-
-### Changed
-
-- Cursor rules: F-Droid maintenance, release checklist hygiene
-- Documentation: full alignment (CONTEXT, PLAN, ARCHITECTURE, IMPLEMENTATION_SUMMARY, etc.)
-- F-Droid metadata: versionCode 9, changelog 9.txt
-- Screenshot pipeline: mkdir before copy, validation in CI
-
----
-
-## [0.3.0-beta.2] - 2026-02-21
-
-### Added
-
-- **Password-protected export/import**: Settings export encrypted with AES-256-GCM; import prompts for password when encrypted file detected
-- **Configurable root folder**: Select any folder as "root" for tab navigation; its subfolders become tabs
-- **Auto-lock edit mode**: Edit mode (reorder/move) auto-locks after 60 seconds of inactivity; any edit action resets the timer
-- **Delete bookmarks**: Long-press on any bookmark to delete (available even when edit mode is locked)
-- **Post-import auto-sync**: After importing settings, bookmarks sync automatically if credentials are valid
-- **Reset all data**: Button in About tab to clear all profiles, settings, and cached data
-- **Import on empty state**: "Import Settings" button shown when no credentials are configured
-- **Default profile creation**: Default profile is automatically created on first launch or when saving credentials
-- **CI screenshot generation**: Golden tests generate screenshots; CI workflow includes screenshot generation job
-- **Pre-release CI tags**: Tags with `-beta`, `-rc`, `-test` etc. build all platforms but create pre-releases instead of latest releases
-
-### Changed
-
-- Edit mode defaults to locked on every app launch
-- Edit mode toggle moved to AppBar (lock/unlock icon)
-- Removed `golden_screenshot` dependency; replaced with simple `matchesGoldenFile` golden tests
-- Desktop export uses `FilePicker.saveFile()` instead of `Share.shareXFiles()` (Linux/Windows/macOS)
-- Flatpak metainfo updated with auto-generated screenshots
-
-### Fixed
-
-- Profile dropdown overflow in AppBar (Flexible text with ellipsis)
-- Infinite sync loop when importing settings (replaceProfiles with triggerSync guard)
-- "Bad state: No element" crash when exporting with no profiles
-- `allowMoveReorder` now always defaults to false (not persisted)
-
----
-
 ## [0.3.0] - 2026-02-21
 
 ### Added
@@ -65,6 +22,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Reorder bookmarks**: Drag-and-drop to reorder in root folders and subfolders; changes persisted to `_order.json`
 - **Share link as bookmark**: Receive shared URLs (e.g. from Chrome) and add as bookmark
 - **Recursive folder display**: Subfolders and nested bookmarks now displayed correctly
+- **Password-protected export/import**: Settings export encrypted with AES-256-GCM; import prompts for password when encrypted file detected
+- **Configurable root folder**: Select any folder as "root" for tab navigation; its subfolders become tabs
+- **Auto-lock edit mode**: Edit mode (reorder/move) auto-locks after 60 seconds of inactivity; any edit action resets the timer
+- **Delete bookmarks**: Long-press on any bookmark to delete (available even when edit mode is locked)
+- **Post-import auto-sync**: After importing settings, bookmarks sync automatically if credentials are valid
+- **Reset all data**: Button in About tab to clear all profiles, settings, and cached data
+- **Import on empty state**: "Import Settings" button shown when no credentials are configured
+- **Default profile creation**: Default profile is automatically created on first launch or when saving credentials
+- **Pre-release CI tags**: Tags with `-beta`, `-rc`, `-test` etc. build all platforms but create pre-releases instead of latest releases
 - **Workflow "Flatpak test":** Isolated Flatpak build via `workflow_dispatch` or tag `v*-flatpak-test*` (no full release)
 
 ### Changed
@@ -74,6 +40,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Status (last sync, bookmark count) moved above search bar
 - Removed redundant blue "Sync now" button (Sync icon in AppBar remains)
 - Extension-compatible encryption (`gitsyncmarks-enc:v1`) for settings.enc
+- Edit mode defaults to locked on every app launch
+- Edit mode toggle moved to AppBar (lock/unlock icon)
+- Desktop export uses `FilePicker.saveFile()` instead of `Share.shareXFiles()` (Linux/Windows/macOS)
+- Golden tests with `golden_toolkit` for proper font rendering in screenshots
+- F-Droid metadata with screenshots, icon, changelogs
 
 ### Fixed
 
@@ -82,6 +53,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Folder picker for move: Unterordner des Quellordners werden angezeigt (vorher ausgefiltert)
 - Infinite height layout error in ReorderableListView
 - Debug instrumentation removed
+- Profile dropdown overflow in AppBar (Flexible text with ellipsis)
+- Infinite sync loop when importing settings (replaceProfiles with triggerSync guard)
+- "Bad state: No element" crash when exporting with no profiles
+- `allowMoveReorder` now always defaults to false (not persisted)
 
 ---
 
