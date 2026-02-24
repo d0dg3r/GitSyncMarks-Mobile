@@ -36,9 +36,9 @@ else
   cd "$BUILD_DIR"
 fi
 
-# Step 3: Create branch
+# Step 3: Create or checkout branch
 echo "3. Creating branch com.d0dg3r.gitsyncmarks..."
-git checkout -B com.d0dg3r.gitsyncmarks 2>/dev/null || git checkout com.d0dg3r.gitsyncmarks
+git checkout -B com.d0dg3r.gitsyncmarks
 
 # Step 4: Validate submit metadata (no pre-releases)
 SUBMIT_FILE="$PROJECT_DIR/fdroid/metadata/com.d0dg3r.gitsyncmarks-fdroid-submit.yml"
@@ -54,9 +54,16 @@ echo "   OK: Only stable versions in submit metadata."
 echo "5. Copying metadata..."
 cp "$SUBMIT_FILE" metadata/com.d0dg3r.gitsyncmarks.yml
 
+# Step 5b: Remove localized metadata dir if present (CI check requires summary.txt/description.txt
+# instead of short_description.txt/full_description.txt; metadata comes from app repo via Repo:)
+if [[ -d metadata/com.d0dg3r.gitsyncmarks ]]; then
+  echo "5b. Removing metadata/com.d0dg3r.gitsyncmarks/ (metadata from app repo)"
+  rm -rf metadata/com.d0dg3r.gitsyncmarks
+fi
+
 # Step 6: Commit
 echo "6. Committing..."
-git add metadata/com.d0dg3r.gitsyncmarks.yml
+git add metadata/com.d0dg3r.gitsyncmarks.yml metadata/
 if git diff --cached --quiet; then
   echo "   No changes (file may already be committed)"
 else
