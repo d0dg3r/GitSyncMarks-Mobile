@@ -14,3 +14,5 @@ When starting or resuming work on this project, especially in a new IDE session:
 This is a Flutter app (Android, iOS, Windows, macOS, Linux) that syncs bookmarks from a GitHub repo (GitSyncMarks format), opens URLs in the user's browser, and supports move/reorder/delete/add (synced to repo). Android stable; other platforms alpha.
 
 **Parent project:** https://github.com/d0dg3r/GitSyncMarks (browser extension)
+
+**Workflow:** Test locally, ask before commit, small steps (see User Rules). For releases: [release-workflow.mdc](release-workflow.mdc). For platform code: [platform-gotchas.mdc](platform-gotchas.mdc).

@@ -1,0 +1,23 @@
+---
+description: Release workflow – Tag, F-Droid, GitHub Releases
+alwaysApply: false
+globs: pubspec.yaml, CHANGELOG.md, .github/workflows/*, fdroid/**/*
+---
+
+# Release Workflow
+
+When preparing or executing a release:
+
+1. **Order:** Merge → Tag on final commit → Verify F-Droid commit hash
+
+2. **Tag:** Set on exactly the final merge commit (not on an older commit)
+
+3. **F-Droid:** `commit:` in [fdroid/metadata/com.d0dg3r.gitsyncmarks-fdroid-submit.yml](fdroid/metadata/com.d0dg3r.gitsyncmarks-fdroid-submit.yml) must match the tag commit. Verify before submit: `git rev-parse vX.Y.Z` = `commit:` in the YAML.
+
+4. **GitHub Releases:** Only stable tags (`v*` without `-`) as "latest"; pre-releases (`-beta`, `-rc`, `-test`) visible but not latest
+
+5. **Screenshots:** Generate locally with `./scripts/generate-screenshots.sh` before tagging (Light + Dark for README, Flatpak, F-Droid). CI screenshot disabled until fonts/CI consistency is fixed.
+
+6. **Before F-Droid MR:** Run `./fdroid/submit-to-gitlab.sh` – validates and copies the submit file
+
+See also [release-checklist-hygiene.mdc](release-checklist-hygiene.mdc) and [fdroid-maintenance.mdc](fdroid-maintenance.mdc).

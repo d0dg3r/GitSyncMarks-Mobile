@@ -9,7 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- (none)
+### Added
+
+- **Cursor MDC rules:** release-workflow, platform-gotchas; extended docs-sync, release-checklist, fdroid-maintenance, project-context
+- **AGENTS.md:** Central AI agent guidance for Cursor sessions
 
 ---
 

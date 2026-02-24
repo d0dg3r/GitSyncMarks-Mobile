@@ -1,0 +1,27 @@
+---
+description: Platform-specific gotchas – Flatpak, Export/Import, Edit mode, etc.
+alwaysApply: false
+globs: lib/**/*, flatpak/**/*
+---
+
+# Platform Gotchas
+
+Known pitfalls and conventions when working on lib/ or flatpak/:
+
+## Flatpak
+
+- **libsecret:** `flutter_secure_storage` requires D-Bus access. In [flatpak/io.github.d0dg3r.GitSyncMarksMobile.yml](flatpak/io.github.d0dg3r.GitSyncMarksMobile.yml) `finish-args` must include `--talk-name=org.freedesktop.secrets`.
+
+## Export/Import
+
+- **Desktop (Linux, Windows, macOS):** `FilePicker.platform.saveFile` – `Share.shareXFiles` is not implemented on Linux
+- **Mobile (Android, iOS):** `Share.shareXFiles`
+- **Import:** Show spinner during encrypted import; call `syncBookmarks()` explicitly after import; offer import on empty state
+
+## Edit Mode
+
+- **allowMoveReorder:** Transient (not in `Profile.toJson()`); always `false` in `Profile.fromJson()` – never persist. Default: locked.
+
+## Default Profile
+
+- Create a default profile when `_profiles` is empty after migration (`loadCredentials()` in BookmarkProvider)

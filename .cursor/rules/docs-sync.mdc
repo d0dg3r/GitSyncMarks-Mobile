@@ -22,9 +22,31 @@ When making changes to the project (features, fixes, architecture, setup), **alw
 | [SETUP.md](SETUP.md) | Setup steps, dependencies |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Contribution workflow changes |
 | [fdroid/](fdroid/) | App metadata, changelogs, store submission (see fdroid-maintenance rule) |
+| [fdroid/README.md](fdroid/README.md) | Submit flow changes |
+
+## Tests
+
+Keep tests in sync when making code or feature changes: `test/`, `integration_test/`, goldens (`test/goldens/`, `flatpak/screenshots/`).
+
+## Architecture
+
+Update [ARCHITECTURE.md](ARCHITECTURE.md) when CI, workflow, service, or structure changes.
+
+## Store Assets
+
+Check when making UI or feature changes: screenshots (README, Flatpak, F-Droid), icons, metainfo.
+
+## Completeness Checklist
+
+| Area | What to keep in sync |
+|---------|------------------------|
+| **Docs** | README, CHANGELOG, CONTEXT, PLAN, ROADMAP, ARCHITECTURE, SETUP, fdroid/README |
+| **Tests** | `test/`, `integration_test/`, goldens (`test/goldens/`, `flatpak/screenshots/`) |
+| **Architecture** | ARCHITECTURE.md when CI, workflows, services, or project structure change |
+| **Store Assets** | Screenshots (README, Flatpak, F-Droid), icons, metainfo, F-Droid changelogs |
 
 ## Workflow
 
-1. After implementing a change, identify which docs are affected.
-2. Update them in the same session before finishing.
+1. After implementing a change, identify which docs, tests, architecture, and store assets are affected.
+2. **Always update everything** – Update docs, tests, architecture, and store assets in the same session.
 3. Do not leave documentation outdated.

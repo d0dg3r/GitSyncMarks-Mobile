@@ -29,10 +29,16 @@ When changing app metadata, release notes, screenshots, package IDs, or submissi
 
 4. **Keep version aligned** with `pubspec.yaml` and `CHANGELOG.md`
 
-5. **Verify screenshot/icon paths** if referenced in metadata (`metadata/en-US/images/`)
+5. **UpdateCheckMode:** `Tags ^v[0-9.]+$` – filters pre-releases from auto-updates
 
-6. **Update [fdroid/README.md](fdroid/README.md)** if submission steps or paths change
+6. **Builds:** Chronological (older versions first)
 
-7. **Before submit:** Run `./fdroid/submit-to-gitlab.sh` — it validates and copies the submit file
+7. **Commit hash:** Must exactly match the tag commit. See [release-workflow.mdc](release-workflow.mdc) for release workflow.
+
+8. **Verify screenshot/icon paths** if referenced in metadata (`metadata/en-US/images/`)
+
+9. **Update [fdroid/README.md](fdroid/README.md)** if submission steps or paths change
+
+10. **Before submit:** Run `./fdroid/submit-to-gitlab.sh` — it validates and copies the submit file
 
 Do not leave F-Droid-facing metadata partially updated.

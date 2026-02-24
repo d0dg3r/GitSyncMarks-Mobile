@@ -14,6 +14,7 @@ When opening this project fresh: read CONTEXT.md and PLAN.md first so you have f
 | [BOOKMARK-FORMAT.md](BOOKMARK-FORMAT.md) | GitSyncMarks repo structure (JSON format, API) |
 | [ARCHITECTURE.md](../ARCHITECTURE.md) | Technical architecture, CI/Release |
 | [CHANGELOG.md](../CHANGELOG.md) | Version history |
+| [AGENTS.md](../AGENTS.md) | AI agent guidance (Cursor rules, workflow) |
 
 ## Current Status (v0.3.0)
 

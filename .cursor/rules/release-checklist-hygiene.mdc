@@ -15,8 +15,12 @@ For user-visible changes or release preparation:
 
 4. **CI/release workflow** — if tags, artifacts, or workflow change, update [ARCHITECTURE.md](ARCHITECTURE.md) and [.github/workflows/](.github/workflows/) references
 
-5. **Screenshots** — lokal: `./scripts/generate-screenshots.sh` → committen vor Tag (Light + Dark für README, Flatpak, F-Droid)
+5. **Screenshots** — locally: `./scripts/generate-screenshots.sh` → commit before tagging (Light + Dark for README, Flatpak, F-Droid)
 
-6. **F-Droid** — update [fdroid/](fdroid/) metadata and changelogs with each release. Submit file [com.d0dg3r.gitsyncmarks-fdroid-submit.yml](fdroid/metadata/com.d0dg3r.gitsyncmarks-fdroid-submit.yml) only with stable versions (see fdroid-maintenance rule)
+6. **F-Droid** — update [fdroid/](fdroid/) metadata and changelogs with each release. Submit file [com.d0dg3r.gitsyncmarks-fdroid-submit.yml](fdroid/metadata/com.d0dg3r.gitsyncmarks-fdroid-submit.yml) only with stable versions (see fdroid-maintenance rule). **Verify F-Droid commit = tag commit** before submit.
+
+7. **Completeness:** Verify before release: docs, tests, [ARCHITECTURE.md](ARCHITECTURE.md), and store assets (screenshots, icons, metainfo, F-Droid changelogs) are up to date.
+
+See [release-workflow.mdc](release-workflow.mdc) for the full release workflow.
 
 Prefer small, complete checklist updates over deferred documentation.
