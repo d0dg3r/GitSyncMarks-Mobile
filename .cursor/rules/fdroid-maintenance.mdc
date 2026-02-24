@@ -10,8 +10,14 @@ When changing app metadata, release notes, screenshots, package IDs, or submissi
 
 1. **Submit metadata (for F-Droid MRs)** — [fdroid/metadata/com.d0dg3r.gitsyncmarks-fdroid-submit.yml](fdroid/metadata/com.d0dg3r.gitsyncmarks-fdroid-submit.yml) must contain **only stable versions** (no -beta, -alpha, -rc). CI fails if pre-releases are present. Use [com.d0dg3r.gitsyncmarks.yml](fdroid/metadata/com.d0dg3r.gitsyncmarks.yml) for development (may include pre-releases).
 
-   **Flutter build config (do not change):** F-Droid reviewer (linsui) requires pinning the version in the repo and extracting it. Use `srclibs: flutter@stable` plus prebuild steps that extract from `.github/workflows/release.yml`:
-   `flutterVersion=$(sed -n -E "s/.*flutter-version:\ '(.*)'/\1/p" .github/workflows/release.yml | head -1)` and `git -C $$flutter$$ checkout -f $flutterVersion`. Do **not** hardcode `flutter@3.41.1` in the metadata.
+   **Flutter build config (do not change):** F-Droid reviewer (linsui) requires pinning the version in the repo and extracting it. Use `srclibs: flutter@stable` plus prebuild steps that extract from `.github/workflows/release.yml`. The prebuild line must use **rewritemeta-compatible format** (long lines split so `fdroid rewritemeta` produces no diff; CI fails otherwise):
+   ```yaml
+   - flutterVersion=$(sed -n -E "s/.*flutter-version:\ '(.*)'/\1/p" .github/workflows/release.yml
+     | head -1)
+   - '[[ $flutterVersion ]]'
+   - git -C $$flutter$$ checkout -f $flutterVersion
+   ```
+   Do **not** hardcode `flutter@3.41.1` in the metadata.
 
 2. **Update F-Droid metadata** in the same session:
    - [fdroid/metadata/com.d0dg3r.gitsyncmarks.yml](fdroid/metadata/com.d0dg3r.gitsyncmarks.yml) — versionName, versionCode, commit, build config (development)
