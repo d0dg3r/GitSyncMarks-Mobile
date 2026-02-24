@@ -68,5 +68,175 @@
   "repoFormatDescription": "El repositorio debe seguir el formato GitSyncMarks: Base Path (ej. \"bookmarks\") con subcarpetas como toolbar, menu, other, mobile. Cada carpeta tiene _order.json y archivos JSON por marcador con title y url.",
   "support": "Soporte",
   "supportText": "¿Preguntas o mensajes de error? Abre un issue en el repositorio del proyecto.",
-  "gitSyncMarksAndroidIssues": "GitSyncMarks-Mobile (GitHub Issues)"
+  "gitSyncMarksAndroidIssues": "GitSyncMarks-Mobile (GitHub Issues)",
+
+  "profiles": "Perfiles",
+  "profile": "Perfil",
+  "activeProfile": "Perfil activo",
+  "addProfile": "Añadir perfil",
+  "renameProfile": "Renombrar perfil",
+  "deleteProfile": "Eliminar perfil",
+  "deleteProfileConfirm": "¿Eliminar perfil \"{name}\"?",
+  "@deleteProfileConfirm": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "profileName": "Nombre del perfil",
+  "profileCount": "{count}/{max} perfiles",
+  "@profileCount": {
+    "placeholders": {
+      "count": {"type": "int"},
+      "max": {"type": "int"}
+    }
+  },
+  "maxProfilesReached": "Número máximo de perfiles alcanzado ({max})",
+  "@maxProfilesReached": {
+    "placeholders": {
+      "max": {"type": "int"}
+    }
+  },
+  "profileAdded": "Perfil \"{name}\" añadido",
+  "@profileAdded": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "profileRenamed": "Perfil renombrado a \"{name}\"",
+  "@profileRenamed": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "profileDeleted": "Perfil eliminado",
+  "cannotDeleteLastProfile": "No se puede eliminar el último perfil",
+
+  "importExport": "Importar / Exportar",
+  "importSettings": "Importar ajustes",
+  "exportSettings": "Exportar ajustes",
+  "importSettingsDesc": "Importar perfiles desde un archivo de ajustes GitSyncMarks (JSON)",
+  "exportSettingsDesc": "Exportar todos los perfiles como archivo de ajustes GitSyncMarks",
+  "importSuccess": "{count} perfil(es) importado(s)",
+  "@importSuccess": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "importFailed": "Importación fallida: {error}",
+  "@importFailed": {
+    "placeholders": {
+      "error": {"type": "String"}
+    }
+  },
+  "importConfirm": "¿Importar {count} perfil(es)? Se reemplazarán todos los perfiles existentes.",
+  "@importConfirm": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "exportSuccess": "Ajustes exportados",
+  "cancel": "Cancelar",
+  "delete": "Eliminar",
+  "rename": "Renombrar",
+  "add": "Añadir",
+  "import_": "Importar",
+  "replace": "Reemplazar",
+  "bookmarks": "Marcadores",
+  "info": "Info",
+  "connection": "Conexión",
+  "folders": "Carpetas",
+
+  "tabGitHub": "GitHub",
+  "tabSync": "Sync",
+  "tabFiles": "Archivos",
+  "tabHelp": "Ayuda",
+  "tabAbout": "Acerca de",
+  "subTabProfile": "Perfil",
+  "subTabConnection": "Conexión",
+  "subTabExportImport": "Exportar / Importar",
+  "subTabSettings": "Ajustes",
+  "searchPlaceholder": "Buscar marcadores...",
+  "noSearchResults": "Sin resultados para \"{query}\"",
+  "clearSearch": "Borrar búsqueda",
+  "@noSearchResults": {"placeholders": {"query": {"type": "String"}}},
+  "automaticSync": "Sincronización automática",
+  "autoSyncActive": "Auto-sync activo",
+  "autoSyncDisabled": "Auto-sync desactivado",
+  "nextSyncIn": "Próximo sync en {time}",
+  "@nextSyncIn": {"placeholders": {"time": {"type": "String"}}},
+  "syncProfileRealtime": "Tiempo real",
+  "syncProfileFrequent": "Frecuente",
+  "syncProfileNormal": "Normal",
+  "syncProfilePowersave": "Ahorro de energía",
+  "syncProfileCustom": "Personalizado",
+  "lastSynced": "Última sincronización {time}",
+  "@lastSynced": {"placeholders": {"time": {"type": "String"}}},
+  "neverSynced": "Nunca sincronizado",
+  "syncOnStart": "Sync al iniciar la app",
+  "allowMoveReorder": "Permitir mover y reordenar",
+  "allowMoveReorderDesc": "Asas de arrastre y mover a carpeta. Desactivar para vista solo lectura.",
+  "allowMoveReorderDisable": "Solo lectura (ocultar asas)",
+  "allowMoveReorderEnable": "Activar edición (mostrar asas)",
+  "bookmarkCount": "{count} marcadores en {folders} carpetas",
+  "@bookmarkCount": {"placeholders": {"count": {"type": "int"}, "folders": {"type": "int"}}},
+  "syncNow": "Sincronizar ahora",
+  "addBookmark": "Añadir marcador",
+  "addBookmarkTitle": "Añadir marcador",
+  "bookmarkTitle": "Título del marcador",
+  "selectFolder": "Seleccionar carpeta",
+  "exportBookmarks": "Exportar marcadores",
+  "settingsSyncToGit": "Sincronizar ajustes con Git (encriptado)",
+  "settingsSyncPassword": "Contraseña de cifrado",
+  "settingsSyncPasswordHint": "Establecer una vez por dispositivo. Debe ser la misma en todos los dispositivos.",
+  "settingsSyncRememberPassword": "Recordar contraseña",
+  "settingsSyncPasswordSaved": "Contraseña guardada (para Push/Pull)",
+  "settingsSyncClearPassword": "Borrar contraseña guardada",
+  "settingsSyncSaveBtn": "Guardar contraseña",
+  "settingsSyncPasswordMissing": "Por favor, introduce la contraseña.",
+  "settingsSyncWithBookmarks": "Sincronizar ajustes con marcadores",
+  "settingsSyncPush": "Subir ajustes",
+  "settingsSyncPull": "Cargar ajustes",
+  "settingsSyncModeLabel": "Modo de sincronización",
+  "settingsSyncModeGlobal": "Global — compartido en todos los dispositivos",
+  "settingsSyncModeIndividual": "Individual — solo este dispositivo",
+  "settingsSyncImportTitle": "Importar desde otro dispositivo",
+  "settingsSyncLoadConfigs": "Cargar configuraciones disponibles",
+  "settingsSyncImport": "Importar",
+  "settingsSyncImportEmpty": "No se encontraron configuraciones de dispositivos",
+  "settingsSyncImportSuccess": "Ajustes importados correctamente",
+  "reportIssue": "Reportar problema",
+  "documentation": "Documentación",
+  "voteBacklog": "Votar en backlog",
+  "discussions": "Discusiones",
+  "moveUp": "Subir",
+  "moveDown": "Bajar",
+  "shareLinkAddBookmark": "Añadir enlace compartido como marcador",
+  "clearCache": "Borrar caché",
+  "clearCacheDesc": "Eliminar datos en caché. Se sincronizará automáticamente si GitHub está configurado.",
+  "clearCacheSuccess": "Caché borrada.",
+  "moveToFolder": "Mover a carpeta",
+  "moveToFolderSuccess": "Marcador movido",
+  "moveToFolderFailed": "Error al mover el marcador",
+  "deleteBookmark": "Eliminar marcador",
+  "deleteBookmarkConfirm": "¿Eliminar marcador \"{title}\"?",
+  "@deleteBookmarkConfirm": {"placeholders": {"title": {"type": "String"}}},
+  "bookmarkDeleted": "Marcador eliminado",
+  "orderUpdated": "Orden actualizado",
+  "rootFolder": "Carpeta raíz",
+  "rootFolderHelp": "Selecciona una carpeta cuyos subcarpetas se muestran como pestañas. Por defecto muestra todas las carpetas de nivel superior.",
+  "allFolders": "Todas las carpetas",
+  "selectRootFolder": "Seleccionar carpeta raíz",
+  "exportPasswordTitle": "Contraseña de exportación",
+  "exportPasswordHint": "Dejar vacío para exportación sin cifrar",
+  "importPasswordTitle": "Archivo cifrado",
+  "importPasswordHint": "Introduce la contraseña de cifrado",
+  "importSettingsAction": "Importar ajustes",
+  "importingSettings": "Importando ajustes…",
+  "orImportExisting": "o importar ajustes existentes",
+  "wrongPassword": "Contraseña incorrecta. Inténtalo de nuevo.",
+  "export_": "Exportar",
+  "resetAll": "Restablecer todos los datos",
+  "resetConfirmTitle": "¿Restablecer la aplicación?",
+  "resetConfirmMessage": "Se eliminarán todos los perfiles, ajustes y marcadores en caché. La aplicación volverá a su estado inicial.",
+  "resetSuccess": "Todos los datos han sido restablecidos"
 }

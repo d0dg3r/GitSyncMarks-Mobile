@@ -4,7 +4,7 @@ Thank you for considering contributing to GitSyncMarks-Mobile!
 
 ## Development Setup
 
-1. Install Flutter SDK (3.0.0 or higher)
+1. Install Flutter SDK (3.41.0 or higher; 3.41.1 recommended for CI parity)
 2. Clone the repository:
    ```bash
    git clone git@github.com:d0dg3r/GitSyncMarks-Mobile.git
@@ -27,10 +27,34 @@ flutter run -d android
 flutter run -d ios
 ```
 
-### Chrome (for web testing)
+### Linux
 ```bash
-flutter run -d chrome
+flutter run -d linux
 ```
+
+### Windows (Windows host only)
+```bash
+flutter run -d windows
+```
+
+### macOS (macOS host only)
+```bash
+flutter run -d macos
+```
+
+## Generating Screenshots
+
+Screenshots werden lokal generiert (CI-Job ist deaktiviert). Vor jedem Release:
+
+```bash
+./scripts/generate-screenshots.sh
+git add test/goldens/ flatpak/screenshots/
+git commit -m "chore: update screenshots"
+```
+
+Oder manuell: `flutter test test/screenshot_test.dart --update-goldens` → `cp test/goldens/*.png flatpak/screenshots/`
+
+Erzeugt: `bookmark-list.png` (Light), `bookmark-list-dark.png` (Dark), `settings-github.png` – für README und Flatpak-Metainfo.
 
 ## Testing
 
@@ -60,9 +84,13 @@ dart format .
 
 ```
 lib/
-├── models/          # Data models
-├── services/        # Business logic and API services
-├── screens/         # UI screens
+├── config/          # Configuration (credentials)
+├── models/          # Data models (bookmark_node, profile)
+├── services/        # GitHub API, cache, settings sync, storage
+├── repositories/    # Bookmark repository (orchestration)
+├── providers/       # State management (BookmarkProvider)
+├── screens/         # bookmark_list_screen, settings_screen, home_screen
+├── utils/           # Favicon, filename helpers
 ├── widgets/         # Reusable widgets
 └── main.dart        # App entry point
 
@@ -70,6 +98,25 @@ test/                # Unit and widget tests
 android/             # Android-specific files
 ios/                 # iOS-specific files
 ```
+
+## F-Droid Metadata
+
+When changing app metadata, release notes, or screenshots, update F-Droid metadata in `fdroid/`:
+
+- `fdroid/metadata/com.d0dg3r.gitsyncmarks.yml` — version, build config
+- `fdroid/metadata/com.d0dg3r.gitsyncmarks/en-US/changelogs/{versionCode}.txt` — changelog per release
+- `fdroid/README.md` — submission instructions
+
+See [fdroid/README.md](fdroid/README.md) for submission workflow.
+
+## Flatpak Test Workflow
+
+To test the Flatpak build without running the full release (Windows, macOS, release job):
+
+- **Manual:** Go to Actions → "Flatpak test" → Run workflow
+- **Tag:** Push `v0.3.0-flatpak-test.1` (or any `v*-flatpak-test*` tag)
+
+Downloads only `build-android-linux` and `build-flatpak`. The `.flatpak` artifact is available from the workflow run.
 
 ## Adding New Features
 

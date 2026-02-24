@@ -8,6 +8,18 @@ class GithubCredentials {
     this.basePath = 'bookmarks',
   }) : token = token.trim();
 
+  factory GithubCredentials.fromJson(Map<String, dynamic> json) {
+    return GithubCredentials(
+      token: (json['token'] as String?) ?? '',
+      owner: (json['owner'] as String?) ?? '',
+      repo: (json['repo'] as String?) ?? '',
+      branch: (json['branch'] as String?) ?? 'main',
+      basePath: (json['filePath'] as String?) ??
+          (json['basePath'] as String?) ??
+          'bookmarks',
+    );
+  }
+
   final String token;
   final String owner;
   final String repo;
@@ -19,4 +31,12 @@ class GithubCredentials {
 
   /// Cache key for bookmark storage (owner|repo|branch|basePath).
   String get cacheKey => '$owner|$repo|$branch|$basePath';
+
+  Map<String, dynamic> toJson() => {
+        'token': token,
+        'owner': owner,
+        'repo': repo,
+        'branch': branch,
+        'filePath': basePath,
+      };
 }

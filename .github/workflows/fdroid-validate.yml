@@ -1,0 +1,29 @@
+# Validate F-Droid submit metadata: no pre-releases allowed
+name: F-Droid Validate
+
+on:
+  push:
+    branches: [main, develop/v0.3.0, develop/0.3.0]
+    paths:
+      - 'fdroid/metadata/*-fdroid-submit.yml'
+  pull_request:
+    paths:
+      - 'fdroid/metadata/*-fdroid-submit.yml'
+
+jobs:
+  validate-no-prereleases:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate F-Droid submit metadata (no pre-releases)
+        run: |
+          for f in fdroid/metadata/*-fdroid-submit.yml; do
+            [ -f "$f" ] || continue
+            echo "Checking $f..."
+            if grep -E '(CurrentVersion|versionName:).*-(beta|alpha|rc|test|dev)[.-]' "$f"; then
+              echo "::error::$f contains pre-release versions (-beta, -alpha, -rc, etc.). F-Droid accepts only stable releases."
+              exit 1
+            fi
+          done
+          echo "OK: All submit metadata files contain only stable versions."

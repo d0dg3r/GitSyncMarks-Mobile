@@ -28,37 +28,30 @@ GitSyncMarks is a Flutter application following a clean architecture pattern wit
 ### lib/models/
 Contains data models that represent the domain entities.
 
-- `bookmark.dart`: Bookmark model with JSON serialization
+- `bookmark_node.dart`: BookmarkNode, BookmarkFolder, Bookmark with JSON serialization
   - Represents both folders and link bookmarks
   - Supports nested hierarchical structure
-  - Handles multiple JSON formats
+  - GitSyncMarks per-file format
+- `profile.dart`: Profile with credentials, sync settings, selected folders
 
 ### lib/services/
 Contains business logic and external integrations.
 
-- `bookmark_service.dart`: Main service for bookmark operations
-  - Fetches bookmarks from GitHub
-  - Handles local caching with SharedPreferences
-  - Parses multiple bookmark formats
-  - Implements offline-first strategy
+- `github_api.dart`: GitHub Contents API client (GET, PUT, DELETE)
+- `settings_sync_service.dart`: Encrypted settings push/pull (extension-compatible)
+- `settings_crypto.dart`: PBKDF2 + AES-256-GCM (gitsyncmarks-enc:v1)
+- `storage_service.dart`: flutter_secure_storage for credentials, profiles, settings sync password
+- `bookmark_cache.dart`: Hive-based offline cache
+
+### lib/repositories/
+- `bookmark_repository.dart`: Fetches bookmarks, move, reorder, add; orchestrates GitHub API
 
 ### lib/screens/
-Contains full-screen UI components.
+- `bookmark_list_screen.dart`: Main screen with folder tabs, ReorderableListView, move-to-folder
+- `settings_screen.dart`: Tabbed Settings (GitHub, Sync, Files, Help, About)
 
-- `bookmarks_screen.dart`: Main screen displaying bookmark tree
-  - Manages app state (loading, error, success)
-  - Handles user interactions
-  - Displays last sync time
-  - Provides refresh functionality
-
-### lib/widgets/
-Contains reusable UI components.
-
-- Currently contains `BookmarkTile` (inline in bookmarks_screen.dart)
-  - Recursive widget for displaying bookmarks
-  - Handles both folders and links
-  - Uses ExpansionTile for folders
-  - Uses ListTile for links
+### lib/providers/
+- `bookmark_provider.dart`: App state, sync, move, reorder; uses ChangeNotifier
 
 ### lib/main.dart
 Application entry point.
@@ -73,9 +66,9 @@ Application entry point.
 ```
 User Action (Open App/Refresh)
          ↓
-BookmarksScreen._loadBookmarks()
+BookmarkListScreen via BookmarkProvider
          ↓
-BookmarkService.fetchBookmarks()
+BookmarkRepository.fetchBookmarks()
          ↓
 ┌────────────────────────────┐
 │ Check Cache (if not force) │
@@ -105,7 +98,7 @@ User Taps Bookmark
          ↓
 BookmarkTile.onTap()
          ↓
-BookmarksScreen._openUrl()
+BookmarkListScreen._openUrl()
          ↓
 url_launcher.launchUrl()
          ↓
@@ -114,18 +107,15 @@ External Browser Opens
 
 ## State Management
 
-The app uses Flutter's built-in `StatefulWidget` for state management.
+The app uses `provider` with `BookmarkProvider` (ChangeNotifier).
 
-### State Variables
-- `_bookmarks`: List of root bookmarks
-- `_isLoading`: Loading state indicator
-- `_error`: Error message (if any)
-- `_lastSync`: Timestamp of last successful sync
-
-### State Updates
-- Initial load on app start
-- Manual refresh via button
-- Error states with fallback to cache
+### State (BookmarkProvider)
+- `_rootFolders`, `_credentials`, `_profiles`, `_activeProfileId`
+- `_lastSyncTime`, `_isLoading`, `_error`
+- `_searchQuery`, `_selectedRootFolders`
+- `_viewRootFolder` — configurable root folder for tab navigation
+- `allowMoveReorder` — edit mode toggle (defaults to false, not persisted)
+- Auto-sync timer, sync-on-start, auto-lock timer (60s inactivity)
 
 ## Caching Strategy
 
@@ -136,10 +126,9 @@ The app uses Flutter's built-in `StatefulWidget` for state management.
 4. On failure: fallback to cache if available
 
 ### Cache Implementation
-- Uses SharedPreferences for persistent storage
-- Stores JSON-serialized bookmark data
+- Uses Hive for bookmark cache (BookmarkCacheService)
+- flutter_secure_storage for credentials, profiles, settings sync password
 - Stores last sync timestamp
-- No expiration (manual refresh required)
 
 ## Error Handling
 
@@ -171,36 +160,65 @@ The app uses Flutter's built-in `StatefulWidget` for state management.
 ### Core Dependencies
 - `flutter`: SDK framework
 - `http`: Network requests
-- `shared_preferences`: Local storage
+- `hive` / `hive_flutter`: Bookmark cache (offline)
+- `flutter_secure_storage`: Credentials, profiles, settings sync password
+- `provider`: State management (BookmarkProvider)
 - `url_launcher`: External browser integration
+- `pointycastle`: Settings sync encryption (PBKDF2, AES-256-GCM)
+- `receive_sharing_intent`: Share link as bookmark (Android/iOS)
+- `file_picker`: Desktop export (save file dialog) and import
+- `share_plus`: Mobile export (share sheet)
+- `uuid`: Device ID generation for individual settings sync
+- `cached_network_image`: Favicon caching
+- `package_info_plus`: App version info
 
 ### Dev Dependencies
 - `flutter_test`: Testing framework
 - `flutter_lints`: Code analysis
 
+## CI / Release
+
+### Release Workflow (`.github/workflows/release.yml`)
+- **Trigger:** Tag push `v*` (all tags build; `-beta`/`-rc`/`-test` → pre-release; clean versions → latest)
+- **Jobs:** `build-android-linux`, `build-windows`, `build-macos`, `build-flatpak`, `release` (Screenshots lokal, CI deaktiviert)
+- **Artifacts:** APK (Android), Flatpak + ZIP (Linux), ZIP (Windows, macOS), screenshots
+- **Linux bundle:** Flutter Linux build packed as tar.gz with `--owner=root --group=root`
+- **Screenshots:** Lokal mit `flutter test test/screenshot_test.dart --update-goldens`, dann `flatpak/screenshots/` committen
+
+### Flatpak Test Workflow (`.github/workflows/flatpak-test.yml`)
+- **Trigger:** `workflow_dispatch` or tag `v*-flatpak-test*`
+- **Jobs:** `build-android-linux` → `build-flatpak` only (no Windows, macOS, release job)
+- **Purpose:** Test Flatpak build without full release
+
+### Flatpak Build Script (`flatpak/build-flatpak.sh`)
+- Tar extraction with `--no-same-owner` (avoids uid/gid errors in build container)
+- Icon path fallback: `flutter_assets/assets/images/app_icon.png`
+- Error handling when tar.gz is missing
+
 ## Testing Strategy
 
-### Unit Tests
-- Model serialization/deserialization
-- Service method behavior
-- Error handling logic
-
 ### Widget Tests
-- UI component rendering
-- User interaction handling
-- Loading states
+- `test/widget_test.dart`: Basic app smoke test
+- `test/screenshot_test.dart`: Golden screenshots for Flatpak metainfo (`test/goldens/` → `flatpak/screenshots/`)
+
+### Unit Tests
+- (Future) Model serialization, service behavior, error handling
 
 ### Integration Tests
 - (Future) End-to-end user flows
 
-## Future Enhancements
+## Features (v0.3.0)
 
-Potential improvements while maintaining read-only nature:
-- Search functionality
-- Bookmark sorting options
-- Multiple repository support
-- Sync scheduling
-- Export bookmarks
-- Statistics and analytics
-- Dark mode
-- Accessibility improvements
+- Settings Sync to Git (extension-compatible, Global/Individual)
+- Move bookmarks to folder (hierarchical picker)
+- Reorder bookmarks (drag-and-drop, persisted)
+- Delete bookmarks (long-press, available in locked mode)
+- Share link as bookmark (receive_sharing_intent)
+- Recursive folder display
+- Password-protected settings export/import (AES-256-GCM)
+- Configurable root folder for tab navigation
+- Auto-lock edit mode (60s inactivity timer)
+- Post-import auto-sync
+- Reset all data (profiles, settings, cache)
+- Search, Export settings, Export bookmarks
+- CI screenshot generation via golden tests

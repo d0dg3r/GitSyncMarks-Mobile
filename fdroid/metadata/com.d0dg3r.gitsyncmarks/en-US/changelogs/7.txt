@@ -1,0 +1,1 @@
+Version 0.3.0: Settings Sync to Git (extension-compatible). Move/reorder bookmarks, share link as bookmark. Password-protected export/import, configurable root folder, auto-lock edit mode. Delete bookmarks (long-press), reset all data, import on empty state.
