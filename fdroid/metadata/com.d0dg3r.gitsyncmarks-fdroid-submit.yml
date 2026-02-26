@@ -16,7 +16,7 @@ Repo: https://github.com/d0dg3r/GitSyncMarks-App
 Builds:
   - versionName: 0.3.1
     versionCode: 8
-    commit: 44f52c0c129a7023b5ccfb1120c36392196dd11d
+    commit: 82b5384992421c84d191d6f2608e3ee5ce0b0991
   - versionName: 0.3.0
     versionCode: 7
     commit: 976bd753483822f603b5b7d73adb483e762878fe
