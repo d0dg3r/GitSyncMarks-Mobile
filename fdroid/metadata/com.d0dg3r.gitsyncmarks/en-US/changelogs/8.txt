@@ -1,0 +1,1 @@
+Version 0.3.1: Repository renamed to GitSyncMarks-App. Beta testing signup for Google Play launch. Play Store preparation (AAB, CI). Cursor rules and AGENTS.md.

@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-02-26
+
 ### Added
 
 - **Beta testing signup:** README banner and [BETA_JOIN.md](BETA_JOIN.md) for Google Play Store launch; Issue template for structured signups
