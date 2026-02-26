@@ -13,6 +13,10 @@ if (keystorePropertiesFile.exists()) {
 android {
     namespace = "com.d0dg3r.gitsyncmarks"
     compileSdk = flutter.compileSdkVersion
+
+    dependenciesInfo {
+        includeInApk = false
+    }
     ndkVersion = "27.0.12077973"
 
     compileOptions {

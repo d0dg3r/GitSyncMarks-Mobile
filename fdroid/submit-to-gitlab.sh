@@ -67,9 +67,13 @@ else
   git checkout -B "$BRANCH"
 fi
 
-# Step 4: Validate submit metadata (no pre-releases)
+# Step 4: Validate submit metadata (no pre-releases, no placeholder commit)
 SUBMIT_FILE="$PROJECT_DIR/fdroid/metadata/com.d0dg3r.gitsyncmarks-fdroid-submit.yml"
-echo "4. Validating submit metadata (no pre-releases allowed)..."
+echo "4. Validating submit metadata..."
+if grep -q 'COMMIT_PLACEHOLDER' "$SUBMIT_FILE" 2>/dev/null; then
+  echo "   ERROR: Replace COMMIT_PLACEHOLDER with actual commit hash (git rev-parse v0.3.2) before submit."
+  exit 1
+fi
 if grep -E '(CurrentVersion|versionName:).*-(beta|alpha|rc|test|dev)[.-]' "$SUBMIT_FILE" >/dev/null 2>&1; then
   echo "   ERROR: Submit metadata contains pre-release versions (-beta, -alpha, -rc, etc.)."
   echo "   F-Droid accepts only stable releases. Fix $SUBMIT_FILE and try again."
