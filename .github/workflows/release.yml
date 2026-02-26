@@ -41,8 +41,12 @@ jobs:
       - name: Build APK
         run: flutter build apk --release --target-platform android-arm64
 
+      - name: Check Play Store signing
+        id: signing
+        run: echo "available=${{ secrets.ANDROID_KEYSTORE_BASE64 != '' }}" >> $GITHUB_OUTPUT
+
       - name: Setup Play Store signing
-        if: ${{ secrets.ANDROID_KEYSTORE_BASE64 != '' }}
+        if: steps.signing.outputs.available == 'true'
         run: |
           echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > android/upload-keystore.jks
           cat > android/key.properties << EOF
@@ -53,7 +57,7 @@ jobs:
           EOF
 
       - name: Build AAB (Play Store)
-        if: ${{ secrets.ANDROID_KEYSTORE_BASE64 != '' }}
+        if: steps.signing.outputs.available == 'true'
         run: flutter build appbundle --release
 
       - name: Install Linux build dependencies
