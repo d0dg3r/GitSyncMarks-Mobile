@@ -1,30 +1,30 @@
 # Join the Beta – GitSyncMarks-Mobile
 
-Vor dem öffentlichen Launch im Google Play Store suchen wir Beta-Tester, die die App auf Android testen und Feedback geben.
+We're looking for beta testers before the public Google Play Store launch. Help us test the app on Android and share your feedback.
 
-## Was wir suchen
+## What we're looking for
 
-- Beta-Tester für den **Google Play Store Launch** (Android)
-- Menschen, die GitSyncMarks oder ähnliche Bookmark-Sync-Workflows nutzen
+- Beta testers for the **Google Play Store launch** (Android)
+- People who use GitSyncMarks or similar bookmark-sync workflows
 
-## Was du bekommst
+## What you get
 
-- Früher Zugang über Play Store Internal/Closed Testing
-- Einfluss auf die finale Version vor dem öffentlichen Launch
-- Direkter Draht zum Team für Feedback
+- Early access via Play Store Internal/Closed Testing
+- Influence on the final version before the public launch
+- Direct line to the team for feedback
 
-## Was wir erwarten
+## What we expect
 
-- Regelmäßiges Testen der App
-- Feedback zu Bugs und UX (kurz und knapp reicht)
-- Optional: Nutzung mit echtem GitSyncMarks-Setup (GitHub-Repo, Token)
+- Regular testing of the app
+- Feedback on bugs and UX (brief is fine)
+- Optional: Use with a real GitSyncMarks setup (GitHub repo, token)
 
-## So meldest du dich
+## How to sign up
 
-**[→ Issue erstellen (Beta-Anmeldung)](https://github.com/d0dg3r/GitSyncMarks-Mobile/issues/new?template=beta-signup.md&labels=beta-signup)**
+**[→ Create issue (Beta signup)](https://github.com/d0dg3r/GitSyncMarks-Mobile/issues/new?template=beta-signup.md&labels=beta-signup)**
 
-Fülle das vorgefertigte Formular aus – wir melden uns bei dir.
+Fill out the template – we'll get back to you.
 
 ---
 
-*Alternative:* [GitHub Discussions](https://github.com/d0dg3r/GitSyncMarks-Mobile/discussions) (falls aktiviert) – z.B. in der Kategorie „Beta testing“.
+*Alternative:* [GitHub Discussions](https://github.com/d0dg3r/GitSyncMarks-Mobile/discussions) (if enabled) – e.g. in the "Beta testing" category.

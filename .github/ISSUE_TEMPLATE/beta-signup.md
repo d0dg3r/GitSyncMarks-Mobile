@@ -1,20 +1,20 @@
 ---
 name: Beta Tester Signup
-about: Melde dich als Beta-Tester für den Google Play Store Launch
+about: Sign up as a beta tester for the Google Play Store launch
 title: "[Beta] "
 labels: beta-signup
 assignees: ''
 ---
 
-## Gerät / Android
+## Device / Android
 
-- **Gerät:** (z.B. Pixel 7, Samsung Galaxy S23)
-- **Android-Version:** (z.B. 14)
+- **Device:** (e.g. Pixel 7, Samsung Galaxy S23)
+- **Android version:** (e.g. 14)
 
 ## Motivation (optional)
 
-Wieso möchtest du Beta testen? Nutzt du bereits GitSyncMarks oder planst du es?
+Why do you want to beta test? Do you already use GitSyncMarks or plan to?
 
-## GitHub-Username (optional)
+## GitHub username (optional)
 
-(falls du möchtest, dass wir dich hier erwähnen)
+(if you'd like us to mention you here)
