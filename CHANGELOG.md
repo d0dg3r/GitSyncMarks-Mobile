@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - **F-Droid:** 0.3.2 build commit in submit metadata now matches v0.3.2 tag (`715e5e2`); was `cecdde3` (wrong commit)
+- **F-Droid check apk:** Removed version 0.3.1 (versionCode 8) from build list – APK contained "Dependency metadata" signing block (fix only in 0.3.2); CI now passes
 
 ### Changed
 
