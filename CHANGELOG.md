@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **F-Droid submit script:** Branch-Update mit Merge (erhält Remote-Änderungen); `--force` für Force-Push; README-Pfad und Build 0.3.1 korrigiert
+
 ## [0.3.1] - 2026-02-26
 
 ### Added

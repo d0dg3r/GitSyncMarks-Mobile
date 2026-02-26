@@ -2,12 +2,26 @@
 # Submit GitSyncMarks-App to F-Droid via GitLab merge request
 # Prerequisites: GitLab account, fdroiddata fork, SSH key configured
 #
-# Usage: ./submit-to-gitlab.sh [GITLAB_USER]
+# Usage: ./submit-to-gitlab.sh [OPTIONS] [GITLAB_USER]
 #   GITLAB_USER: your GitLab username (default: d0dg3r)
+#   --force:     force-push (overwrites remote branch; use when MR has no review changes to keep)
+#
+# First submit: creates branch from master, pushes.
+# Update:       fetches remote branch, rebases, updates metadata, pushes (preserves review feedback).
+# Update --force: resets branch from master, force-pushes (discards remote changes).
 
 set -e
 
-GITLAB_USER="${1:-d0dg3r}"
+FORCE=false
+GITLAB_USER="d0dg3r"
+for arg in "$@"; do
+  if [[ "$arg" == "--force" ]]; then
+    FORCE=true
+  elif [[ "$arg" != --* ]]; then
+    GITLAB_USER="$arg"
+  fi
+done
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 BUILD_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/gitsyncmarks-fdroiddata"
@@ -15,6 +29,7 @@ REPO_URL="git@gitlab.com:${GITLAB_USER}/fdroiddata.git"
 
 echo "F-Droid submission for GitSyncMarks-App"
 echo "GitLab user: $GITLAB_USER"
+[[ "$FORCE" == "true" ]] && echo "Mode: --force (will overwrite remote branch)"
 echo ""
 
 # Step 1: Fork reminder
@@ -37,8 +52,19 @@ else
 fi
 
 # Step 3: Create or checkout branch
-echo "3. Creating branch com.d0dg3r.gitsyncmarks..."
-git checkout -B com.d0dg3r.gitsyncmarks
+BRANCH="com.d0dg3r.gitsyncmarks"
+git fetch origin "$BRANCH" 2>/dev/null || true
+
+if [[ "$FORCE" == "true" ]]; then
+  echo "3. Resetting branch $BRANCH from master (--force)..."
+  git checkout -B "$BRANCH"
+elif git rev-parse "origin/$BRANCH" >/dev/null 2>&1; then
+  echo "3. Updating existing branch $BRANCH from remote..."
+  git checkout -B "$BRANCH" "origin/$BRANCH"
+else
+  echo "3. Creating new branch $BRANCH..."
+  git checkout -B "$BRANCH"
+fi
 
 # Step 4: Validate submit metadata (no pre-releases)
 SUBMIT_FILE="$PROJECT_DIR/fdroid/metadata/com.d0dg3r.gitsyncmarks-fdroid-submit.yml"
@@ -67,16 +93,20 @@ git add metadata/com.d0dg3r.gitsyncmarks.yml metadata/
 if git diff --cached --quiet; then
   echo "   No changes (file may already be committed)"
 else
-  git commit -m "New App: com.d0dg3r.gitsyncmarks"
+  git commit -m "Update: com.d0dg3r.gitsyncmarks"
 fi
 
 # Step 7: Push
 echo "7. Pushing to GitLab..."
-git push -u origin com.d0dg3r.gitsyncmarks
+if [[ "$FORCE" == "true" ]]; then
+  git push --force-with-lease -u origin "$BRANCH"
+else
+  git push -u origin "$BRANCH"
+fi
 
 echo ""
 echo "Done. Create merge request:"
-echo "   https://gitlab.com/${GITLAB_USER}/fdroiddata/-/merge_requests/new?merge_request%5Bsource_branch%5D=com.d0dg3r.gitsyncmarks"
+echo "   https://gitlab.com/${GITLAB_USER}/fdroiddata/-/merge_requests/new?merge_request%5Bsource_branch%5D=$BRANCH"
 echo ""
 echo "Or open: https://gitlab.com/fdroid/fdroiddata/-/merge_requests/new"
-echo "and select branch 'com.d0dg3r.gitsyncmarks' from your fork."
+echo "and select branch '$BRANCH' from your fork."

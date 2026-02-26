@@ -12,7 +12,7 @@ This folder contains metadata for submitting GitSyncMarks-App to [F-Droid](https
    ./fdroid/submit-to-gitlab.sh YOUR_GITLAB_USER
    ```
 
-   Replace `YOUR_GITLAB_USER` with your GitLab username (e.g. `d0dg3r`).
+   Replace `YOUR_GITLAB_USER` with your GitLab username (e.g. `d0dg3r`). Use `--force` to overwrite the remote branch (e.g. when updating and MR has no review changes to keep).
 
 3. Open the MR link printed at the end, or go to [New Merge Request](https://gitlab.com/fdroid/fdroiddata/-/merge_requests/new) and select branch `com.d0dg3r.gitsyncmarks` from your fork.
 
@@ -25,7 +25,7 @@ This folder contains metadata for submitting GitSyncMarks-App to [F-Droid](https
    cd ~/fdroiddata
    git checkout -b com.d0dg3r.gitsyncmarks
    ```
-3. Copy metadata: `cp /path/to/GitSyncMarks-App/fdroid/metadata/com.d0dg3r.gitsyncmarks.yml metadata/`
+3. Copy metadata: `cp /path/to/GitSyncMarks-App/fdroid/metadata/com.d0dg3r.gitsyncmarks-fdroid-submit.yml metadata/com.d0dg3r.gitsyncmarks.yml`
 4. Commit and push: `git add metadata/com.d0dg3r.gitsyncmarks.yml && git commit -m "New App: com.d0dg3r.gitsyncmarks" && git push -u origin com.d0dg3r.gitsyncmarks`
 5. Open a [Merge Request](https://gitlab.com/fdroid/fdroiddata/-/merge_requests/new)
 
