@@ -20,6 +20,12 @@
   <a href="http://apps.obtainium.imranr.dev/redirect.html?r=obtainium://add/https://github.com/d0dg3r/GitSyncMarks-Mobile/releases"><img src="assets/badges/badge_obtainium.png" alt="Get it on Obtainium" height="50"></a>
 </p>
 
+## Beta testing (Google Play)
+
+Vor dem öffentlichen Launch im Google Play Store suchen wir Beta-Tester.
+
+<a href="BETA_JOIN.md"><img src="assets/images/join_beta_app.png" alt="Join the Beta" width="450"></a>
+
 <p align="center">
   <strong>Why GitSyncMarks-Mobile?</strong> View your <a href="https://github.com/d0dg3r/GitSyncMarks">GitSyncMarks</a> bookmarks on mobile. Uses the same per-file format — bookmarks live in <em>your</em> Git repo. Sync once, browse offline. Works with the browser extension's bookmark structure (toolbar, menu, other, mobile).
 </p>
