@@ -53,6 +53,12 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and [ROADMAP.md](ROADMAP.md
 - **i18n**: German, English, Spanish, French
 - **Settings | About | Help**: All in one tabbed screen
 
+## Beta testing (Google Play)
+
+We're looking for beta testers before the public Google Play Store launch.
+
+<a href="BETA_JOIN.md"><img src="assets/images/join_beta_app.png" alt="Join the Beta" width="450"></a>
+
 ## Installation
 
 ### Android
