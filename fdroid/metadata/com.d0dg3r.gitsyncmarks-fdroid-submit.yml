@@ -16,7 +16,7 @@ Repo: https://github.com/d0dg3r/GitSyncMarks-App
 Builds:
   - versionName: 0.3.1
     versionCode: 8
-    commit: v0.3.1
+    commit: d17ce46fc5d33cea9ab02494c59b7cca6c889c96
     output: build/app/outputs/flutter-apk/app-release.apk
     srclibs:
       - flutter@stable
@@ -39,7 +39,7 @@ Builds:
 
   - versionName: 0.3.0
     versionCode: 7
-    commit: v0.3.0
+    commit: 976bd753483822f603b5b7d73adb483e762878fe
     output: build/app/outputs/flutter-apk/app-release.apk
     srclibs:
       - flutter@stable
@@ -62,7 +62,7 @@ Builds:
 
   - versionName: 0.2.0
     versionCode: 6
-    commit: v0.2.0
+    commit: 6e5d731f095888956aaf594a89f6d3e478d3a050
     output: build/app/outputs/flutter-apk/app-release.apk
     srclibs:
       - flutter@stable

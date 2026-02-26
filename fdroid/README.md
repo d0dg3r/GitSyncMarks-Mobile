@@ -13,7 +13,7 @@ This folder contains metadata for submitting GitSyncMarks-App to [F-Droid](https
 4. **Verify:** `git rev-parse vX.Y.Z` must match `commit:` in the YAML (or use tag name directly).
 5. **Submit:** `./fdroid/submit-to-gitlab.sh` from project root.
 
-The tag must exist before submitting. The `commit:` field can be either the tag name (e.g. `v0.3.1`) or the full commit hash.
+The tag must exist before submitting. Use the **full commit hash** in `commit:` (not the tag name) – F-Droid's shallow clone may not fetch tags. Get it with `git rev-parse vX.Y.Z`.
 
 ## One-command submission (GitLab + SSH)
 
