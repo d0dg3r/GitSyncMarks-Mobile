@@ -35,9 +35,12 @@ This document shows where GitSyncMarks-App stands and where it is headed. For im
   auto-lock edit mode, delete bookmarks, post-import auto-sync, reset all data,
   import on empty state, golden_toolkit for screenshots, F-Droid screenshots/icon
 
+### v0.3.1
+- Beta testing signup for Play Store; repository rename (GitSyncMarks-Mobile → GitSyncMarks-App); F-Droid metadata fixes (commit hashes, rewritemeta, pre-release filter)
+
 ---
 
-## Current (v0.3.0)
+## Current (v0.3.1)
 
 - **Features:** Bookmark sync, move, reorder, delete, add via share; Settings Sync to Git; encrypted export/import; configurable root folder; auto-lock edit mode; reset all data; import on empty state
 - **Platforms:** Android (stable), iOS, Windows, macOS, Linux (alpha)
