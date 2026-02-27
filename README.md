@@ -1,7 +1,3 @@
-
-
-# GitSyncMarks-App
-
 ![GitSyncMarks](store/banner_logo.png)
 
 Cross-platform app (Android, iOS, Windows, macOS, Linux) that syncs bookmarks from your GitHub repo and opens URLs in your preferred browser.  
