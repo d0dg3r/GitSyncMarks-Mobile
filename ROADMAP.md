@@ -45,24 +45,26 @@ import on empty state, golden_toolkit for screenshots, F-Droid screenshots/icon
 
 - Beta testing signup for Play Store; repository rename (GitSyncMarks-Mobile → GitSyncMarks-App); F-Droid metadata fixes (commit hashes, rewritemeta, pre-release filter)
 
-### v0.3.3 (in progress)
+### v0.3.3
 
 - Settings sync alignment with extension profiles path: `profiles/<alias>/settings.enc`
 - Client name flow for individual settings sync mode
 - Folder browser for selecting repo base path in GitHub settings
 - `_index.json` compatibility (`version: 2`) during bookmark write operations
+- General settings tab with app language and theme selection
+- Full localization across all supported app locales
 
 ---
 
-## Current (v0.3.3)
+## Current (post-v0.3.3)
 
-- **Features:** Bookmark sync, move, reorder, delete, add via share; Settings Sync to Git with client profile paths; encrypted export/import; configurable root folder; auto-lock edit mode; reset all data; import on empty state
+- **Features:** Stable v0.3.3 feature set shipped (settings sync profile-path compatibility, client-name flow, folder browser, General language/theme settings, and full localization coverage)
 - **Platforms:** Android (beta), iOS, Windows, macOS, Linux (alpha)
-- **Release:** Tag `v`* → APK, Flatpak + ZIP (Linux), ZIP (Windows, macOS); pre-release tags supported
+- **Release:** Stable tags (`vX.Y.Z`) create latest releases; suffixed tags (`-beta/-rc/-test`) create pre-releases
 
 ---
 
-## Near-term
+## Near-term (next cycle)
 
 - Minor UX improvements
 - Stability fixes for alpha platforms
