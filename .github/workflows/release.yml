@@ -21,7 +21,7 @@ jobs:
         run: |
           set -euo pipefail
           echo "GRADLE_USER_HOME=/tmp/gradle-user-home" >> "$GITHUB_ENV"
-          echo "GRADLE_OPTS=-Dorg.gradle.vfs.watch=false" >> "$GITHUB_ENV"
+          echo "GRADLE_OPTS=-Dorg.gradle.vfs.watch=false -Dorg.gradle.daemon=false" >> "$GITHUB_ENV"
           mkdir -p /tmp/gradle-user-home
 
       - name: Install container prerequisites
@@ -91,13 +91,15 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          rm -rf ".gradle" "android/.gradle" || true
+          rm -rf "$GRADLE_USER_HOME"/* || true
           rm -rf "$GRADLE_USER_HOME/caches/journal-1" || true
           if [ -d "$GRADLE_USER_HOME/caches" ]; then
             find "$GRADLE_USER_HOME/caches" -type f -name "file-access.bin" -delete || true
           fi
 
       - name: Build APK
-        run: flutter build apk --release --target-platform android-arm64
+        run: flutter build apk --release --target-platform android-arm64 --verbose
 
       - name: Build AAB (Play Store)
         run: flutter build appbundle --release

@@ -36,6 +36,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Android container Gradle env pinning:** `GRADLE_USER_HOME` is now exported from `$GITHUB_WORKSPACE` at runtime and `GRADLE_OPTS` disables VFS file watching
 - **Android container Gradle journal reset:** Release job now removes `journal-1` and `file-access.bin` artifacts before APK build to prevent bootstrap journal parse crashes
 - **Android container Gradle tmp-home:** `GRADLE_USER_HOME` now points to `/tmp/gradle-user-home` to avoid workspace mount side effects on Gradle access-time journal parsing
+- **Android container Gradle deep clean:** Release job now also clears project-level Gradle caches (`.gradle`, `android/.gradle`) and enables `org.gradle.daemon=false` for deterministic cold startup
+- **Android release debug verbosity:** APK build step now runs with `--verbose` to capture full Gradle diagnostics during CI failure triage
 
 ## [0.3.3] - 2026-03-01
 
