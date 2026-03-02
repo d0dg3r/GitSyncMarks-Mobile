@@ -17,10 +17,13 @@ When opening this project fresh: read CONTEXT.md and PLAN.md first so you have f
 | [BETA_JOIN.md](../BETA_JOIN.md) | Beta testing signup (Google Play launch) |
 | [AGENTS.md](../AGENTS.md) | AI agent guidance (Cursor rules, workflow) |
 
-## Current Status (v0.3.0)
+## Current Status (v0.3.3)
 
 - Bookmark sync, move, reorder, delete, add via share
-- Settings Sync to Git (extension-compatible, Global/Individual mode)
+- Settings Sync to Git (extension-compatible, Global/Individual mode, `profiles/<alias>/settings.enc`)
+- Individual settings sync with explicit client name flow
+- Base path folder browser in GitHub connection settings
+- `_index.json` compatibility handling (`version: 2`) on bookmark write operations
 - Password-protected export/import of settings
 - Configurable root folder for tab-based navigation
 - Auto-lock edit mode (60s inactivity timer)

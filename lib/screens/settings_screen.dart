@@ -4,16 +4,20 @@ import 'dart:convert';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../config/github_credentials.dart';
 import '../models/bookmark_node.dart';
+import '../services/github_api.dart';
 import '../services/settings_sync_service.dart';
 import '../services/storage_service.dart';
 import '../l10n/app_localizations.dart';
 import '../models/profile.dart';
+import '../providers/app_locale_controller.dart';
+import '../providers/app_theme_controller.dart';
 import '../providers/bookmark_provider.dart';
 import '../services/bookmark_export.dart';
 import '../services/settings_crypto.dart';
@@ -53,11 +57,11 @@ class _SettingsScreenState extends State<SettingsScreen>
   void initState() {
     super.initState();
     _tabController = TabController(
-      length: 5,
+      length: 6,
       vsync: this,
-      initialIndex: widget.initialTabIndex.clamp(0, 4),
+      initialIndex: widget.initialTabIndex.clamp(0, 5),
     );
-    _githubSubTabController = TabController(length: 2, vsync: this);
+    _githubSubTabController = TabController(length: 3, vsync: this);
     _filesSubTabController = TabController(length: 2, vsync: this);
     WidgetsBinding.instance.addPostFrameCallback((_) => _loadFromProvider());
   }
@@ -169,6 +173,41 @@ class _SettingsScreenState extends State<SettingsScreen>
     );
   }
 
+  Future<void> _onBrowseBasePath() async {
+    final l = AppLocalizations.of(context)!;
+    final token = _tokenController.text.trim();
+    final owner = _ownerController.text.trim();
+    final repo = _repoController.text.trim();
+    final branch = _branchController.text.trim().isEmpty
+        ? 'main'
+        : _branchController.text.trim();
+    if (token.isEmpty || owner.isEmpty || repo.isEmpty) {
+      _showSnackBar(l.pleaseFillTokenOwnerRepo, isError: true);
+      return;
+    }
+
+    var currentPath = _basePathController.text.trim();
+    if (currentPath.isEmpty) currentPath = 'bookmarks';
+
+    final selected = await showDialog<String>(
+      context: context,
+      builder: (ctx) {
+        return _BasePathBrowserDialog(
+          token: token,
+          owner: owner,
+          repo: repo,
+          branch: branch,
+          initialPath: currentPath,
+        );
+      },
+    );
+    if (selected != null && selected.trim().isNotEmpty) {
+      setState(() {
+        _basePathController.text = selected.trim();
+      });
+    }
+  }
+
   Future<String?> _showTextDialog(
     BuildContext context, {
     required String title,
@@ -223,7 +262,8 @@ class _SettingsScreenState extends State<SettingsScreen>
         }
         return;
       }
-      final picked = result?.files.isNotEmpty == true ? result!.files.single : null;
+      final picked =
+          result?.files.isNotEmpty == true ? result!.files.single : null;
       String content;
       if (kIsWeb) {
         final bytes = picked?.bytes ?? webFallback?.bytes;
@@ -346,29 +386,46 @@ class _SettingsScreenState extends State<SettingsScreen>
     required String action,
     bool allowEmpty = true,
   }) async {
+    final l = AppLocalizations.of(context)!;
     final controller = TextEditingController();
     final result = await showDialog<String>(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(title),
-        content: TextField(
-          controller: controller,
-          obscureText: true,
-          decoration: InputDecoration(hintText: hint),
-          autofocus: true,
-          onSubmitted: (v) => Navigator.pop(ctx, v),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: Text(AppLocalizations.of(context)!.cancel),
+      builder: (ctx) {
+        var isObscured = true;
+        return StatefulBuilder(
+          builder: (ctx, setDialogState) => AlertDialog(
+            title: Text(title),
+            content: TextField(
+              controller: controller,
+              obscureText: isObscured,
+              decoration: InputDecoration(
+                hintText: hint,
+                suffixIcon: IconButton(
+                  tooltip: isObscured ? l.showSecret : l.hideSecret,
+                  onPressed: () {
+                    setDialogState(() => isObscured = !isObscured);
+                  },
+                  icon: Icon(
+                    isObscured ? Icons.visibility : Icons.visibility_off,
+                  ),
+                ),
+              ),
+              autofocus: true,
+              onSubmitted: (v) => Navigator.pop(ctx, v),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(ctx),
+                child: Text(l.cancel),
+              ),
+              FilledButton(
+                onPressed: () => Navigator.pop(ctx, controller.text),
+                child: Text(action),
+              ),
+            ],
           ),
-          FilledButton(
-            onPressed: () => Navigator.pop(ctx, controller.text),
-            child: Text(action),
-          ),
-        ],
-      ),
+        );
+      },
     );
     return result;
   }
@@ -450,53 +507,59 @@ class _SettingsScreenState extends State<SettingsScreen>
         return Stack(
           children: [
             Scaffold(
-          appBar: AppBar(
-            title: Text(l.settings),
-            bottom: TabBar(
-              controller: _tabController,
-              isScrollable: true,
-              tabs: [
-                Tab(text: l.tabGitHub),
-                Tab(text: l.tabSync),
-                Tab(text: l.tabFiles),
-                Tab(text: l.tabHelp),
-                Tab(text: l.tabAbout),
-              ],
+              appBar: AppBar(
+                title: Text(l.settings),
+                bottom: TabBar(
+                  controller: _tabController,
+                  isScrollable: true,
+                  tabAlignment: TabAlignment.start,
+                  padding: const EdgeInsets.only(left: 12, right: 8),
+                  labelPadding: const EdgeInsets.symmetric(horizontal: 8),
+                  tabs: [
+                    Tab(text: l.tabGitHub),
+                    Tab(text: l.tabSync),
+                    Tab(text: l.tabFiles),
+                    Tab(text: l.tabGeneral),
+                    Tab(text: l.tabHelp),
+                    Tab(text: l.tabAbout),
+                  ],
+                ),
+              ),
+              body: TabBarView(
+                controller: _tabController,
+                children: [
+                  _GitHubTab(
+                    provider: provider,
+                    tokenController: _tokenController,
+                    ownerController: _ownerController,
+                    repoController: _repoController,
+                    branchController: _branchController,
+                    basePathController: _basePathController,
+                    subTabController: _githubSubTabController,
+                    onSave: _onSave,
+                    onTestConnection: _onTestConnection,
+                    onSync: _onSync,
+                    onBrowseBasePath: _onBrowseBasePath,
+                    showTextDialog: _showTextDialog,
+                  ),
+                  _SyncTab(provider: provider),
+                  _FilesTab(
+                    provider: provider,
+                    isImporting: _isImporting,
+                    onImport: _onImport,
+                    onExport: _onExport,
+                    onExportBookmarks: _onExportBookmarks,
+                    onClearCache: _onClearCache,
+                    subTabController: _filesSubTabController,
+                  ),
+                  const _GeneralTab(),
+                  _HelpTab(),
+                  _AboutTab(launchUrl: _launchUrl, onReset: _onReset),
+                ],
+              ),
             ),
-          ),
-          body: TabBarView(
-            controller: _tabController,
-            children: [
-              _GitHubTab(
-                provider: provider,
-                tokenController: _tokenController,
-                ownerController: _ownerController,
-                repoController: _repoController,
-                branchController: _branchController,
-                basePathController: _basePathController,
-                subTabController: _githubSubTabController,
-                onSave: _onSave,
-                onTestConnection: _onTestConnection,
-                onSync: _onSync,
-                showTextDialog: _showTextDialog,
-              ),
-              _SyncTab(provider: provider),
-              _FilesTab(
-                provider: provider,
-                isImporting: _isImporting,
-                onImport: _onImport,
-                onExport: _onExport,
-                onExportBookmarks: _onExportBookmarks,
-                onClearCache: _onClearCache,
-                subTabController: _filesSubTabController,
-              ),
-              _HelpTab(),
-              _AboutTab(launchUrl: _launchUrl, onReset: _onReset),
-            ],
-          ),
-        ),
             if (_isImporting)
-              Positioned.fill(
+              const Positioned.fill(
                 child: ModalBarrier(dismissible: false),
               ),
             if (_isImporting)
@@ -533,6 +596,7 @@ class _GitHubTab extends StatelessWidget {
     required this.onSave,
     required this.onTestConnection,
     required this.onSync,
+    required this.onBrowseBasePath,
     required this.showTextDialog,
   });
 
@@ -546,7 +610,12 @@ class _GitHubTab extends StatelessWidget {
   final VoidCallback onSave;
   final VoidCallback onTestConnection;
   final VoidCallback onSync;
-  final Future<String?> Function(BuildContext, {required String title, required String label, required String action, String? initialValue}) showTextDialog;
+  final Future<void> Function() onBrowseBasePath;
+  final Future<String?> Function(BuildContext,
+      {required String title,
+      required String label,
+      required String action,
+      String? initialValue}) showTextDialog;
 
   @override
   Widget build(BuildContext context) {
@@ -565,9 +634,11 @@ class _GitHubTab extends StatelessWidget {
             controller: subTabController,
             isScrollable: true,
             tabAlignment: TabAlignment.center,
+            labelPadding: const EdgeInsets.symmetric(horizontal: 8),
             tabs: [
               Tab(text: l.subTabProfile),
               Tab(text: l.subTabConnection),
+              Tab(text: l.subTabFolders),
             ],
           ),
         ),
@@ -589,7 +660,9 @@ class _GitHubTab extends StatelessWidget {
                 onSave: onSave,
                 onTestConnection: onTestConnection,
                 onSync: onSync,
+                onBrowseBasePath: onBrowseBasePath,
               ),
+              _FoldersSubTab(provider: provider),
             ],
           ),
         ),
@@ -605,7 +678,11 @@ class _ProfileSubTab extends StatelessWidget {
   });
 
   final BookmarkProvider provider;
-  final Future<String?> Function(BuildContext, {required String title, required String label, required String action, String? initialValue}) showTextDialog;
+  final Future<String?> Function(BuildContext,
+      {required String title,
+      required String label,
+      required String action,
+      String? initialValue}) showTextDialog;
 
   @override
   Widget build(BuildContext context) {
@@ -647,8 +724,8 @@ class _ProfileSubTab extends StatelessWidget {
                     if (name == null || name.trim().isEmpty) return;
                     await provider.renameProfile(profile.id, name.trim());
                     if (context.mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text(l.profileRenamed(name.trim()))));
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(l.profileRenamed(name.trim()))));
                     }
                   },
                   onDelete: provider.profiles.length > 1
@@ -657,20 +734,18 @@ class _ProfileSubTab extends StatelessWidget {
                             context: context,
                             builder: (ctx) => AlertDialog(
                               title: Text(l.deleteProfile),
-                              content: Text(
-                                  l.deleteProfileConfirm(profile.name)),
+                              content:
+                                  Text(l.deleteProfileConfirm(profile.name)),
                               actions: [
                                 TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(ctx, false),
+                                  onPressed: () => Navigator.pop(ctx, false),
                                   child: Text(l.cancel),
                                 ),
                                 FilledButton(
                                   style: FilledButton.styleFrom(
                                     backgroundColor: scheme.error,
                                   ),
-                                  onPressed: () =>
-                                      Navigator.pop(ctx, true),
+                                  onPressed: () => Navigator.pop(ctx, true),
                                   child: Text(l.delete),
                                 ),
                               ],
@@ -695,9 +770,7 @@ class _ProfileSubTab extends StatelessWidget {
             child: OutlinedButton.icon(
               onPressed: () async {
                 final name = await showTextDialog(context,
-                    title: l.addProfile,
-                    label: l.profileName,
-                    action: l.add);
+                    title: l.addProfile, label: l.profileName, action: l.add);
                 if (name == null || name.trim().isEmpty) return;
                 final profile = await provider.addProfile(name.trim());
                 if (context.mounted) {
@@ -715,7 +788,7 @@ class _ProfileSubTab extends StatelessWidget {
   }
 }
 
-class _ConnectionSubTab extends StatelessWidget {
+class _ConnectionSubTab extends StatefulWidget {
   const _ConnectionSubTab({
     required this.provider,
     required this.tokenController,
@@ -726,6 +799,7 @@ class _ConnectionSubTab extends StatelessWidget {
     required this.onSave,
     required this.onTestConnection,
     required this.onSync,
+    required this.onBrowseBasePath,
   });
 
   final BookmarkProvider provider;
@@ -737,10 +811,28 @@ class _ConnectionSubTab extends StatelessWidget {
   final VoidCallback onSave;
   final VoidCallback onTestConnection;
   final VoidCallback onSync;
+  final Future<void> Function() onBrowseBasePath;
+
+  @override
+  State<_ConnectionSubTab> createState() => _ConnectionSubTabState();
+}
+
+class _ConnectionSubTabState extends State<_ConnectionSubTab> {
+  bool _obscureToken = true;
 
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context)!;
+    final provider = widget.provider;
+    final tokenController = widget.tokenController;
+    final ownerController = widget.ownerController;
+    final repoController = widget.repoController;
+    final branchController = widget.branchController;
+    final basePathController = widget.basePathController;
+    final onSave = widget.onSave;
+    final onTestConnection = widget.onTestConnection;
+    final onSync = widget.onSync;
+    final onBrowseBasePath = widget.onBrowseBasePath;
 
     return ListView(
       padding: const EdgeInsets.all(16),
@@ -759,8 +851,17 @@ class _ConnectionSubTab extends StatelessWidget {
                     hintText: l.tokenHint,
                     helperText: l.tokenHelper,
                     helperMaxLines: 3,
+                    suffixIcon: IconButton(
+                      tooltip: _obscureToken ? l.showSecret : l.hideSecret,
+                      onPressed: () {
+                        setState(() => _obscureToken = !_obscureToken);
+                      },
+                      icon: Icon(
+                        _obscureToken ? Icons.visibility : Icons.visibility_off,
+                      ),
+                    ),
                   ),
-                  obscureText: true,
+                  obscureText: _obscureToken,
                 ),
                 const SizedBox(height: 14),
                 TextField(
@@ -792,12 +893,24 @@ class _ConnectionSubTab extends StatelessWidget {
                     ),
                     const SizedBox(width: 12),
                     Expanded(
-                      child: TextField(
-                        controller: basePathController,
-                        decoration: InputDecoration(
-                          labelText: l.basePath,
-                          hintText: l.basePathHint,
-                        ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              controller: basePathController,
+                              decoration: InputDecoration(
+                                labelText: l.basePath,
+                                hintText: l.basePathHint,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          IconButton.outlined(
+                            tooltip: l.basePathBrowseTitle,
+                            onPressed: onBrowseBasePath,
+                            icon: const Icon(Icons.folder_open),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -827,8 +940,24 @@ class _ConnectionSubTab extends StatelessWidget {
             ),
           ),
         ),
+        const SizedBox(height: 32),
+      ],
+    );
+  }
+}
+
+class _FoldersSubTab extends StatelessWidget {
+  const _FoldersSubTab({required this.provider});
+
+  final BookmarkProvider provider;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+    return ListView(
+      padding: const EdgeInsets.all(16),
+      children: [
         if (provider.fullRootFolders.isNotEmpty) ...[
-          const SizedBox(height: 24),
           _SectionHeader(title: l.rootFolder),
           Card(
             child: Padding(
@@ -838,20 +967,13 @@ class _ConnectionSubTab extends StatelessWidget {
                 children: [
                   Text(
                     l.rootFolderHelp,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodySmall
-                        ?.copyWith(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .outline),
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Theme.of(context).colorScheme.outline),
                   ),
                   const SizedBox(height: 12),
                   ListTile(
                     leading: const Icon(Icons.folder_open),
-                    title: Text(
-                      provider.viewRootFolder ?? l.allFolders,
-                    ),
+                    title: Text(provider.viewRootFolder ?? l.allFolders),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () => _showRootFolderPicker(context, provider, l),
                   ),
@@ -859,9 +981,9 @@ class _ConnectionSubTab extends StatelessWidget {
               ),
             ),
           ),
+          const SizedBox(height: 24),
         ],
         if (provider.availableRootFolderNames.isNotEmpty) ...[
-          const SizedBox(height: 24),
           _SectionHeader(title: l.displayedFolders),
           Card(
             child: Padding(
@@ -871,20 +993,14 @@ class _ConnectionSubTab extends StatelessWidget {
                 children: [
                   Text(
                     l.displayedFoldersHelp,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodySmall
-                        ?.copyWith(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .outline),
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Theme.of(context).colorScheme.outline),
                   ),
                   const SizedBox(height: 12),
                   Wrap(
                     spacing: 8,
                     runSpacing: 8,
-                    children:
-                        provider.availableRootFolderNames.map((name) {
+                    children: provider.availableRootFolderNames.map((name) {
                       final selected =
                           provider.selectedRootFolders.contains(name);
                       return FilterChip(
@@ -892,15 +1008,14 @@ class _ConnectionSubTab extends StatelessWidget {
                         selected: selected,
                         showCheckmark: true,
                         onSelected: (sel) {
-                          final current = List<String>.from(
-                              provider.selectedRootFolders);
+                          final current =
+                              List<String>.from(provider.selectedRootFolders);
                           if (sel) {
                             current.add(name);
                           } else {
                             current.remove(name);
                           }
-                          provider.setSelectedRootFolders(current,
-                              save: true);
+                          provider.setSelectedRootFolders(current, save: true);
                         },
                       );
                     }).toList(),
@@ -983,8 +1098,7 @@ class _ConnectionSubTab extends StatelessWidget {
     for (final folder in folders) {
       final dirName = folder.dirName ?? folder.title;
       final path = parentPath.isEmpty ? dirName : '$parentPath/$dirName';
-      final subfolders =
-          folder.children.whereType<BookmarkFolder>().toList();
+      final subfolders = folder.children.whereType<BookmarkFolder>().toList();
       final isSelected = provider.viewRootFolder == path;
 
       widgets.add(
@@ -1012,6 +1126,146 @@ class _ConnectionSubTab extends StatelessWidget {
   }
 }
 
+class _BasePathBrowserDialog extends StatefulWidget {
+  const _BasePathBrowserDialog({
+    required this.token,
+    required this.owner,
+    required this.repo,
+    required this.branch,
+    required this.initialPath,
+  });
+
+  final String token;
+  final String owner;
+  final String repo;
+  final String branch;
+  final String initialPath;
+
+  @override
+  State<_BasePathBrowserDialog> createState() => _BasePathBrowserDialogState();
+}
+
+class _BasePathBrowserDialogState extends State<_BasePathBrowserDialog> {
+  late String _currentPath;
+  bool _isLoading = false;
+  String? _error;
+  List<ContentEntry> _dirs = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _currentPath = widget.initialPath.trim();
+    _load(_currentPath);
+  }
+
+  Future<void> _load(String path) async {
+    setState(() {
+      _isLoading = true;
+      _error = null;
+    });
+    final api = GithubApi(
+      token: widget.token,
+      owner: widget.owner,
+      repo: widget.repo,
+      branch: widget.branch,
+      basePath: '',
+    );
+    try {
+      final entries = await api.getContents(path);
+      final dirs = entries.where((e) => e.type == 'dir').toList()
+        ..sort((a, b) => a.name.compareTo(b.name));
+      if (!mounted) return;
+      setState(() {
+        _currentPath = path;
+        _dirs = dirs;
+        _isLoading = false;
+      });
+    } on GithubApiException catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _isLoading = false;
+        _error = e.message;
+      });
+    } finally {
+      api.close();
+    }
+  }
+
+  String _parentOf(String path) {
+    final clean = path.trim().replaceAll(RegExp(r'/+$'), '');
+    if (clean.isEmpty || !clean.contains('/')) return '';
+    return clean.substring(0, clean.lastIndexOf('/'));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+    return AlertDialog(
+      title: Text(l.basePathBrowseTitle),
+      content: SizedBox(
+        width: 520,
+        height: 420,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              _currentPath.isEmpty ? '/' : _currentPath,
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+            const SizedBox(height: 8),
+            if (_currentPath.isNotEmpty)
+              ListTile(
+                dense: true,
+                leading: const Icon(Icons.arrow_upward),
+                title: const Text('..'),
+                onTap: () => _load(_parentOf(_currentPath)),
+              ),
+            Expanded(
+              child: _isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : _error != null
+                      ? Center(
+                          child: Text(
+                            _error!,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.error,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        )
+                      : ListView.builder(
+                          itemCount: _dirs.length,
+                          itemBuilder: (_, i) {
+                            final dir = _dirs[i];
+                            final nextPath = _currentPath.isEmpty
+                                ? dir.name
+                                : '$_currentPath/${dir.name}';
+                            return ListTile(
+                              leading: const Icon(Icons.folder),
+                              title: Text(dir.name),
+                              onTap: () => _load(nextPath),
+                            );
+                          },
+                        ),
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text(l.cancel),
+        ),
+        FilledButton(
+          onPressed: () => Navigator.pop(
+              context, _currentPath.isEmpty ? 'bookmarks' : _currentPath),
+          child: Text(l.selectFolder),
+        ),
+      ],
+    );
+  }
+}
+
 // =============================================================================
 // Sync Tab
 // =============================================================================
@@ -1025,16 +1279,47 @@ class _SyncTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context)!;
     final active = provider.activeProfile;
+    final selectedProfile = active?.syncProfile ?? 'normal';
+    final isCustomProfile = selectedProfile == 'custom';
+    const customIntervalMin = 1;
+    const customIntervalMax = 1440;
 
     String syncProfileLabel(String key) {
       switch (key) {
-        case 'realtime': return l.syncProfileRealtime;
-        case 'frequent': return l.syncProfileFrequent;
-        case 'normal': return l.syncProfileNormal;
-        case 'powersave': return l.syncProfilePowersave;
-        case 'custom': return l.syncProfileCustom;
-        default: return l.syncProfileNormal;
+        case 'realtime':
+          return l.syncProfileRealtime;
+        case 'frequent':
+          return l.syncProfileFrequent;
+        case 'normal':
+          return l.syncProfileNormal;
+        case 'powersave':
+          return l.syncProfilePowersave;
+        case 'custom':
+          return l.syncProfileCustom;
+        default:
+          return l.syncProfileNormal;
       }
+    }
+
+    Future<void> saveCustomInterval(String raw) async {
+      final parsed = int.tryParse(raw.trim());
+      if (parsed == null ||
+          parsed < customIntervalMin ||
+          parsed > customIntervalMax) {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                l.customSyncIntervalErrorRange(
+                    customIntervalMin, customIntervalMax),
+              ),
+            ),
+          );
+        }
+        return;
+      }
+      if (parsed == active?.customIntervalMinutes) return;
+      await provider.updateSyncSettings(customIntervalMinutes: parsed);
     }
 
     return ListView(
@@ -1051,12 +1336,10 @@ class _SyncTab extends StatelessWidget {
                   title: Text(l.automaticSync),
                   value: active?.autoSyncEnabled ?? false,
                   onChanged: (v) async {
-                    await provider.updateSyncSettings(
-                        autoSyncEnabled: v);
+                    await provider.updateSyncSettings(autoSyncEnabled: v);
                     if (context.mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                              content: Text('Auto-sync updated')));
+                          const SnackBar(content: Text('Auto-sync updated')));
                     }
                   },
                 ),
@@ -1064,8 +1347,14 @@ class _SyncTab extends StatelessWidget {
                 ListTile(
                   title: const Text('Sync profile'),
                   trailing: DropdownButton<String>(
-                    value: active?.syncProfile ?? 'normal',
-                    items: ['realtime', 'frequent', 'normal', 'powersave', 'custom']
+                    value: selectedProfile,
+                    items: [
+                      'realtime',
+                      'frequent',
+                      'normal',
+                      'powersave',
+                      'custom'
+                    ]
                         .map((k) => DropdownMenuItem<String>(
                               value: k,
                               child: Text(syncProfileLabel(k)),
@@ -1076,6 +1365,57 @@ class _SyncTab extends StatelessWidget {
                         provider.updateSyncSettings(syncProfile: v);
                       }
                     },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        l.syncProfileMeaningTitle,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text('• ${l.syncProfileMeaningRealtime}'),
+                      Text('• ${l.syncProfileMeaningFrequent}'),
+                      Text('• ${l.syncProfileMeaningNormal}'),
+                      Text('• ${l.syncProfileMeaningPowersave}'),
+                      Text('• ${l.syncProfileMeaningCustom}'),
+                      if (isCustomProfile) ...[
+                        const SizedBox(height: 12),
+                        TextFormField(
+                          key: ValueKey(
+                            'custom-sync-${active?.id ?? 'none'}-${active?.customIntervalMinutes ?? 15}',
+                          ),
+                          initialValue:
+                              (active?.customIntervalMinutes ?? 15).toString(),
+                          keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
+                          decoration: InputDecoration(
+                            labelText: l.customSyncIntervalLabel,
+                            hintText: l.customSyncIntervalHint,
+                          ),
+                          onChanged: (raw) {
+                            final parsed = int.tryParse(raw.trim());
+                            if (parsed == null ||
+                                parsed < customIntervalMin ||
+                                parsed > customIntervalMax) {
+                              return;
+                            }
+                            if (parsed != active?.customIntervalMinutes) {
+                              provider.updateSyncSettings(
+                                  customIntervalMinutes: parsed);
+                            }
+                          },
+                          onFieldSubmitted: saveCustomInterval,
+                        ),
+                      ],
+                    ],
                   ),
                 ),
                 SwitchListTile(
@@ -1127,13 +1467,17 @@ class _FilesTab extends StatelessWidget {
         Container(
           margin: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
+            color: Theme.of(context)
+                .colorScheme
+                .surfaceContainerHighest
+                .withValues(alpha: 0.5),
             borderRadius: BorderRadius.circular(8),
           ),
           child: TabBar(
             controller: subTabController,
             isScrollable: true,
             tabAlignment: TabAlignment.center,
+            labelPadding: const EdgeInsets.symmetric(horizontal: 8),
             tabs: [
               Tab(text: l.subTabExportImport),
               Tab(text: l.subTabSettings),
@@ -1194,10 +1538,7 @@ class _ExportImportSubTab extends StatelessWidget {
                   style: Theme.of(context)
                       .textTheme
                       .bodySmall
-                      ?.copyWith(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .outline),
+                      ?.copyWith(color: Theme.of(context).colorScheme.outline),
                 ),
                 const SizedBox(height: 14),
                 Row(
@@ -1242,8 +1583,7 @@ class _ExportImportSubTab extends StatelessWidget {
                   style: Theme.of(context)
                       .textTheme
                       .bodySmall
-                      ?.copyWith(
-                          color: Theme.of(context).colorScheme.outline),
+                      ?.copyWith(color: Theme.of(context).colorScheme.outline),
                 ),
                 const SizedBox(height: 14),
                 OutlinedButton.icon(
@@ -1274,10 +1614,13 @@ class _SettingsSyncSubTabState extends State<_SettingsSyncSubTab> {
   final _syncService = SettingsSyncService();
   final _storage = StorageService();
   final _passwordController = TextEditingController();
+  final _clientNameController = TextEditingController();
   bool _isLoading = false;
   bool _syncSettingsToGit = false;
-  String _settingsSyncMode = 'global';
+  String _settingsSyncMode = 'individual';
   bool _hasStoredPassword = false;
+  bool _obscureSettingsSyncPassword = true;
+  String? _clientName;
   List<DeviceConfigEntry> _deviceConfigs = [];
   String? _selectedDeviceFilename;
 
@@ -1291,11 +1634,14 @@ class _SettingsSyncSubTabState extends State<_SettingsSyncSubTab> {
     final syncToGit = await _storage.loadSyncSettingsToGit();
     final mode = await _storage.loadSettingsSyncMode();
     final has = await _storage.hasSettingsSyncPassword();
+    final clientName = await _storage.loadSettingsSyncClientName();
     if (mounted) {
       setState(() {
         _syncSettingsToGit = syncToGit;
         _settingsSyncMode = mode;
         _hasStoredPassword = has;
+        _clientName = clientName;
+        _clientNameController.text = clientName ?? '';
       });
     }
   }
@@ -1303,6 +1649,7 @@ class _SettingsSyncSubTabState extends State<_SettingsSyncSubTab> {
   @override
   void dispose() {
     _passwordController.dispose();
+    _clientNameController.dispose();
     super.dispose();
   }
 
@@ -1355,6 +1702,13 @@ class _SettingsSyncSubTabState extends State<_SettingsSyncSubTab> {
       final deviceId = await _storage.getOrCreateDeviceId();
       final syncToGit = await _storage.loadSyncSettingsToGit();
       final mode = await _storage.loadSettingsSyncMode();
+      final clientName = await _storage.loadSettingsSyncClientName();
+      if (clientName == null || clientName.isEmpty) {
+        if (mounted) {
+          _showSnackBar(l.settingsSyncClientNameRequired, isError: true);
+        }
+        return;
+      }
       await _syncService.push(
         creds,
         widget.provider.profiles,
@@ -1362,9 +1716,11 @@ class _SettingsSyncSubTabState extends State<_SettingsSyncSubTab> {
         password,
         mode: mode,
         deviceId: deviceId,
+        clientName: clientName,
         syncSettingsToGit: syncToGit,
         settingsSyncMode: mode,
       );
+      await _storage.saveSettingsSyncPassword(password);
       if (mounted) _showSnackBar(l.settingsSaved);
     } catch (e) {
       if (mounted) _showSnackBar(e.toString(), isError: true);
@@ -1388,7 +1744,15 @@ class _SettingsSyncSubTabState extends State<_SettingsSyncSubTab> {
 
     setState(() => _isLoading = true);
     try {
-      final result = await _syncService.pull(creds, password);
+      const mode = 'individual';
+      final clientName = await _storage.loadSettingsSyncClientName();
+      final result = await _syncService.pull(
+        creds,
+        password,
+        mode: mode,
+        clientName: clientName,
+      );
+      await _storage.saveSettingsSyncPassword(password);
       if (result.syncSettingsToGit != null) {
         await _storage.saveSyncSettingsToGit(result.syncSettingsToGit!);
       }
@@ -1434,6 +1798,11 @@ class _SettingsSyncSubTabState extends State<_SettingsSyncSubTab> {
       _showSnackBar(l.pleaseFillTokenOwnerRepo, isError: true);
       return;
     }
+    final clientName = (_clientNameController.text).trim();
+    if (clientName.isEmpty) {
+      _showSnackBar(l.settingsSyncClientNameRequired, isError: true);
+      return;
+    }
     setState(() => _isLoading = true);
     try {
       final configs = await _syncService.listRemoteDeviceConfigs(creds);
@@ -1454,9 +1823,9 @@ class _SettingsSyncSubTabState extends State<_SettingsSyncSubTab> {
   }
 
   String _configLabel(DeviceConfigEntry c) {
-    return c.deviceId == 'global'
+    return c.filename == 'settings.enc'
         ? 'Global (${c.filename})'
-        : 'Device ${c.deviceId} (${c.filename})';
+        : 'Client ${c.deviceId} (${c.filename})';
   }
 
   void _showConfigPicker() {
@@ -1518,6 +1887,11 @@ class _SettingsSyncSubTabState extends State<_SettingsSyncSubTab> {
       _showSnackBar(l.pleaseFillTokenOwnerRepo, isError: true);
       return;
     }
+    final clientName = (_clientNameController.text).trim();
+    if (clientName.isEmpty) {
+      _showSnackBar(l.settingsSyncClientNameRequired, isError: true);
+      return;
+    }
     final password = await _getPassword();
     if (password.isEmpty) {
       _showSnackBar(l.settingsSyncPasswordMissing, isError: true);
@@ -1535,6 +1909,7 @@ class _SettingsSyncSubTabState extends State<_SettingsSyncSubTab> {
           activeId: r.activeProfileId,
         ),
       );
+      await _storage.saveSettingsSyncPassword(password);
       if (mounted) {
         await _loadStoredState();
         _showSnackBar(l.settingsSyncImportSuccess);
@@ -1544,6 +1919,20 @@ class _SettingsSyncSubTabState extends State<_SettingsSyncSubTab> {
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
+  }
+
+  Future<void> _onCreateClientSetting() async {
+    final l = AppLocalizations.of(context)!;
+    final clientName = _clientNameController.text.trim();
+    if (clientName.isEmpty) {
+      _showSnackBar(l.settingsSyncClientNameRequired, isError: true);
+      return;
+    }
+    await _storage.saveSettingsSyncClientName(clientName);
+    if (mounted) {
+      setState(() => _clientName = clientName);
+    }
+    await _onPush();
   }
 
   @override
@@ -1571,24 +1960,36 @@ class _SettingsSyncSubTabState extends State<_SettingsSyncSubTab> {
                   const Divider(height: 1),
                   const SizedBox(height: 12),
                   DropdownButtonFormField<String>(
-                    value: _settingsSyncMode,
+                    initialValue: _settingsSyncMode,
                     decoration: InputDecoration(
                       labelText: l.settingsSyncModeLabel,
                     ),
                     items: [
                       DropdownMenuItem(
-                        value: 'global',
-                        child: Text(l.settingsSyncModeGlobal),
-                      ),
-                      DropdownMenuItem(
                         value: 'individual',
                         child: Text(l.settingsSyncModeIndividual),
                       ),
                     ],
-                    onChanged: (v) async {
-                      if (v != null) {
-                        await _storage.saveSettingsSyncMode(v);
-                        if (mounted) setState(() => _settingsSyncMode = v);
+                    onChanged: null,
+                  ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    controller: _clientNameController,
+                    decoration: InputDecoration(
+                      labelText: l.settingsSyncClientName,
+                      hintText: l.settingsSyncClientNameHint,
+                    ),
+                    onChanged: (value) async {
+                      final trimmed = value.trim();
+                      if (trimmed.isEmpty) {
+                        await _storage.saveSettingsSyncClientName('');
+                      } else {
+                        await _storage.saveSettingsSyncClientName(trimmed);
+                      }
+                      if (mounted) {
+                        setState(
+                          () => _clientName = trimmed.isEmpty ? null : trimmed,
+                        );
                       }
                     },
                   ),
@@ -1617,10 +2018,26 @@ class _SettingsSyncSubTabState extends State<_SettingsSyncSubTab> {
                     ),
                   TextField(
                     controller: _passwordController,
-                    obscureText: true,
+                    obscureText: _obscureSettingsSyncPassword,
                     decoration: InputDecoration(
                       labelText: l.settingsSyncPassword,
                       hintText: l.settingsSyncPasswordHint,
+                      suffixIcon: IconButton(
+                        tooltip: _obscureSettingsSyncPassword
+                            ? l.showSecret
+                            : l.hideSecret,
+                        onPressed: () {
+                          setState(() {
+                            _obscureSettingsSyncPassword =
+                                !_obscureSettingsSyncPassword;
+                          });
+                        },
+                        icon: Icon(
+                          _obscureSettingsSyncPassword
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                        ),
+                      ),
                     ),
                     onSubmitted: (_) => _onPush(),
                   ),
@@ -1634,7 +2051,7 @@ class _SettingsSyncSubTabState extends State<_SettingsSyncSubTab> {
             ),
           ),
         ),
-        if (_syncSettingsToGit && _settingsSyncMode == 'individual') ...[
+        if (_syncSettingsToGit) ...[
           const SizedBox(height: 20),
           // Card 2: Import from other device
           Card(
@@ -1651,14 +2068,23 @@ class _SettingsSyncSubTabState extends State<_SettingsSyncSubTab> {
                   ),
                   const SizedBox(height: 12),
                   OutlinedButton(
-                    onPressed: _isLoading ? null : _onLoadConfigs,
+                    onPressed: _isLoading ||
+                            (_clientName == null || _clientName!.isEmpty)
+                        ? null
+                        : _onLoadConfigs,
                     child: Text(l.settingsSyncLoadConfigs),
                   ),
                   const SizedBox(height: 12),
-                  InkWell(
-                    onTap: _deviceConfigs.isEmpty
+                  OutlinedButton(
+                    onPressed: _isLoading ||
+                            (_clientName == null || _clientName!.isEmpty)
                         ? null
-                        : _showConfigPicker,
+                        : _onCreateClientSetting,
+                    child: Text(l.settingsSyncCreateBtn),
+                  ),
+                  const SizedBox(height: 12),
+                  InkWell(
+                    onTap: _deviceConfigs.isEmpty ? null : _showConfigPicker,
                     borderRadius: BorderRadius.circular(4),
                     child: Container(
                       padding: const EdgeInsets.symmetric(
@@ -1667,9 +2093,10 @@ class _SettingsSyncSubTabState extends State<_SettingsSyncSubTab> {
                       ),
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: Theme.of(context).colorScheme.outline.withValues(
-                                alpha: 0.5,
-                              ),
+                          color:
+                              Theme.of(context).colorScheme.outline.withValues(
+                                    alpha: 0.5,
+                                  ),
                         ),
                         borderRadius: BorderRadius.circular(4),
                       ),
@@ -1679,7 +2106,8 @@ class _SettingsSyncSubTabState extends State<_SettingsSyncSubTab> {
                             child: Text(
                               _selectedDeviceFilename != null
                                   ? _configLabel(_deviceConfigs.firstWhere(
-                                      (c) => c.filename == _selectedDeviceFilename,
+                                      (c) =>
+                                          c.filename == _selectedDeviceFilename,
                                       orElse: () => DeviceConfigEntry(
                                         filename: _selectedDeviceFilename!,
                                         deviceId: '?',
@@ -1701,7 +2129,9 @@ class _SettingsSyncSubTabState extends State<_SettingsSyncSubTab> {
                   ),
                   const SizedBox(height: 12),
                   FilledButton(
-                    onPressed: _isLoading || _selectedDeviceFilename == null
+                    onPressed: _isLoading ||
+                            _selectedDeviceFilename == null ||
+                            (_clientName == null || _clientName!.isEmpty)
                         ? null
                         : _onImportDeviceConfig,
                     child: Text(l.settingsSyncImport),
@@ -1745,6 +2175,147 @@ class _SettingsSyncSubTabState extends State<_SettingsSyncSubTab> {
             ),
           ),
         ],
+        const SizedBox(height: 32),
+      ],
+    );
+  }
+}
+
+// =============================================================================
+// General Tab
+// =============================================================================
+
+class _GeneralTab extends StatelessWidget {
+  const _GeneralTab();
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+    final localeController = context.watch<AppLocaleController>();
+    final themeController = context.watch<AppThemeController>();
+
+    return ListView(
+      padding: const EdgeInsets.all(16),
+      children: [
+        _SectionHeader(title: l.tabGeneral),
+        Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  l.generalLanguageTitle,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const SizedBox(height: 12),
+                DropdownButtonFormField<String>(
+                  key:
+                      ValueKey('app-language-${localeController.languageCode}'),
+                  initialValue: localeController.languageCode,
+                  decoration: InputDecoration(labelText: l.appLanguage),
+                  items: [
+                    DropdownMenuItem(
+                      value: 'system',
+                      child: Text(l.appLanguageSystem),
+                    ),
+                    DropdownMenuItem(
+                      value: 'de',
+                      child: Text(l.appLanguageGerman),
+                    ),
+                    DropdownMenuItem(
+                      value: 'en',
+                      child: Text(l.appLanguageEnglish),
+                    ),
+                    DropdownMenuItem(
+                      value: 'es',
+                      child: Text(l.appLanguageSpanish),
+                    ),
+                    DropdownMenuItem(
+                      value: 'fr',
+                      child: Text(l.appLanguageFrench),
+                    ),
+                    DropdownMenuItem(
+                      value: 'pt_BR',
+                      child: Text(l.appLanguagePortugueseBrazil),
+                    ),
+                    DropdownMenuItem(
+                      value: 'it',
+                      child: Text(l.appLanguageItalian),
+                    ),
+                    DropdownMenuItem(
+                      value: 'ja',
+                      child: Text(l.appLanguageJapanese),
+                    ),
+                    DropdownMenuItem(
+                      value: 'zh_CN',
+                      child: Text(l.appLanguageChineseSimplified),
+                    ),
+                    DropdownMenuItem(
+                      value: 'ko',
+                      child: Text(l.appLanguageKorean),
+                    ),
+                    DropdownMenuItem(
+                      value: 'ru',
+                      child: Text(l.appLanguageRussian),
+                    ),
+                    DropdownMenuItem(
+                      value: 'tr',
+                      child: Text(l.appLanguageTurkish),
+                    ),
+                    DropdownMenuItem(
+                      value: 'pl',
+                      child: Text(l.appLanguagePolish),
+                    ),
+                  ],
+                  onChanged: (value) async {
+                    if (value == null) return;
+                    await localeController.setLanguageCode(value);
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(l.settingsSaved)),
+                      );
+                    }
+                  },
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  l.generalThemeTitle,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const SizedBox(height: 12),
+                DropdownButtonFormField<String>(
+                  key: ValueKey('app-theme-${themeController.themeModeKey}'),
+                  initialValue: themeController.themeModeKey,
+                  decoration: InputDecoration(labelText: l.appTheme),
+                  items: [
+                    DropdownMenuItem(
+                      value: 'system',
+                      child: Text(l.appThemeSystem),
+                    ),
+                    DropdownMenuItem(
+                      value: 'light',
+                      child: Text(l.appThemeLight),
+                    ),
+                    DropdownMenuItem(
+                      value: 'dark',
+                      child: Text(l.appThemeDark),
+                    ),
+                  ],
+                  onChanged: (value) async {
+                    if (value == null) return;
+                    await themeController.setThemeModeKey(value);
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(l.settingsSaved)),
+                      );
+                    }
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
         const SizedBox(height: 32),
       ],
     );
@@ -1798,8 +2369,7 @@ class _HelpTab extends StatelessWidget {
                   label: l.reportIssue,
                   url: '$_gitSyncMarksAppUrl/issues',
                   onLaunch: () async {
-                    await launchUrl(
-                        Uri.parse('$_gitSyncMarksAppUrl/issues'),
+                    await launchUrl(Uri.parse('$_gitSyncMarksAppUrl/issues'),
                         mode: LaunchMode.externalApplication);
                   },
                 ),
@@ -1911,8 +2481,8 @@ class _AboutTab extends StatelessWidget {
                   final v = snapshot.data?.version ?? '...';
                   return Text(
                     l.version(v),
-                    style: textTheme.bodyMedium
-                        ?.copyWith(color: scheme.outline),
+                    style:
+                        textTheme.bodyMedium?.copyWith(color: scheme.outline),
                   );
                 },
               ),
@@ -1945,20 +2515,18 @@ class _AboutTab extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   l.formatFromGitSyncMarks,
-                  style: textTheme.bodySmall
-                      ?.copyWith(color: scheme.outline),
+                  style: textTheme.bodySmall?.copyWith(color: scheme.outline),
                 ),
                 const SizedBox(height: 12),
                 InkWell(
                   onTap: () => launchUrl(_gitSyncMarksUrl),
                   borderRadius: BorderRadius.circular(12),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 8, horizontal: 4),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
                     child: Row(
                       children: [
-                        Icon(Icons.extension,
-                            color: scheme.primary, size: 22),
+                        Icon(Icons.extension, color: scheme.primary, size: 22),
                         const SizedBox(width: 12),
                         Expanded(
                           child: Column(
@@ -1986,8 +2554,8 @@ class _AboutTab extends StatelessWidget {
                   onTap: () => launchUrl(_gitSyncMarksAppUrl),
                   borderRadius: BorderRadius.circular(12),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 8, horizontal: 4),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
                     child: Row(
                       children: [
                         Icon(Icons.phone_android,
@@ -2019,13 +2587,15 @@ class _AboutTab extends StatelessWidget {
               children: [
                 OutlinedButton.icon(
                   onPressed: onReset,
-                  icon: Icon(Icons.delete_forever, size: 18, color: scheme.error),
+                  icon:
+                      Icon(Icons.delete_forever, size: 18, color: scheme.error),
                   label: Text(
                     l.resetAll,
                     style: TextStyle(color: scheme.error),
                   ),
                   style: OutlinedButton.styleFrom(
-                    side: BorderSide(color: scheme.error.withValues(alpha: 0.5)),
+                    side:
+                        BorderSide(color: scheme.error.withValues(alpha: 0.5)),
                   ),
                 ),
               ],

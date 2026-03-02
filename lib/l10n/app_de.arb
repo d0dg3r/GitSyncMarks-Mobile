@@ -7,14 +7,16 @@
   "noBookmarksYet": "Noch keine Lesezeichen",
   "tapSyncToFetch": "Tippe auf Sync, um Lesezeichen von GitHub zu laden",
   "configureInSettings": "GitHub-Verbindung in Einstellungen einrichten",
-  "sync": "Sync",
+  "sync": "Synchronisieren",
   "openSettings": "Einstellungen öffnen",
   "error": "Fehler",
   "retry": "Erneut",
   "couldNotOpenUrl": "Konnte {url} nicht öffnen",
   "@couldNotOpenUrl": {
     "placeholders": {
-      "url": {"type": "Object"}
+      "url": {
+        "type": "Object"
+      }
     }
   },
   "couldNotOpenLink": "Link konnte nicht geöffnet werden",
@@ -25,26 +27,28 @@
   "syncComplete": "Sync abgeschlossen",
   "syncFailed": "Sync fehlgeschlagen",
   "githubConnection": "GitHub-Verbindung",
-  "personalAccessToken": "Personal Access Token (PAT)",
-  "tokenHint": "ghp_xxxxxxxxxxxxxxxxxxxx",
+  "personalAccessToken": "Persönliches Zugriffstoken (PAT)",
+  "tokenHint": "gp_xxxxxxxxxxxxxxxxxxxxx",
   "tokenHelper": "Classic PAT: Scope 'repo'. Fine-grained: Contents Read. Erstelle unter: GitHub → Settings → Developer settings → Personal access tokens",
   "repositoryOwner": "Repository-Owner",
   "ownerHint": "dein-github-username",
   "repositoryName": "Repository-Name",
-  "repoHint": "my-bookmarks",
-  "branch": "Branch",
-  "branchHint": "main",
-  "basePath": "Base Path",
-  "basePathHint": "bookmarks",
+  "repoHint": "meine-lesezeichen",
+  "branch": "Zweig",
+  "branchHint": "hauptsächlich",
+  "basePath": "Basispfad",
+  "basePathHint": "Lesezeichen",
   "displayedFolders": "Angezeigte Ordner",
   "displayedFoldersHelp": "Verfügbar nach Test Connection. Leere Auswahl = alle Ordner. Mindestens einen wählen = nur diese Ordner.",
   "save": "Speichern",
-  "testConnection": "Test Connection",
-  "syncBookmarks": "Sync Bookmarks",
+  "testConnection": "Testverbindung",
+  "syncBookmarks": "Lesezeichen synchronisieren",
   "version": "Version {appVersion}",
   "@version": {
     "placeholders": {
-      "appVersion": {"type": "String"}
+      "appVersion": {
+        "type": "String"
+      }
     }
   },
   "authorBy": "Von Joe Mild",
@@ -58,18 +62,17 @@
   "help1Body": "Erstelle einen GitHub Personal Access Token (PAT). Classic PAT: Scope 'repo'. Fine-grained: Contents Read. Erstelle unter: GitHub → Settings → Developer settings → Personal access tokens",
   "help2Title": "2. Repo verbinden",
   "help2Body": "Gib in den Einstellungen Owner, Repo-Name und Branch ein. Dein Repo sollte dem Format von GitSyncMarks entsprechen (Ordner wie toolbar, menu, other mit JSON-Dateien pro Lesezeichen).",
-  "help3Title": "3. Test Connection",
+  "help3Title": "3. Testen Sie die Verbindung",
   "help3Body": "Klicke auf \"Test Connection\", um Token und Repo-Zugriff zu prüfen. Bei Erfolg werden die verfügbaren Root-Ordner angezeigt.",
   "help4Title": "4. Ordner auswählen",
   "help4Body": "Wähle die Ordner aus, die angezeigt werden sollen (z.B. toolbar, mobile). Leere Auswahl bedeutet alle Ordner. Mindestens einer gewählt = nur diese Ordner.",
-  "help5Title": "5. Sync",
+  "help5Title": "5. Synchronisieren",
   "help5Body": "Klicke auf \"Sync Bookmarks\", um die Lesezeichen zu laden. Pull-to-Refresh auf der Hauptseite lädt erneut.",
   "whichRepoFormat": "Welches Repo-Format?",
   "repoFormatDescription": "Das Repo sollte dem Format von GitSyncMarks entsprechen: Base Path (z.B. \"bookmarks\") mit Unterordnern wie toolbar, menu, other, mobile. Jeder Ordner hat _order.json und JSON-Dateien pro Lesezeichen mit title und url.",
-  "support": "Support",
+  "support": "Unterstützung",
   "supportText": "Fragen oder Fehlermeldungen? Öffne ein Issue im Projekt-Repository.",
-  "gitSyncMarksAndroidIssues": "GitSyncMarks-App (GitHub Issues)",
-
+  "gitSyncMarksAndroidIssues": "GitSyncMarks-App (GitHub-Probleme)",
   "profiles": "Profile",
   "profile": "Profil",
   "activeProfile": "Aktives Profil",
@@ -79,39 +82,50 @@
   "deleteProfileConfirm": "Profil \"{name}\" löschen?",
   "@deleteProfileConfirm": {
     "placeholders": {
-      "name": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
   },
   "profileName": "Profilname",
   "profileCount": "{count}/{max} Profile",
   "@profileCount": {
     "placeholders": {
-      "count": {"type": "int"},
-      "max": {"type": "int"}
+      "count": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
     }
   },
   "maxProfilesReached": "Maximale Anzahl an Profilen erreicht ({max})",
   "@maxProfilesReached": {
     "placeholders": {
-      "max": {"type": "int"}
+      "max": {
+        "type": "int"
+      }
     }
   },
   "profileAdded": "Profil \"{name}\" hinzugefügt",
   "@profileAdded": {
     "placeholders": {
-      "name": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
   },
   "profileRenamed": "Profil umbenannt zu \"{name}\"",
   "@profileRenamed": {
     "placeholders": {
-      "name": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
   },
   "profileDeleted": "Profil gelöscht",
   "cannotDeleteLastProfile": "Das letzte Profil kann nicht gelöscht werden",
-
-  "importExport": "Import / Export",
+  "importExport": "Importieren / Exportieren",
   "importSettings": "Einstellungen importieren",
   "exportSettings": "Einstellungen exportieren",
   "importSettingsDesc": "Profile aus einer GitSyncMarks-Einstellungsdatei (JSON) importieren",
@@ -119,19 +133,25 @@
   "importSuccess": "{count} Profil(e) importiert",
   "@importSuccess": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "importFailed": "Import fehlgeschlagen: {error}",
   "@importFailed": {
     "placeholders": {
-      "error": {"type": "String"}
+      "error": {
+        "type": "String"
+      }
     }
   },
   "importConfirm": "{count} Profil(e) importieren? Alle bestehenden Profile werden ersetzt.",
   "@importConfirm": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "exportSuccess": "Einstellungen exportiert",
@@ -145,32 +165,70 @@
   "info": "Info",
   "connection": "Verbindung",
   "folders": "Ordner",
-
   "tabGitHub": "GitHub",
-  "tabSync": "Sync",
+  "tabSync": "Synchronisieren",
   "tabFiles": "Dateien",
+  "tabGeneral": "Allgemein",
   "tabHelp": "Hilfe",
   "tabAbout": "Über",
   "subTabProfile": "Profil",
   "subTabConnection": "Verbindung",
-  "subTabExportImport": "Export / Import",
+  "subTabExportImport": "Exportieren / Importieren",
   "subTabSettings": "Einstellungen",
   "searchPlaceholder": "Lesezeichen suchen...",
   "noSearchResults": "Keine Ergebnisse für \"{query}\"",
   "clearSearch": "Suche löschen",
-  "@noSearchResults": {"placeholders": {"query": {"type": "String"}}},
+  "@noSearchResults": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
   "automaticSync": "Automatische Synchronisation",
   "autoSyncActive": "Auto-Sync aktiv",
   "autoSyncDisabled": "Auto-Sync deaktiviert",
   "nextSyncIn": "Nächster Sync in {time}",
-  "@nextSyncIn": {"placeholders": {"time": {"type": "String"}}},
+  "@nextSyncIn": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "syncProfileRealtime": "Echtzeit",
   "syncProfileFrequent": "Häufig",
   "syncProfileNormal": "Normal",
   "syncProfilePowersave": "Energiesparen",
   "syncProfileCustom": "Benutzerdefiniert",
+  "syncProfileMeaningTitle": "Bedeutung der Profile:",
+  "syncProfileMeaningRealtime": "Echtzeit: Synchronisiert jede Minute (maximale Aktualität, höherer Akkuverbrauch).",
+  "syncProfileMeaningFrequent": "Häufig: Synchronisiert alle 5 Minuten (ausgewogen für aktive Nutzung).",
+  "syncProfileMeaningNormal": "Normal: Synchronisiert alle 15 Minuten (empfohlener Standard).",
+  "syncProfileMeaningPowersave": "Energiesparen: Synchronisiert alle 60 Minuten (geringster Akku-/Netzverbrauch).",
+  "syncProfileMeaningCustom": "Benutzerdefiniert: Wähle ein eigenes Intervall in Minuten.",
+  "customSyncIntervalLabel": "Benutzerdefiniertes Sync-Intervall (Minuten)",
+  "customSyncIntervalHint": "Wert zwischen 1 und 1440 eingeben",
+  "customSyncIntervalErrorRange": "Bitte ein gültiges Intervall zwischen {min} und {max} Minuten eingeben.",
+  "@customSyncIntervalErrorRange": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "syncCommit": "Begehen",
   "lastSynced": "Zuletzt synchronisiert {time}",
-  "@lastSynced": {"placeholders": {"time": {"type": "String"}}},
+  "@lastSynced": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "neverSynced": "Noch nie synchronisiert",
   "syncOnStart": "Sync beim App-Start",
   "allowMoveReorder": "Verschieben und Sortieren erlauben",
@@ -178,7 +236,16 @@
   "allowMoveReorderDisable": "Schreibschutz ein (Handles ausblenden)",
   "allowMoveReorderEnable": "Bearbeiten aktivieren (Handles anzeigen)",
   "bookmarkCount": "{count} Lesezeichen in {folders} Ordnern",
-  "@bookmarkCount": {"placeholders": {"count": {"type": "int"}, "folders": {"type": "int"}}},
+  "@bookmarkCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "folders": {
+        "type": "int"
+      }
+    }
+  },
   "syncNow": "Jetzt synchronisieren",
   "addBookmark": "Lesezeichen hinzufügen",
   "addBookmarkTitle": "Lesezeichen hinzufügen",
@@ -196,8 +263,8 @@
   "settingsSyncWithBookmarks": "Einstellungen bei Lesezeichen-Sync mitsynchronisieren",
   "settingsSyncPush": "Einstellungen hochladen",
   "settingsSyncPull": "Einstellungen laden",
-  "settingsSyncModeLabel": "Sync-Modus",
-  "settingsSyncModeGlobal": "Global — für alle Geräte gemeinsam",
+  "settingsSyncModeLabel": "Sync-Modus (nur individuell)",
+  "settingsSyncModeGlobal": "Global — für alle Geräte gemeinsam (Legacy, wird migriert)",
   "settingsSyncModeIndividual": "Individuell — nur dieses Gerät",
   "settingsSyncImportTitle": "Von anderem Gerät importieren",
   "settingsSyncLoadConfigs": "Verfügbare Konfigurationen laden",
@@ -219,7 +286,13 @@
   "moveToFolderFailed": "Lesezeichen konnte nicht verschoben werden",
   "deleteBookmark": "Lesezeichen entfernen",
   "deleteBookmarkConfirm": "Lesezeichen \"{title}\" entfernen?",
-  "@deleteBookmarkConfirm": {"placeholders": {"title": {"type": "String"}}},
+  "@deleteBookmarkConfirm": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
   "bookmarkDeleted": "Lesezeichen entfernt",
   "orderUpdated": "Sortierung aktualisiert",
   "rootFolder": "Stammordner",
@@ -234,9 +307,38 @@
   "importingSettings": "Einstellungen werden importiert…",
   "orImportExisting": "oder vorhandene Einstellungen importieren",
   "wrongPassword": "Falsches Passwort. Bitte erneut versuchen.",
+  "showSecret": "Geheimnis anzeigen",
+  "hideSecret": "Geheimnis ausblenden",
   "export_": "Exportieren",
   "resetAll": "Alle Daten zurücksetzen",
   "resetConfirmTitle": "App zurücksetzen?",
   "resetConfirmMessage": "Alle Profile, Einstellungen und gecachte Lesezeichen werden gelöscht. Die App startet im Ausgangszustand.",
-  "resetSuccess": "Alle Daten wurden zurückgesetzt"
+  "resetSuccess": "Alle Daten wurden zurückgesetzt",
+  "settingsSyncClientName": "Client-Name",
+  "settingsSyncClientNameHint": "z.B. base-android oder laptop-linux",
+  "settingsSyncClientNameRequired": "Bitte einen Client-Namen für den individuellen Modus eingeben.",
+  "settingsSyncCreateBtn": "Meine Client-Einstellung erstellen",
+  "generalLanguageTitle": "Sprache",
+  "generalThemeTitle": "Design",
+  "appLanguage": "App-Sprache",
+  "appTheme": "App-Design",
+  "appLanguageSystem": "Systemstandard",
+  "appThemeSystem": "Systemstandard",
+  "appThemeLight": "Hell",
+  "appThemeDark": "Dunkel",
+  "appLanguageGerman": "Deutsch",
+  "appLanguageEnglish": "Englisch",
+  "appLanguageSpanish": "Spanisch",
+  "appLanguageFrench": "Französisch",
+  "basePathBrowse": "Ordner durchsuchen",
+  "basePathBrowseTitle": "Repository-Ordner auswählen",
+  "subTabFolders": "Ordner",
+  "appLanguagePortugueseBrazil": "Portugiesisch (Brasilien)",
+  "appLanguageItalian": "Italienisch",
+  "appLanguageJapanese": "Japanisch",
+  "appLanguageChineseSimplified": "Chinesisch (Vereinfacht)",
+  "appLanguageKorean": "Koreanisch",
+  "appLanguageRussian": "Russisch",
+  "appLanguageTurkish": "Türkisch",
+  "appLanguagePolish": "Polnisch"
 }

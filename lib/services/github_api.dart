@@ -28,8 +28,9 @@ class GithubApi {
   /// Returns list of entries: files (with base64 content) and subdirectories.
   /// Note: Directory listings typically omit file content; use getFileContent for files.
   Future<List<ContentEntry>> getContents(String path) async {
-    final pathEncoded =
-        path.isEmpty ? path : path.split('/').map((s) => Uri.encodeComponent(s)).join('/');
+    final pathEncoded = path.isEmpty
+        ? path
+        : path.split('/').map((s) => Uri.encodeComponent(s)).join('/');
     final uri = Uri.parse(
       '$_baseUrl/repos/$owner/$repo/contents/$pathEncoded?ref=${Uri.encodeQueryComponent(branch)}',
     );
@@ -138,10 +139,8 @@ class GithubApi {
     String message, {
     String? sha,
   }) async {
-    final pathEncoded = path
-        .split('/')
-        .map((s) => Uri.encodeComponent(s))
-        .join('/');
+    final pathEncoded =
+        path.split('/').map((s) => Uri.encodeComponent(s)).join('/');
     final uri = Uri.parse('$_baseUrl/repos/$owner/$repo/contents/$pathEncoded');
 
     final body = <String, dynamic>{
@@ -187,10 +186,8 @@ class GithubApi {
   /// [path] is relative to repo root (e.g. "bookmarks/toolbar/file.json").
   /// [sha] is required (get from getFileMeta).
   Future<void> deleteFile(String path, String sha, String message) async {
-    final pathEncoded = path
-        .split('/')
-        .map((s) => Uri.encodeComponent(s))
-        .join('/');
+    final pathEncoded =
+        path.split('/').map((s) => Uri.encodeComponent(s)).join('/');
     final uri = Uri.parse('$_baseUrl/repos/$owner/$repo/contents/$pathEncoded');
 
     final response = await _client.delete(
@@ -222,10 +219,8 @@ class GithubApi {
   /// Fetches a file's metadata including sha (for updates).
   /// Returns null if file does not exist.
   Future<FileMeta?> getFileMeta(String path) async {
-    final pathEncoded = path
-        .split('/')
-        .map((s) => Uri.encodeComponent(s))
-        .join('/');
+    final pathEncoded =
+        path.split('/').map((s) => Uri.encodeComponent(s)).join('/');
     final uri = Uri.parse(
       '$_baseUrl/repos/$owner/$repo/contents/$pathEncoded?ref=${Uri.encodeQueryComponent(branch)}',
     );
@@ -249,6 +244,35 @@ class GithubApi {
     }
     final decoded = json.decode(response.body) as Map<String, dynamic>;
     return FileMeta(sha: decoded['sha'] as String?);
+  }
+
+  /// Fetches the HEAD commit SHA for the configured branch.
+  Future<String?> getBranchHeadSha() async {
+    final branchEncoded = Uri.encodeComponent(branch);
+    final uri =
+        Uri.parse('$_baseUrl/repos/$owner/$repo/branches/$branchEncoded');
+    final response = await _client.get(
+      uri,
+      headers: {
+        'Accept': 'application/vnd.github+json',
+        'Authorization': 'token $token',
+        'X-GitHub-Api-Version': '2022-11-28',
+      },
+    );
+    if (response.statusCode != 200) {
+      final message = _parseGitHubErrorMessage(response.body) ??
+          'Failed to fetch branch head: ${response.statusCode}';
+      throw GithubApiException(
+        message,
+        statusCode: response.statusCode,
+        body: response.body,
+      );
+    }
+    final decoded = json.decode(response.body) as Map<String, dynamic>;
+    final commit = decoded['commit'];
+    if (commit is! Map<String, dynamic>) return null;
+    final sha = commit['sha'] as String?;
+    return sha?.trim().isNotEmpty == true ? sha : null;
   }
 
   void close() {

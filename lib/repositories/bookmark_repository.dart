@@ -9,6 +9,8 @@ import '../utils/bookmark_filename.dart';
 class BookmarkRepository {
   BookmarkRepository();
 
+  static const Set<String> _hiddenRootDirs = {'profiles'};
+
   /// Fetches the full bookmark tree from GitHub.
   /// Returns a list of root folders (toolbar, other, menu, mobile).
   Future<List<BookmarkFolder>> fetchBookmarks(GithubCredentials creds) async {
@@ -20,6 +22,7 @@ class BookmarkRepository {
       basePath: creds.basePath,
     );
     try {
+      await _readIndexVersion(api, creds.basePath);
       return await _fetchRootFolders(api, creds.basePath);
     } finally {
       api.close();
@@ -43,6 +46,8 @@ class BookmarkRepository {
       basePath: creds.basePath,
     );
     try {
+      await _ensureIndexVersion2(
+          api, creds.basePath, 'Ensure _index.json (v2)');
       final filename = bookmarkFilename(title, url);
       final content = json.encode({'title': title, 'url': url});
 
@@ -72,7 +77,8 @@ class BookmarkRepository {
 
       if (!orderList.contains(filename)) {
         orderList.insert(0, filename);
-        final newOrderJson = const JsonEncoder.withIndent('  ').convert(orderList);
+        final newOrderJson =
+            const JsonEncoder.withIndent('  ').convert(orderList);
         await api.createOrUpdateFile(
           orderPath,
           newOrderJson,
@@ -104,16 +110,21 @@ class BookmarkRepository {
       basePath: creds.basePath,
     );
     try {
-      final sourceFilename = bookmark.filename ?? bookmarkFilename(bookmark.title, bookmark.url);
+      await _ensureIndexVersion2(
+          api, creds.basePath, 'Ensure _index.json (v2)');
+      final sourceFilename =
+          bookmark.filename ?? bookmarkFilename(bookmark.title, bookmark.url);
       final fromFilePath = '$fromFolderPath/$sourceFilename';
 
       if (fromFolderPath == toFolderPath) return true;
 
-      final content = json.encode({'title': bookmark.title, 'url': bookmark.url});
+      final content =
+          json.encode({'title': bookmark.title, 'url': bookmark.url});
       final toFilename = bookmarkFilename(bookmark.title, bookmark.url);
       final toFilePath = '$toFolderPath/$toFilename';
 
-      await api.createOrUpdateFile(toFilePath, content, 'Move bookmark: ${bookmark.title}');
+      await api.createOrUpdateFile(
+          toFilePath, content, 'Move bookmark: ${bookmark.title}');
 
       final toOrderPath = '$toFolderPath/_order.json';
       String? toOrderJson;
@@ -136,7 +147,8 @@ class BookmarkRepository {
 
       final fileMeta = await api.getFileMeta(fromFilePath);
       if (fileMeta != null && fileMeta.sha != null) {
-        await api.deleteFile(fromFilePath, fileMeta.sha!, 'Move bookmark: ${bookmark.title}');
+        await api.deleteFile(
+            fromFilePath, fileMeta.sha!, 'Move bookmark: ${bookmark.title}');
       }
 
       final fromOrderPath = '$fromFolderPath/_order.json';
@@ -177,13 +189,17 @@ class BookmarkRepository {
       basePath: creds.basePath,
     );
     try {
-      final filename = bookmark.filename ?? bookmarkFilename(bookmark.title, bookmark.url);
+      await _ensureIndexVersion2(
+          api, creds.basePath, 'Ensure _index.json (v2)');
+      final filename =
+          bookmark.filename ?? bookmarkFilename(bookmark.title, bookmark.url);
       final filePath = '$folderPath/$filename';
 
       final fileMeta = await api.getFileMeta(filePath);
       if (fileMeta == null || fileMeta.sha == null) return false;
 
-      await api.deleteFile(filePath, fileMeta.sha!, 'Delete bookmark: ${bookmark.title}');
+      await api.deleteFile(
+          filePath, fileMeta.sha!, 'Delete bookmark: ${bookmark.title}');
 
       final orderPath = '$folderPath/_order.json';
       String? orderJson;
@@ -232,6 +248,8 @@ class BookmarkRepository {
       basePath: creds.basePath,
     );
     try {
+      await _ensureIndexVersion2(
+          api, creds.basePath, 'Ensure _index.json (v2)');
       final orderPath = '$folderPath/_order.json';
       final list = orderEntries.map((e) {
         if (e.isFile) return e.filename!;
@@ -270,7 +288,7 @@ class BookmarkRepository {
     try {
       final entries = await api.getContents(creds.basePath);
       return entries
-          .where((e) => e.type == 'dir')
+          .where((e) => e.type == 'dir' && _isVisibleRootDir(e.name))
           .map((e) => e.name)
           .toList();
     } finally {
@@ -283,12 +301,13 @@ class BookmarkRepository {
     String basePath,
   ) async {
     final entries = await api.getContents(basePath);
-    final dirs = entries.where((e) => e.type == 'dir').toList();
+    final dirs = entries
+        .where((e) => e.type == 'dir' && _isVisibleRootDir(e.name))
+        .toList();
     final rootFolders = <BookmarkFolder>[];
 
     for (final dir in dirs) {
-      final folderPath =
-          basePath.isEmpty ? dir.name : '$basePath/${dir.name}';
+      final folderPath = basePath.isEmpty ? dir.name : '$basePath/${dir.name}';
       final folder = await _fetchFolder(api, folderPath, dir.name);
       if (_hasContent(folder)) {
         rootFolders.add(folder);
@@ -325,17 +344,16 @@ class BookmarkRepository {
     if (orderJson != null) {
       orderEntries = _parseOrder(orderJson);
       // Append dirs from disk not in _order.json (like extension: "picked up automatically")
-      final orderDirNames = orderEntries
-          .where((e) => !e.isFile)
-          .map((e) => e.dirName!)
-          .toSet();
+      final orderDirNames =
+          orderEntries.where((e) => !e.isFile).map((e) => e.dirName!).toSet();
       for (final e in entries) {
         if (e.type == 'dir' && !orderDirNames.contains(e.name)) {
           orderEntries = [...orderEntries, OrderEntry.folder(e.name, e.name)];
         }
       }
       // Append files from disk not in _order.json
-      final orderFiles = orderEntries.where((e) => e.isFile).map((e) => e.filename!).toSet();
+      final orderFiles =
+          orderEntries.where((e) => e.isFile).map((e) => e.filename!).toSet();
       for (final e in entries) {
         if (e.type == 'file' &&
             e.name.endsWith('.json') &&
@@ -420,24 +438,29 @@ class BookmarkRepository {
     if (decoded is List) {
       list = decoded;
     } else if (decoded is Map) {
-      list = (decoded['order'] ?? decoded['items'] ?? decoded['entries'] ?? []) as List<dynamic>? ?? [];
+      list = (decoded['order'] ?? decoded['items'] ?? decoded['entries'] ?? [])
+              as List<dynamic>? ??
+          [];
     } else {
       return [];
     }
 
-    return list.map((e) {
-      if (e is String) {
-        return OrderEntry.file(e);
-      }
-      if (e is Map) {
-        final dir = e['dir'] as String?;
-        final title = e['title'] as String?;
-        if (dir != null) {
-          return OrderEntry.folder(dir, title ?? dir);
-        }
-      }
-      return null;
-    }).whereType<OrderEntry>().toList();
+    return list
+        .map((e) {
+          if (e is String) {
+            return OrderEntry.file(e);
+          }
+          if (e is Map) {
+            final dir = e['dir'] as String?;
+            final title = e['title'] as String?;
+            if (dir != null) {
+              return OrderEntry.folder(dir, title ?? dir);
+            }
+          }
+          return null;
+        })
+        .whereType<OrderEntry>()
+        .toList();
   }
 
   Bookmark? _parseBookmark(String jsonStr, [String? filename]) {
@@ -454,6 +477,50 @@ class BookmarkRepository {
     } catch (_) {}
     return null;
   }
+
+  Future<void> _readIndexVersion(GithubApi api, String basePath) async {
+    final indexPath = '$basePath/_index.json';
+    try {
+      final content = await api.getFileContent(indexPath);
+      final decoded = json.decode(content);
+      if (decoded is Map<String, dynamic> && decoded['version'] == 2) {
+        return;
+      }
+    } catch (_) {
+      // Best-effort only for reads; write operations ensure the file.
+    }
+  }
+
+  Future<void> _ensureIndexVersion2(
+    GithubApi api,
+    String basePath,
+    String message,
+  ) async {
+    final indexPath = '$basePath/_index.json';
+    String? sha;
+    bool needsWrite = true;
+    try {
+      final content = await api.getFileContent(indexPath);
+      final meta = await api.getFileMeta(indexPath);
+      sha = meta?.sha;
+      final decoded = json.decode(content);
+      if (decoded is Map<String, dynamic> && decoded['version'] == 2) {
+        needsWrite = false;
+      }
+    } catch (_) {
+      // Missing or invalid; write a fresh v2 metadata file.
+    }
+
+    if (!needsWrite) return;
+    await api.createOrUpdateFile(
+      indexPath,
+      const JsonEncoder.withIndent('  ').convert({'version': 2}),
+      message,
+      sha: sha,
+    );
+  }
+
+  bool _isVisibleRootDir(String name) => !_hiddenRootDirs.contains(name);
 }
 
 /// Represents an entry in _order.json.

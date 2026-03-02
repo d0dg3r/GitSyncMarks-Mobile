@@ -39,6 +39,7 @@ class BookmarkProvider extends ChangeNotifier {
   String? _error;
   String? _lastSuccessMessage;
   DateTime? _lastSyncTime;
+  String? _lastSyncCommitSha;
   Timer? _autoSyncTimer;
   DateTime? _nextAutoSyncAt;
   String _searchQuery = '';
@@ -101,15 +102,15 @@ class BookmarkProvider extends ChangeNotifier {
     return filtered.isEmpty ? effective : filtered;
   }
 
-  List<String> get availableRootFolderNames =>
-      _effectiveRootFolders.isNotEmpty
-          ? _effectiveRootFolders.map((f) => f.title).toList()
-          : _discoveredRootFolderNames;
+  List<String> get availableRootFolderNames => _effectiveRootFolders.isNotEmpty
+      ? _effectiveRootFolders.map((f) => f.title).toList()
+      : _discoveredRootFolderNames;
 
   /// Full folder tree (ignoring viewRootFolder) for the settings picker.
   List<BookmarkFolder> get fullRootFolders => _rootFolders;
 
-  List<String> get selectedRootFolders => List.unmodifiable(_selectedRootFolders);
+  List<String> get selectedRootFolders =>
+      List.unmodifiable(_selectedRootFolders);
 
   bool get isLoading => _isLoading;
 
@@ -124,6 +125,12 @@ class BookmarkProvider extends ChangeNotifier {
   bool get canAddProfile => _profiles.length < maxProfiles;
 
   DateTime? get lastSyncTime => _lastSyncTime;
+  String? get lastSyncCommitSha => _lastSyncCommitSha;
+  String? get lastSyncCommitShort {
+    final sha = _lastSyncCommitSha?.trim();
+    if (sha == null || sha.isEmpty) return null;
+    return sha.length > 7 ? sha.substring(0, 7) : sha;
+  }
 
   int get bookmarkCount => _countBookmarks(_rootFolders);
 
@@ -354,7 +361,8 @@ class BookmarkProvider extends ChangeNotifier {
         return p.copyWith(
           autoSyncEnabled: autoSyncEnabled ?? p.autoSyncEnabled,
           syncProfile: syncProfile ?? p.syncProfile,
-          customIntervalMinutes: customIntervalMinutes ?? p.customIntervalMinutes,
+          customIntervalMinutes:
+              customIntervalMinutes ?? p.customIntervalMinutes,
           syncOnStart: syncOnStart ?? p.syncOnStart,
           allowMoveReorder: allowMoveReorder ?? p.allowMoveReorder,
         );
@@ -385,7 +393,8 @@ class BookmarkProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> setSelectedRootFolders(List<String> names, {bool save = false}) async {
+  Future<void> setSelectedRootFolders(List<String> names,
+      {bool save = false}) async {
     _selectedRootFolders = names.toList();
     if (save) {
       _updateActiveProfileFolders(names);
@@ -407,7 +416,8 @@ class BookmarkProvider extends ChangeNotifier {
   // Credentials update (from Settings form)
   // ---------------------------------------------------------------------------
 
-  Future<void> updateCredentials(GithubCredentials creds, {bool save = false}) async {
+  Future<void> updateCredentials(GithubCredentials creds,
+      {bool save = false}) async {
     _credentials = creds;
     if (save) {
       if (_profiles.isEmpty) {
@@ -493,7 +503,8 @@ class BookmarkProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final ok = await _repository.addBookmarkToFolder(c, folderPath, title, url);
+      final ok =
+          await _repository.addBookmarkToFolder(c, folderPath, title, url);
       if (ok) {
         _lastSuccessMessage = 'Bookmark added';
         await syncBookmarks();
@@ -533,6 +544,7 @@ class BookmarkProvider extends ChangeNotifier {
       _rootFolders = await _repository.fetchBookmarks(c);
       await _cache.saveCache(c.cacheKey, _rootFolders);
       _lastSyncTime = DateTime.now();
+      _lastSyncCommitSha = await _tryFetchHeadCommitSha(c);
       final bc = _countBookmarks(_rootFolders);
       _lastSuccessMessage =
           'Synced ${_rootFolders.length} folder(s), $bc bookmark(s)';
@@ -541,21 +553,28 @@ class BookmarkProvider extends ChangeNotifier {
       if (syncSettingsToGit) {
         final password = await _storage.loadSettingsSyncPassword();
         if (password != null && password.isNotEmpty) {
-          final mode = await _storage.loadSettingsSyncMode();
+          await _storage.loadSettingsSyncMode();
           final deviceId = await _storage.getOrCreateDeviceId();
-          if (mode == 'global') {
-            try {
-              final result = await _settingsSync.pull(c, password);
-              if (result.syncSettingsToGit != null) {
-                await _storage.saveSyncSettingsToGit(result.syncSettingsToGit!);
-              }
-              if (result.settingsSyncMode != null) {
-                await _storage.saveSettingsSyncMode(result.settingsSyncMode!);
-              }
-              await replaceProfiles(result.profiles, activeId: result.activeProfileId, triggerSync: false);
-            } catch (_) {
-              // settings.enc may not exist yet; ignore
+          final clientName = await _storage.loadSettingsSyncClientName();
+          try {
+            // Legacy-compatible read: pull resolves individual first and can
+            // still read old global/legacy files as fallback.
+            final result = await _settingsSync.pull(
+              c,
+              password,
+              mode: 'individual',
+              clientName: clientName,
+            );
+            if (result.syncSettingsToGit != null) {
+              await _storage.saveSyncSettingsToGit(result.syncSettingsToGit!);
             }
+            if (result.settingsSyncMode != null) {
+              await _storage.saveSettingsSyncMode(result.settingsSyncMode!);
+            }
+            await replaceProfiles(result.profiles,
+                activeId: result.activeProfileId, triggerSync: false);
+          } catch (_) {
+            // settings file may not exist yet; ignore
           }
           if (_profiles.isNotEmpty) {
             try {
@@ -565,10 +584,11 @@ class BookmarkProvider extends ChangeNotifier {
                 _profiles,
                 activeId,
                 password,
-                mode: mode,
+                mode: 'individual',
                 deviceId: deviceId,
+                clientName: clientName,
                 syncSettingsToGit: syncSettingsToGit,
-                settingsSyncMode: mode,
+                settingsSyncMode: 'individual',
               );
             } catch (_) {
               // Push failure does not fail bookmark sync
@@ -616,6 +636,7 @@ class BookmarkProvider extends ChangeNotifier {
     _lastSuccessMessage = null;
     _searchQuery = '';
     _lastSyncTime = null;
+    _lastSyncCommitSha = null;
     _nextAutoSyncAt = null;
     notifyListeners();
   }
@@ -635,6 +656,7 @@ class BookmarkProvider extends ChangeNotifier {
     await _cache.clearCache();
     _rootFolders = [];
     _lastSyncTime = null;
+    _lastSyncCommitSha = null;
     _error = null;
     _lastSuccessMessage = null;
     notifyListeners();
@@ -758,7 +780,8 @@ class BookmarkProvider extends ChangeNotifier {
     return found != null ? '${c.basePath}$found' : null;
   }
 
-  String? _findFolderPath(List<BookmarkFolder> folders, BookmarkFolder target, String prefix) {
+  String? _findFolderPath(
+      List<BookmarkFolder> folders, BookmarkFolder target, String prefix) {
     for (final f in folders) {
       final path = '$prefix/${f.dirName ?? f.title}';
       if (identical(f, target)) return path;
@@ -795,9 +818,11 @@ class BookmarkProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final ok = await _repository.moveBookmarkToFolder(c, fromPath, toPath, bookmark);
+      final ok =
+          await _repository.moveBookmarkToFolder(c, fromPath, toPath, bookmark);
       if (ok) {
-        _rootFolders = _applyMove(bookmark, sourceFolder, targetFolder, _rootFolders);
+        _rootFolders =
+            _applyMove(bookmark, sourceFolder, targetFolder, _rootFolders);
         await _cache.saveCache(c.cacheKey, _rootFolders);
         _lastSuccessMessage = 'Bookmark moved';
         notifyListeners();
@@ -805,7 +830,9 @@ class BookmarkProvider extends ChangeNotifier {
       }
       return false;
     } on GithubApiException catch (e) {
-      _error = e.statusCode != null ? 'Error ${e.statusCode}: ${e.message}' : e.message;
+      _error = e.statusCode != null
+          ? 'Error ${e.statusCode}: ${e.message}'
+          : e.message;
       notifyListeners();
       return false;
     } catch (e) {
@@ -839,12 +866,14 @@ class BookmarkProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final ok = await _repository.deleteBookmarkFromFolder(c, folderPath, bookmark);
+      final ok =
+          await _repository.deleteBookmarkFromFolder(c, folderPath, bookmark);
       if (ok) {
         final newChildren = sourceFolder.children
             .where((c) => !identical(c, bookmark))
             .toList();
-        _rootFolders = _replaceFolderInTree(_rootFolders, sourceFolder, newChildren);
+        _rootFolders =
+            _replaceFolderInTree(_rootFolders, sourceFolder, newChildren);
         await _cache.saveCache(c.cacheKey, _rootFolders);
         _lastSuccessMessage = 'Bookmark deleted';
         notifyListeners();
@@ -852,7 +881,9 @@ class BookmarkProvider extends ChangeNotifier {
       }
       return false;
     } on GithubApiException catch (e) {
-      _error = e.statusCode != null ? 'Error ${e.statusCode}: ${e.message}' : e.message;
+      _error = e.statusCode != null
+          ? 'Error ${e.statusCode}: ${e.message}'
+          : e.message;
       notifyListeners();
       return false;
     } catch (e) {
@@ -900,7 +931,8 @@ class BookmarkProvider extends ChangeNotifier {
     return folders.map((f) {
       if (identical(f, sourceFolder)) {
         final newChildren = f.children.where((c) => c != bookmark).toList();
-        return BookmarkFolder(title: f.title, children: newChildren, dirName: f.dirName);
+        return BookmarkFolder(
+            title: f.title, children: newChildren, dirName: f.dirName);
       }
       if (identical(f, targetFolder)) {
         final targetBookmark = Bookmark(
@@ -909,7 +941,8 @@ class BookmarkProvider extends ChangeNotifier {
           filename: bookmarkFilename(bookmark.title, bookmark.url),
         );
         final newChildren = [...f.children, targetBookmark];
-        return BookmarkFolder(title: f.title, children: newChildren, dirName: f.dirName);
+        return BookmarkFolder(
+            title: f.title, children: newChildren, dirName: f.dirName);
       }
       return BookmarkFolder(
         title: f.title,
@@ -941,7 +974,10 @@ class BookmarkProvider extends ChangeNotifier {
     }
 
     final children = List<BookmarkNode>.from(folder.children);
-    if (oldIndex < 0 || oldIndex >= children.length || newIndex < 0 || newIndex >= children.length) {
+    if (oldIndex < 0 ||
+        oldIndex >= children.length ||
+        newIndex < 0 ||
+        newIndex >= children.length) {
       return false;
     }
     final item = children.removeAt(oldIndex);
@@ -961,7 +997,8 @@ class BookmarkProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final ok = await _repository.updateOrderInFolder(c, folderPath, orderEntries);
+      final ok =
+          await _repository.updateOrderInFolder(c, folderPath, orderEntries);
       if (ok) {
         _rootFolders = _replaceFolderInTree(_rootFolders, folder, children);
         await _cache.saveCache(c.cacheKey, _rootFolders);
@@ -971,7 +1008,9 @@ class BookmarkProvider extends ChangeNotifier {
       }
       return false;
     } on GithubApiException catch (e) {
-      _error = e.statusCode != null ? 'Error ${e.statusCode}: ${e.message}' : e.message;
+      _error = e.statusCode != null
+          ? 'Error ${e.statusCode}: ${e.message}'
+          : e.message;
       notifyListeners();
       return false;
     } catch (e) {
@@ -996,5 +1035,23 @@ class BookmarkProvider extends ChangeNotifier {
       }
     }
     return count;
+  }
+
+  Future<String?> _tryFetchHeadCommitSha(GithubCredentials creds) async {
+    final api = GithubApi(
+      token: creds.token,
+      owner: creds.owner,
+      repo: creds.repo,
+      branch: creds.branch,
+      basePath: creds.basePath,
+    );
+    try {
+      return await api.getBranchHeadSha();
+    } catch (_) {
+      // Commit metadata is best-effort and should not fail bookmark sync.
+      return null;
+    } finally {
+      api.close();
+    }
   }
 }

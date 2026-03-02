@@ -27,7 +27,7 @@ bookmarks/                    # Base path (configurable, default "bookmarks")
 | Role | Chrome | Firefox |
 |------|--------|---------|
 | toolbar | Bookmarks Bar | Bookmarks Toolbar |
-| other | Other Bookmarks | Unfiled Bookmarks |
+| other | Other Bookmarks | Bookmarks Menu (`menu________`) |
 | menu | — | Bookmarks Menu |
 | mobile | Mobile Bookmarks | Mobile Bookmarks |
 
@@ -85,3 +85,15 @@ For `type: "file"`: decode `content` from base64 to get file body.
 4. For each order entry:
    - If string: fetch that `.json`, parse `{title, url}` → Bookmark
    - If object with `dir`: recurse into subfolder, use `title` for display
+
+## Settings Sync Files
+
+Settings sync files are encrypted (`gitsyncmarks-enc:v1`) and extension-compatible.
+
+- Current individual mode path: `profiles/<alias>/settings.enc`
+- Global legacy path: `settings.enc`
+- Individual legacy path: `settings-<id>.enc`
+
+When both old and new paths exist, prefer `profiles/<alias>/settings.enc`.
+
+`profiles/` is an internal settings-sync directory and must not be treated as a bookmark root folder in the app UI.

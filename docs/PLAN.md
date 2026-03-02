@@ -13,6 +13,7 @@
 | 7 – Flatpak/CI | Done | 1 week |
 | 8 – Edit Features | Done | 1 week |
 | 9 – Export/Import & UX | Done | 3–4 days |
+| 10 – Extension Alignment (0.3.3) | In progress | 3–5 days |
 
 ---
 
@@ -157,6 +158,16 @@ lib/
 - [ ] iOS build & distribution (TestFlight / IPA)
 - [ ] Flathub submission
 - [ ] F-Droid store: keep metadata and changelogs in sync with each release (see `fdroid/`)
+
+---
+
+## Phase 10: Extension Alignment (0.3.3) – In Progress
+
+- [x] Settings sync path alignment: `profiles/<alias>/settings.enc` (with legacy read support)
+- [x] Client name workflow for individual settings sync mode
+- [x] Folder browser for selecting base path in Settings
+- [x] `_index.json` compatibility handling (`{ "version": 2 }`)
+- [ ] Final validation on Android/Linux and release notes/docs cleanup
 
 ## Development Quick Start
 

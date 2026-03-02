@@ -1,0 +1,344 @@
+{
+  "@@locale": "ru",
+  "appTitle": "GitSyncMarks",
+  "settings": "Настройки",
+  "about": "О приложении",
+  "help": "Справка",
+  "noBookmarksYet": "Закладок пока нет",
+  "tapSyncToFetch": "Нажмите «Синхронизировать», чтобы загрузить закладки с GitHub",
+  "configureInSettings": "Настройте подключение к GitHub в Настройках",
+  "sync": "Синхронизировать",
+  "openSettings": "Открыть настройки",
+  "error": "Ошибка",
+  "retry": "Повторить",
+  "couldNotOpenUrl": "Не удалось открыть {url}",
+  "@couldNotOpenUrl": {
+    "placeholders": {
+      "url": {
+        "type": "Object"
+      }
+    }
+  },
+  "couldNotOpenLink": "Не удалось открыть ссылку",
+  "pleaseFillTokenOwnerRepo": "Пожалуйста, заполните Token, Owner и Repo",
+  "settingsSaved": "Настройки сохранены",
+  "connectionSuccessful": "Подключение успешно",
+  "connectionFailed": "Ошибка подключения",
+  "syncComplete": "Синхронизация завершена",
+  "syncFailed": "Синхронизация не удалась",
+  "githubConnection": "Подключение к GitHub",
+  "personalAccessToken": "Персональный токен доступа (PAT)",
+  "tokenHint": "ghp_xxxxxxxxxxxxxxxxxxxx",
+  "tokenHelper": "Классический PAT: Область 'repo'. Fine-grained: Contents Read. Создать в: GitHub → Settings → Developer settings → Personal access tokens",
+  "repositoryOwner": "Владелец репозитория",
+  "ownerHint": "ваше-имя-пользователя-github",
+  "repositoryName": "Название репозитория",
+  "repoHint": "мои-закладки",
+  "branch": "Ветка",
+  "branchHint": "main",
+  "basePath": "Базовый путь",
+  "basePathHint": "закладки",
+  "displayedFolders": "Отображаемые папки",
+  "displayedFoldersHelp": "Доступно после теста подключения. Пустой выбор = все папки. Хотя бы одна выбрана = только эти папки.",
+  "save": "Сохранить",
+  "testConnection": "Проверить подключение",
+  "syncBookmarks": "Синхронизировать закладки",
+  "version": "Версия {appVersion}",
+  "@version": {
+    "placeholders": {
+      "appVersion": {
+        "type": "String"
+      }
+    }
+  },
+  "authorBy": "Автор: Joe Mild",
+  "aboutDescription": "Мобильное приложение для GitSyncMarks – просматривайте закладки из вашего репозитория GitHub и открывайте их в браузере.",
+  "projects": "Проекты",
+  "formatFromGitSyncMarks": "Формат закладок взят из GitSyncMarks.",
+  "gitSyncMarksDesc": "Основано на GitSyncMarks – браузерном расширении для двунаправленной синхронизации закладок. Этот проект был разработан с использованием GitSyncMarks в качестве справочника.",
+  "licenseMit": "Лицензия: MIT",
+  "quickGuide": "Краткое руководство",
+  "help1Title": "1. Настройте токен",
+  "help1Body": "Создайте GitHub Personal Access Token (PAT). Классический PAT: Область 'repo'. Fine-grained: Contents Read. Создать в: GitHub → Settings → Developer settings → Personal access tokens",
+  "help2Title": "2. Подключите репозиторий",
+  "help2Body": "Введите Owner, имя Repo и Branch в Настройках. Ваш репозиторий должен соответствовать формату GitSyncMarks (папки toolbar, menu, other с JSON-файлами для каждой закладки).",
+  "help3Title": "3. Проверьте подключение",
+  "help3Body": "Нажмите «Test Connection» для проверки токена и доступа к репозиторию. В случае успеха отображаются доступные корневые папки.",
+  "help4Title": "4. Выберите папки",
+  "help4Body": "Выберите, какие папки отображать (например, toolbar, mobile). Пустой выбор = все. Хотя бы одна выбрана = только эти папки.",
+  "help5Title": "5. Синхронизируйте",
+  "help5Body": "Нажмите «Sync Bookmarks» для загрузки закладок. Потяните для обновления на главном экране.",
+  "whichRepoFormat": "Какой формат репозитория?",
+  "repoFormatDescription": "Репозиторий должен соответствовать формату GitSyncMarks: Base Path (например, \"bookmarks\") с подпапками toolbar, menu, other, mobile. В каждой папке есть _order.json и JSON-файлы для каждой закладки с title и url.",
+  "support": "Поддержка",
+  "supportText": "Вопросы или сообщения об ошибках? Откройте issue в репозитории проекта.",
+  "gitSyncMarksAndroidIssues": "GitSyncMarks-App (GitHub Issues)",
+  "profiles": "Профили",
+  "profile": "Профиль",
+  "activeProfile": "Активный профиль",
+  "addProfile": "Добавить профиль",
+  "renameProfile": "Переименовать профиль",
+  "deleteProfile": "Удалить профиль",
+  "deleteProfileConfirm": "Удалить профиль «{name}»?",
+  "@deleteProfileConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "profileName": "Название профиля",
+  "profileCount": "{count}/{max} профилей",
+  "@profileCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "maxProfilesReached": "Достигнуто максимальное количество профилей ({max})",
+  "@maxProfilesReached": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "profileAdded": "Профиль «{name}» добавлен",
+  "@profileAdded": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "profileRenamed": "Профиль переименован в «{name}»",
+  "@profileRenamed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "profileDeleted": "Профиль удалён",
+  "cannotDeleteLastProfile": "Нельзя удалить последний профиль",
+  "importExport": "Импорт / Экспорт",
+  "importSettings": "Импорт настроек",
+  "exportSettings": "Экспорт настроек",
+  "importSettingsDesc": "Импортировать профили из файла настроек GitSyncMarks (JSON)",
+  "exportSettingsDesc": "Экспортировать все профили как файл настроек GitSyncMarks",
+  "importSuccess": "Импортировано {count} профиль(ей)",
+  "@importSuccess": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importFailed": "Ошибка импорта: {error}",
+  "@importFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "importConfirm": "Импортировать {count} профиль(ей)? Все существующие профили будут заменены.",
+  "@importConfirm": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "exportSuccess": "Настройки экспортированы",
+  "cancel": "Отмена",
+  "delete": "Удалить",
+  "rename": "Переименовать",
+  "add": "Добавить",
+  "import_": "Импорт",
+  "replace": "Заменить",
+  "bookmarks": "Закладки",
+  "info": "Информация",
+  "connection": "Подключение",
+  "folders": "Папки",
+  "tabGitHub": "GitHub",
+  "tabSync": "Синхронизация",
+  "tabFiles": "Файлы",
+  "tabGeneral": "Общие",
+  "tabHelp": "Справка",
+  "tabAbout": "О приложении",
+  "subTabProfile": "Профиль",
+  "subTabConnection": "Подключение",
+  "subTabExportImport": "Экспорт / Импорт",
+  "subTabSettings": "Настройки",
+  "searchPlaceholder": "Поиск закладок...",
+  "noSearchResults": "Нет результатов для «{query}»",
+  "clearSearch": "Очистить поиск",
+  "@noSearchResults": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "automaticSync": "Автоматическая синхронизация",
+  "autoSyncActive": "Автосинхронизация активна",
+  "autoSyncDisabled": "Автосинхронизация отключена",
+  "nextSyncIn": "Следующая синхронизация через {time}",
+  "@nextSyncIn": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "syncProfileRealtime": "Реальное время",
+  "syncProfileFrequent": "Частая",
+  "syncProfileNormal": "Нормальная",
+  "syncProfilePowersave": "Экономия энергии",
+  "syncProfileCustom": "Пользовательская",
+  "syncProfileMeaningTitle": "Что означают эти профили:",
+  "syncProfileMeaningRealtime": "Реальное время: синхронизация каждую минуту (максимальная актуальность, повышенный расход батареи).",
+  "syncProfileMeaningFrequent": "Частая: синхронизация каждые 5 минут (сбалансированно для активного использования).",
+  "syncProfileMeaningNormal": "Нормальная: синхронизация каждые 15 минут (рекомендуемый режим по умолчанию).",
+  "syncProfileMeaningPowersave": "Экономия энергии: синхронизация каждые 60 минут (минимальный расход батареи/сети).",
+  "syncProfileMeaningCustom": "Пользовательская: выберите собственный интервал в минутах.",
+  "customSyncIntervalLabel": "Пользовательский интервал синхронизации (минуты)",
+  "customSyncIntervalHint": "Введите значение от 1 до 1440",
+  "customSyncIntervalErrorRange": "Введите корректный интервал от {min} до {max} минут.",
+  "@customSyncIntervalErrorRange": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "syncCommit": "Коммит",
+  "lastSynced": "Последняя синхронизация {time}",
+  "@lastSynced": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "neverSynced": "Никогда не синхронизировалось",
+  "syncOnStart": "Синхронизировать при запуске",
+  "allowMoveReorder": "Разрешить перемещение и изменение порядка",
+  "allowMoveReorderDesc": "Ручки перетаскивания и перемещение в папку. Отключите для режима только чтение.",
+  "allowMoveReorderDisable": "Только чтение (скрыть ручки)",
+  "allowMoveReorderEnable": "Включить редактирование (показать ручки)",
+  "bookmarkCount": "{count} закладок в {folders} папках",
+  "@bookmarkCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "folders": {
+        "type": "int"
+      }
+    }
+  },
+  "syncNow": "Синхронизировать сейчас",
+  "addBookmark": "Добавить закладку",
+  "addBookmarkTitle": "Добавить закладку",
+  "bookmarkTitle": "Название закладки",
+  "selectFolder": "Выбрать папку",
+  "exportBookmarks": "Экспортировать закладки",
+  "settingsSyncToGit": "Синхронизировать настройки с Git (зашифровано)",
+  "settingsSyncPassword": "Пароль шифрования",
+  "settingsSyncPasswordHint": "Установить один раз для устройства. Должен быть одинаковым на всех устройствах.",
+  "settingsSyncRememberPassword": "Запомнить пароль",
+  "settingsSyncPasswordSaved": "Пароль сохранён (используется для Push/Pull)",
+  "settingsSyncClearPassword": "Очистить сохранённый пароль",
+  "settingsSyncSaveBtn": "Сохранить пароль",
+  "settingsSyncPasswordMissing": "Пожалуйста, введите пароль.",
+  "settingsSyncWithBookmarks": "Синхронизировать настройки при синхронизации закладок",
+  "settingsSyncPush": "Загрузить настройки",
+  "settingsSyncPull": "Скачать настройки",
+  "settingsSyncModeLabel": "Режим синхронизации (только индивидуальный)",
+  "settingsSyncModeGlobal": "Глобальный — общий для всех устройств (legacy, мигрировано)",
+  "settingsSyncModeIndividual": "Индивидуальный — только это устройство",
+  "settingsSyncImportTitle": "Импорт с другого устройства",
+  "settingsSyncLoadConfigs": "Загрузить доступные конфигурации",
+  "settingsSyncImport": "Импорт",
+  "settingsSyncImportEmpty": "Конфигурации устройств не найдены",
+  "settingsSyncImportSuccess": "Настройки успешно импортированы",
+  "reportIssue": "Сообщить о проблеме",
+  "documentation": "Документация",
+  "voteBacklog": "Проголосовать за бэклог",
+  "discussions": "Обсуждения",
+  "moveUp": "Переместить вверх",
+  "moveDown": "Переместить вниз",
+  "shareLinkAddBookmark": "Добавить общую ссылку как закладку",
+  "clearCache": "Очистить кэш",
+  "clearCacheDesc": "Удалить кэшированные данные закладок. Синхронизация запустится автоматически, если GitHub настроен.",
+  "clearCacheSuccess": "Кэш очищен.",
+  "moveToFolder": "Переместить в папку",
+  "moveToFolderSuccess": "Закладка перемещена",
+  "moveToFolderFailed": "Не удалось переместить закладку",
+  "deleteBookmark": "Удалить закладку",
+  "deleteBookmarkConfirm": "Удалить закладку «{title}»?",
+  "@deleteBookmarkConfirm": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "bookmarkDeleted": "Закладка удалена",
+  "orderUpdated": "Порядок обновлён",
+  "rootFolder": "Корневая папка",
+  "rootFolderHelp": "Выберите папку, подпапки которой станут вкладками. По умолчанию отображаются все папки верхнего уровня.",
+  "allFolders": "Все папки",
+  "selectRootFolder": "Выбрать корневую папку",
+  "exportPasswordTitle": "Пароль экспорта",
+  "exportPasswordHint": "Оставьте пустым для незашифрованного экспорта",
+  "importPasswordTitle": "Зашифрованный файл",
+  "importPasswordHint": "Введите пароль шифрования",
+  "importSettingsAction": "Импорт настроек",
+  "importingSettings": "Импортирование настроек…",
+  "orImportExisting": "или импортировать существующие настройки",
+  "wrongPassword": "Неверный пароль. Пожалуйста, попробуйте снова.",
+  "showSecret": "Показать секрет",
+  "hideSecret": "Скрыть секрет",
+  "export_": "Экспорт",
+  "resetAll": "Сбросить все данные",
+  "resetConfirmTitle": "Сбросить приложение?",
+  "resetConfirmMessage": "Все профили, настройки и кэшированные закладки будут удалены. Приложение вернётся в исходное состояние.",
+  "resetSuccess": "Все данные сброшены",
+  "settingsSyncClientName": "Имя клиента",
+  "settingsSyncClientNameHint": "например, base-android или laptop-linux",
+  "settingsSyncClientNameRequired": "Пожалуйста, введите имя клиента для индивидуального режима.",
+  "settingsSyncCreateBtn": "Создать настройки моего клиента",
+  "generalLanguageTitle": "Язык",
+  "generalThemeTitle": "Тема",
+  "appLanguage": "Язык приложения",
+  "appTheme": "Тема приложения",
+  "appLanguageSystem": "Системный по умолчанию",
+  "appThemeSystem": "Системный по умолчанию",
+  "appThemeLight": "Светлая",
+  "appThemeDark": "Тёмная",
+  "appLanguageGerman": "Немецкий",
+  "appLanguageEnglish": "Английский",
+  "appLanguageSpanish": "Испанский",
+  "appLanguageFrench": "Французский",
+  "basePathBrowse": "Обзор папок",
+  "basePathBrowseTitle": "Выбрать папку репозитория",
+  "subTabFolders": "Папки",
+  "appLanguagePortugueseBrazil": "Португальский (Бразилия)",
+  "appLanguageItalian": "Итальянский",
+  "appLanguageJapanese": "Японский",
+  "appLanguageChineseSimplified": "Китайский (упрощённый)",
+  "appLanguageKorean": "Корейский",
+  "appLanguageRussian": "Русский",
+  "appLanguageTurkish": "Турецкий",
+  "appLanguagePolish": "Польский"
+}

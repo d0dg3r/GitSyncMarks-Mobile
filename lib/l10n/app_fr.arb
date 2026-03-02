@@ -1,6 +1,6 @@
 {
   "@@locale": "fr",
-  "appTitle": "GitSyncMarks",
+  "appTitle": "Marques GitSync",
   "settings": "Paramètres",
   "about": "À propos",
   "help": "Aide",
@@ -14,7 +14,9 @@
   "couldNotOpenUrl": "Impossible d'ouvrir {url}",
   "@couldNotOpenUrl": {
     "placeholders": {
-      "url": {"type": "Object"}
+      "url": {
+        "type": "Object"
+      }
     }
   },
   "couldNotOpenLink": "Impossible d'ouvrir le lien",
@@ -25,26 +27,28 @@
   "syncComplete": "Synchronisation terminée",
   "syncFailed": "Synchronisation échouée",
   "githubConnection": "Connexion GitHub",
-  "personalAccessToken": "Personal Access Token (PAT)",
-  "tokenHint": "ghp_xxxxxxxxxxxxxxxxxxxx",
+  "personalAccessToken": "Jeton d'accès personnel (PAT)",
+  "tokenHint": "ghp_xxxxxxxxxxxxxxxxxxxxx",
   "tokenHelper": "Classic PAT: Scope 'repo'. Fine-grained: Contents Read. Créer dans: GitHub → Settings → Developer settings → Personal access tokens",
   "repositoryOwner": "Propriétaire du dépôt",
   "ownerHint": "votre-username-github",
   "repositoryName": "Nom du dépôt",
-  "repoHint": "my-bookmarks",
+  "repoHint": "mes-favoris",
   "branch": "Branche",
-  "branchHint": "main",
+  "branchHint": "principal",
   "basePath": "Chemin de base",
-  "basePathHint": "bookmarks",
+  "basePathHint": "signets",
   "displayedFolders": "Dossiers affichés",
   "displayedFoldersHelp": "Disponible après Test Connection. Sélection vide = tous les dossiers. Au moins un sélectionné = uniquement ces dossiers.",
   "save": "Enregistrer",
-  "testConnection": "Test Connection",
-  "syncBookmarks": "Sync Bookmarks",
+  "testConnection": "Tester la connexion",
+  "syncBookmarks": "Synchroniser les signets",
   "version": "Version {appVersion}",
   "@version": {
     "placeholders": {
-      "appVersion": {"type": "String"}
+      "appVersion": {
+        "type": "String"
+      }
     }
   },
   "authorBy": "Par Joe Mild",
@@ -58,18 +62,17 @@
   "help1Body": "Créez un GitHub Personal Access Token (PAT). Classic PAT: Scope 'repo'. Fine-grained: Contents Read. Créer dans: GitHub → Settings → Developer settings → Personal access tokens",
   "help2Title": "2. Connecter le dépôt",
   "help2Body": "Entrez Owner, nom du Repo et Branch dans Paramètres. Votre dépôt doit suivre le format GitSyncMarks (dossiers comme toolbar, menu, other avec fichiers JSON par favori).",
-  "help3Title": "3. Test Connection",
+  "help3Title": "3. Tester la connexion",
   "help3Body": "Cliquez sur \"Test Connection\" pour vérifier le token et l'accès au dépôt. En cas de succès, les dossiers racine disponibles sont affichés.",
   "help4Title": "4. Sélectionner les dossiers",
   "help4Body": "Choisissez les dossiers à afficher (ex. toolbar, mobile). Sélection vide = tous. Au moins un sélectionné = uniquement ces dossiers.",
-  "help5Title": "5. Sync",
+  "help5Title": "5. Synchronisation",
   "help5Body": "Cliquez sur \"Sync Bookmarks\" pour charger les favoris. Pull-to-refresh sur l'écran principal recharge.",
   "whichRepoFormat": "Quel format de dépôt ?",
   "repoFormatDescription": "Le dépôt doit suivre le format GitSyncMarks: Base Path (ex. \"bookmarks\") avec des sous-dossiers comme toolbar, menu, other, mobile. Chaque dossier a _order.json et des fichiers JSON par favori avec title et url.",
-  "support": "Support",
+  "support": "Soutien",
   "supportText": "Questions ou messages d'erreur ? Ouvrez une issue dans le dépôt du projet.",
-  "gitSyncMarksAndroidIssues": "GitSyncMarks-App (GitHub Issues)",
-
+  "gitSyncMarksAndroidIssues": "GitSyncMarks-App (problèmes GitHub)",
   "profiles": "Profils",
   "profile": "Profil",
   "activeProfile": "Profil actif",
@@ -79,38 +82,49 @@
   "deleteProfileConfirm": "Supprimer le profil \"{name}\" ?",
   "@deleteProfileConfirm": {
     "placeholders": {
-      "name": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
   },
   "profileName": "Nom du profil",
   "profileCount": "{count}/{max} profils",
   "@profileCount": {
     "placeholders": {
-      "count": {"type": "int"},
-      "max": {"type": "int"}
+      "count": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
     }
   },
   "maxProfilesReached": "Nombre maximum de profils atteint ({max})",
   "@maxProfilesReached": {
     "placeholders": {
-      "max": {"type": "int"}
+      "max": {
+        "type": "int"
+      }
     }
   },
   "profileAdded": "Profil \"{name}\" ajouté",
   "@profileAdded": {
     "placeholders": {
-      "name": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
   },
   "profileRenamed": "Profil renommé en \"{name}\"",
   "@profileRenamed": {
     "placeholders": {
-      "name": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
   },
   "profileDeleted": "Profil supprimé",
   "cannotDeleteLastProfile": "Impossible de supprimer le dernier profil",
-
   "importExport": "Importer / Exporter",
   "importSettings": "Importer les paramètres",
   "exportSettings": "Exporter les paramètres",
@@ -119,19 +133,25 @@
   "importSuccess": "{count} profil(s) importé(s)",
   "@importSuccess": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "importFailed": "Échec de l'importation : {error}",
   "@importFailed": {
     "placeholders": {
-      "error": {"type": "String"}
+      "error": {
+        "type": "String"
+      }
     }
   },
   "importConfirm": "Importer {count} profil(s) ? Tous les profils existants seront remplacés.",
   "@importConfirm": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "exportSuccess": "Paramètres exportés",
@@ -142,13 +162,13 @@
   "import_": "Importer",
   "replace": "Remplacer",
   "bookmarks": "Favoris",
-  "info": "Info",
+  "info": "Informations",
   "connection": "Connexion",
   "folders": "Dossiers",
-
   "tabGitHub": "GitHub",
-  "tabSync": "Sync",
+  "tabSync": "Synchroniser",
   "tabFiles": "Fichiers",
+  "tabGeneral": "Général",
   "tabHelp": "Aide",
   "tabAbout": "À propos",
   "subTabProfile": "Profil",
@@ -158,19 +178,57 @@
   "searchPlaceholder": "Rechercher des favoris...",
   "noSearchResults": "Aucun résultat pour \"{query}\"",
   "clearSearch": "Effacer la recherche",
-  "@noSearchResults": {"placeholders": {"query": {"type": "String"}}},
+  "@noSearchResults": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
   "automaticSync": "Synchronisation automatique",
   "autoSyncActive": "Auto-sync actif",
   "autoSyncDisabled": "Auto-sync désactivé",
   "nextSyncIn": "Prochaine sync dans {time}",
-  "@nextSyncIn": {"placeholders": {"time": {"type": "String"}}},
+  "@nextSyncIn": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "syncProfileRealtime": "Temps réel",
   "syncProfileFrequent": "Fréquent",
-  "syncProfileNormal": "Normal",
+  "syncProfileNormal": "Normale",
   "syncProfilePowersave": "Économie d'énergie",
   "syncProfileCustom": "Personnalisé",
+  "syncProfileMeaningTitle": "Signification des profils :",
+  "syncProfileMeaningRealtime": "Temps réel : synchronise chaque minute (fraîcheur maximale, batterie plus sollicitée).",
+  "syncProfileMeaningFrequent": "Fréquent : synchronise toutes les 5 minutes (équilibré pour un usage actif).",
+  "syncProfileMeaningNormal": "Normal : synchronise toutes les 15 minutes (valeur recommandée).",
+  "syncProfileMeaningPowersave": "Économie d'énergie : synchronise toutes les 60 minutes (batterie/réseau minimaux).",
+  "syncProfileMeaningCustom": "Personnalisé : choisis ton propre intervalle en minutes.",
+  "customSyncIntervalLabel": "Intervalle de sync personnalisé (minutes)",
+  "customSyncIntervalHint": "Saisis une valeur entre 1 et 1440",
+  "customSyncIntervalErrorRange": "Saisis un intervalle valide entre {min} et {max} minutes.",
+  "@customSyncIntervalErrorRange": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "syncCommit": "Commettre",
   "lastSynced": "Dernière synchronisation {time}",
-  "@lastSynced": {"placeholders": {"time": {"type": "String"}}},
+  "@lastSynced": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "neverSynced": "Jamais synchronisé",
   "syncOnStart": "Sync au démarrage de l'app",
   "allowMoveReorder": "Autoriser déplacer et réordonner",
@@ -178,7 +236,16 @@
   "allowMoveReorderDisable": "Lecture seule (masquer les poignées)",
   "allowMoveReorderEnable": "Activer l'édition (afficher les poignées)",
   "bookmarkCount": "{count} favoris dans {folders} dossiers",
-  "@bookmarkCount": {"placeholders": {"count": {"type": "int"}, "folders": {"type": "int"}}},
+  "@bookmarkCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "folders": {
+        "type": "int"
+      }
+    }
+  },
   "syncNow": "Synchroniser maintenant",
   "addBookmark": "Ajouter un favori",
   "addBookmarkTitle": "Ajouter un favori",
@@ -196,8 +263,8 @@
   "settingsSyncWithBookmarks": "Synchroniser les paramètres avec les favoris",
   "settingsSyncPush": "Pousser les paramètres",
   "settingsSyncPull": "Récupérer les paramètres",
-  "settingsSyncModeLabel": "Mode de synchronisation",
-  "settingsSyncModeGlobal": "Global — partagé sur tous les appareils",
+  "settingsSyncModeLabel": "Mode de synchronisation (individuel uniquement)",
+  "settingsSyncModeGlobal": "Global — partagé sur tous les appareils (legacy, migré)",
   "settingsSyncModeIndividual": "Individuel — cet appareil uniquement",
   "settingsSyncImportTitle": "Importer depuis un autre appareil",
   "settingsSyncLoadConfigs": "Charger les configurations disponibles",
@@ -219,7 +286,13 @@
   "moveToFolderFailed": "Échec du déplacement du favori",
   "deleteBookmark": "Supprimer le favori",
   "deleteBookmarkConfirm": "Supprimer le favori \"{title}\" ?",
-  "@deleteBookmarkConfirm": {"placeholders": {"title": {"type": "String"}}},
+  "@deleteBookmarkConfirm": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
   "bookmarkDeleted": "Favori supprimé",
   "orderUpdated": "Ordre mis à jour",
   "rootFolder": "Dossier racine",
@@ -234,9 +307,38 @@
   "importingSettings": "Importation des paramètres…",
   "orImportExisting": "ou importer des paramètres existants",
   "wrongPassword": "Mot de passe incorrect. Veuillez réessayer.",
+  "showSecret": "Afficher le secret",
+  "hideSecret": "Masquer le secret",
   "export_": "Exporter",
   "resetAll": "Réinitialiser toutes les données",
   "resetConfirmTitle": "Réinitialiser l'application ?",
   "resetConfirmMessage": "Tous les profils, paramètres et favoris en cache seront supprimés. L'application reviendra à son état initial.",
-  "resetSuccess": "Toutes les données ont été réinitialisées"
+  "resetSuccess": "Toutes les données ont été réinitialisées",
+  "settingsSyncClientName": "Nom du client",
+  "settingsSyncClientNameHint": "ex. base-android ou laptop-linux",
+  "settingsSyncClientNameRequired": "Veuillez saisir un nom de client pour le mode individuel.",
+  "settingsSyncCreateBtn": "Creer mon parametre client",
+  "generalLanguageTitle": "Langue",
+  "generalThemeTitle": "Thème",
+  "appLanguage": "Langue de l'app",
+  "appTheme": "Theme de l'app",
+  "appLanguageSystem": "Par defaut du systeme",
+  "appThemeSystem": "Par defaut du systeme",
+  "appThemeLight": "Clair",
+  "appThemeDark": "Sombre",
+  "appLanguageGerman": "Allemand",
+  "appLanguageEnglish": "Anglais",
+  "appLanguageSpanish": "espagnol",
+  "appLanguageFrench": "Français",
+  "basePathBrowse": "Parcourir les dossiers",
+  "basePathBrowseTitle": "Selectionner un dossier du depot",
+  "subTabFolders": "Dossiers",
+  "appLanguagePortugueseBrazil": "Portugais (Brésil)",
+  "appLanguageItalian": "Italien",
+  "appLanguageJapanese": "Japonais",
+  "appLanguageChineseSimplified": "Chinois (simplifié)",
+  "appLanguageKorean": "Coréen",
+  "appLanguageRussian": "Russe",
+  "appLanguageTurkish": "Turc",
+  "appLanguagePolish": "Polonais"
 }

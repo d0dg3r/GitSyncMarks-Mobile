@@ -16,7 +16,7 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and [ROADMAP.md](ROADMAP.md
 ## Features
 
 - **Sync from GitHub**: Bookmarks from your GitSyncMarks-compatible repository via Contents API
-- **Settings Sync to Git**: Encrypted sync (extension-compatible), Global/Individual mode, Import from other device
+- **Settings Sync to Git**: Encrypted sync (extension-compatible), individual mode with client-name based `profiles/<alias>/settings.enc`, import from other device
 - **Move bookmarks**: Long-press to move bookmarks to any folder (including subfolders)
 - **Reorder bookmarks**: Drag-and-drop to reorder; changes persisted to repo
 - **Delete bookmarks**: Long-press to delete (available even when edit mode is locked)
@@ -28,10 +28,11 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and [ROADMAP.md](ROADMAP.md
 - **Local cache**: Bookmarks saved after sync, loaded from cache on app start (offline-capable)
 - **GitHub Personal Access Token**: Secure authentication with `repo` scope
 - **Folder selection**: Choose which root folders to display (toolbar, menu, mobile, other)
+- **Base path folder browser**: Browse repository folders when selecting the Git sync path
 - **Favicons**: Via DuckDuckGo API
 - **Pull-to-refresh**: Manual sync when you need it
-- **Light and Dark mode**: Follows system theme (GitSyncMarks branding)
-- **i18n**: German, English, Spanish, French
+- **Theme mode**: Select `System`, `Light`, or `Dark` in `Settings > General` (GitSyncMarks branding)
+- **i18n**: 12 extension-parity languages (`en`, `de`, `fr`, `es`, `pt_BR`, `it`, `ja`, `zh_CN`, `ko`, `ru`, `tr`, `pl`) with `System` or manual selection in Settings > General
 - **Settings | About | Help**: All in one tabbed screen
 
 ## Beta testing (Google Play)
@@ -80,10 +81,11 @@ Download the respective `.zip` from [Releases](https://github.com/d0dg3r/GitSync
 1. Open the app and go to **Settings** (first tab)
 2. Enter your **Personal Access Token** (create one at [GitHub Settings > Tokens](https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks+Sync) with `repo` scope)
 3. Enter **Repository Owner** and **Repository Name** (your bookmark repo)
-4. Set **Branch** (usually `main`) and **Base Path** (default `bookmarks` — must match your [GitSyncMarks](https://github.com/d0dg3r/GitSyncMarks) extension config)
-5. Select which folders to display (toolbar, menu, other, mobile)
-6. Click **Test Connection** to verify, then **Save**
-7. Use **Sync Bookmarks** to fetch your bookmarks
+4. Set **Branch** (usually `main`) and **Base Path** (default `bookmarks` — must match your [GitSyncMarks](https://github.com/d0dg3r/GitSyncMarks) extension config). Use the folder button to browse repo directories.
+5. In **GitHub > Folders**, select root/display folders to show (toolbar, menu, other, mobile)
+6. In **Sync**, choose a sync profile. If you select **Custom**, set your own interval in minutes.
+7. Click **Test Connection** to verify, then **Save**
+8. Use **Sync Bookmarks** to fetch your bookmarks (the status line also shows the synced commit hash)
 
 ## Project References
 

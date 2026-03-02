@@ -1,0 +1,344 @@
+{
+  "@@locale": "zh",
+  "appTitle": "GitSyncMarks",
+  "settings": "設定",
+  "about": "關於",
+  "help": "說明",
+  "noBookmarksYet": "尚無書籤",
+  "tapSyncToFetch": "點擊同步以從 GitHub 獲取書籤",
+  "configureInSettings": "請在設定中配置 GitHub 連線",
+  "sync": "同步",
+  "openSettings": "開啟設定",
+  "error": "錯誤",
+  "retry": "重試",
+  "couldNotOpenUrl": "無法開啟 {url}",
+  "@couldNotOpenUrl": {
+    "placeholders": {
+      "url": {
+        "type": "Object"
+      }
+    }
+  },
+  "couldNotOpenLink": "無法開啟連結",
+  "pleaseFillTokenOwnerRepo": "請填寫 Token、Owner 和 Repo",
+  "settingsSaved": "設定已儲存",
+  "connectionSuccessful": "連線成功",
+  "connectionFailed": "連線失敗",
+  "syncComplete": "同步完成",
+  "syncFailed": "同步失敗",
+  "githubConnection": "GitHub 連線",
+  "personalAccessToken": "個人存取權杖 (PAT)",
+  "tokenHint": "ghp_xxxxxxxxxxxxxxxxxxxx",
+  "tokenHelper": "Classic PAT：範圍 'repo'。細粒度：Contents Read。建立位置：GitHub → Settings → Developer settings → Personal access tokens",
+  "repositoryOwner": "儲存庫擁有者",
+  "ownerHint": "您的-github-使用者名稱",
+  "repositoryName": "儲存庫名稱",
+  "repoHint": "我的書籤",
+  "branch": "分支",
+  "branchHint": "main",
+  "basePath": "基礎路徑",
+  "basePathHint": "bookmarks",
+  "displayedFolders": "顯示的資料夾",
+  "displayedFoldersHelp": "測試連線後可用。空選擇 = 所有資料夾。至少選一個 = 僅這些資料夾。",
+  "save": "儲存",
+  "testConnection": "測試連線",
+  "syncBookmarks": "同步書籤",
+  "version": "版本 {appVersion}",
+  "@version": {
+    "placeholders": {
+      "appVersion": {
+        "type": "String"
+      }
+    }
+  },
+  "authorBy": "作者：Joe Mild",
+  "aboutDescription": "GitSyncMarks 的行動應用程式 – 檢視您 GitHub 儲存庫中的書籤並在瀏覽器中開啟。",
+  "projects": "專案",
+  "formatFromGitSyncMarks": "書籤格式來自 GitSyncMarks。",
+  "gitSyncMarksDesc": "基於 GitSyncMarks – 雙向書籤同步的瀏覽器擴充套件。本專案以 GitSyncMarks 為參考開發。",
+  "licenseMit": "授權：MIT",
+  "quickGuide": "快速指南",
+  "help1Title": "1. 設定權杖",
+  "help1Body": "建立一個 GitHub Personal Access Token (PAT)。Classic PAT：範圍 'repo'。細粒度：Contents Read。建立位置：GitHub → Settings → Developer settings → Personal access tokens",
+  "help2Title": "2. 連接儲存庫",
+  "help2Body": "在設定中輸入 Owner、Repo 名稱和 Branch。您的儲存庫應遵循 GitSyncMarks 格式（toolbar、menu、other 等資料夾，每個書籤一個 JSON 檔案）。",
+  "help3Title": "3. 測試連線",
+  "help3Body": "按一下「Test Connection」以驗證權杖和儲存庫存取權限。成功後顯示可用的根資料夾。",
+  "help4Title": "4. 選擇資料夾",
+  "help4Body": "選擇要顯示的資料夾（如 toolbar、mobile）。空選擇 = 全部。至少選一個 = 僅這些資料夾。",
+  "help5Title": "5. 同步",
+  "help5Body": "按一下「Sync Bookmarks」載入書籤。在主畫面下拉重新整理。",
+  "whichRepoFormat": "使用哪種儲存庫格式？",
+  "repoFormatDescription": "儲存庫應遵循 GitSyncMarks 格式：Base Path（如「bookmarks」），包含 toolbar、menu、other、mobile 等子資料夾。每個資料夾有 _order.json 和每個書籤的 JSON 檔案（含 title 和 url）。",
+  "support": "支援",
+  "supportText": "有問題或錯誤訊息？請在專案儲存庫中提交 issue。",
+  "gitSyncMarksAndroidIssues": "GitSyncMarks-App (GitHub Issues)",
+  "profiles": "設定檔",
+  "profile": "設定檔",
+  "activeProfile": "目前設定檔",
+  "addProfile": "新增設定檔",
+  "renameProfile": "重新命名設定檔",
+  "deleteProfile": "刪除設定檔",
+  "deleteProfileConfirm": "刪除設定檔「{name}」？",
+  "@deleteProfileConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "profileName": "設定檔名稱",
+  "profileCount": "{count}/{max} 個設定檔",
+  "@profileCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "maxProfilesReached": "已達到設定檔的最大數量（{max}）",
+  "@maxProfilesReached": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "profileAdded": "設定檔「{name}」已新增",
+  "@profileAdded": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "profileRenamed": "設定檔已重新命名為「{name}」",
+  "@profileRenamed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "profileDeleted": "設定檔已刪除",
+  "cannotDeleteLastProfile": "無法刪除最後一個設定檔",
+  "importExport": "匯入 / 匯出",
+  "importSettings": "匯入設定",
+  "exportSettings": "匯出設定",
+  "importSettingsDesc": "從 GitSyncMarks 設定檔 (JSON) 匯入設定檔",
+  "exportSettingsDesc": "將所有設定檔匯出為 GitSyncMarks 設定檔",
+  "importSuccess": "已匯入 {count} 個設定檔",
+  "@importSuccess": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importFailed": "匯入失敗：{error}",
+  "@importFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "importConfirm": "匯入 {count} 個設定檔？所有現有設定檔將被取代。",
+  "@importConfirm": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "exportSuccess": "設定已匯出",
+  "cancel": "取消",
+  "delete": "刪除",
+  "rename": "重新命名",
+  "add": "新增",
+  "import_": "匯入",
+  "replace": "取代",
+  "bookmarks": "書籤",
+  "info": "資訊",
+  "connection": "連線",
+  "folders": "資料夾",
+  "tabGitHub": "GitHub",
+  "tabSync": "同步",
+  "tabFiles": "檔案",
+  "tabGeneral": "一般",
+  "tabHelp": "說明",
+  "tabAbout": "關於",
+  "subTabProfile": "設定檔",
+  "subTabConnection": "連線",
+  "subTabExportImport": "匯出 / 匯入",
+  "subTabSettings": "設定",
+  "searchPlaceholder": "搜尋書籤...",
+  "noSearchResults": "沒有「{query}」的結果",
+  "clearSearch": "清除搜尋",
+  "@noSearchResults": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "automaticSync": "自動同步",
+  "autoSyncActive": "自動同步已啟用",
+  "autoSyncDisabled": "自動同步已停用",
+  "nextSyncIn": "下次同步將在 {time} 後",
+  "@nextSyncIn": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "syncProfileRealtime": "即時",
+  "syncProfileFrequent": "頻繁",
+  "syncProfileNormal": "正常",
+  "syncProfilePowersave": "省電",
+  "syncProfileCustom": "自訂",
+  "syncProfileMeaningTitle": "這些設定檔的意義：",
+  "syncProfileMeaningRealtime": "即時：每分鐘同步一次（最高時效性，較高電池消耗）。",
+  "syncProfileMeaningFrequent": "頻繁：每 5 分鐘同步一次（適合活躍使用的平衡）。",
+  "syncProfileMeaningNormal": "正常：每 15 分鐘同步一次（建議預設）。",
+  "syncProfileMeaningPowersave": "省電：每 60 分鐘同步一次（最低電池/網路消耗）。",
+  "syncProfileMeaningCustom": "自訂：以分鐘為單位設定自己的間隔。",
+  "customSyncIntervalLabel": "自訂同步間隔（分鐘）",
+  "customSyncIntervalHint": "輸入 1 到 1440 之間的值",
+  "customSyncIntervalErrorRange": "請輸入 {min} 到 {max} 分鐘之間的有效間隔。",
+  "@customSyncIntervalErrorRange": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "syncCommit": "提交",
+  "lastSynced": "上次同步 {time}",
+  "@lastSynced": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "neverSynced": "從未同步",
+  "syncOnStart": "應用程式啟動時同步",
+  "allowMoveReorder": "允許移動和重新排序",
+  "allowMoveReorderDesc": "拖曳把手和移動到資料夾。停用以使用唯讀檢視。",
+  "allowMoveReorderDisable": "唯讀（隱藏把手）",
+  "allowMoveReorderEnable": "啟用編輯（顯示把手）",
+  "bookmarkCount": "{folders} 個資料夾中有 {count} 個書籤",
+  "@bookmarkCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "folders": {
+        "type": "int"
+      }
+    }
+  },
+  "syncNow": "立即同步",
+  "addBookmark": "新增書籤",
+  "addBookmarkTitle": "新增書籤",
+  "bookmarkTitle": "書籤標題",
+  "selectFolder": "選擇資料夾",
+  "exportBookmarks": "匯出書籤",
+  "settingsSyncToGit": "將設定同步至 Git（加密）",
+  "settingsSyncPassword": "加密密碼",
+  "settingsSyncPasswordHint": "每台裝置設定一次。所有裝置上必須相同。",
+  "settingsSyncRememberPassword": "記住密碼",
+  "settingsSyncPasswordSaved": "密碼已儲存（用於 Push/Pull）",
+  "settingsSyncClearPassword": "清除已儲存的密碼",
+  "settingsSyncSaveBtn": "儲存密碼",
+  "settingsSyncPasswordMissing": "請輸入密碼。",
+  "settingsSyncWithBookmarks": "同步書籤時同步設定",
+  "settingsSyncPush": "推送設定",
+  "settingsSyncPull": "拉取設定",
+  "settingsSyncModeLabel": "同步模式（僅限個人）",
+  "settingsSyncModeGlobal": "全域 — 在所有裝置間共用（舊版，已移轉）",
+  "settingsSyncModeIndividual": "個人 — 僅此裝置",
+  "settingsSyncImportTitle": "從其他裝置匯入",
+  "settingsSyncLoadConfigs": "載入可用設定",
+  "settingsSyncImport": "匯入",
+  "settingsSyncImportEmpty": "找不到裝置設定",
+  "settingsSyncImportSuccess": "設定已成功匯入",
+  "reportIssue": "回報問題",
+  "documentation": "說明文件",
+  "voteBacklog": "對待辦事項投票",
+  "discussions": "討論",
+  "moveUp": "向上移動",
+  "moveDown": "向下移動",
+  "shareLinkAddBookmark": "將共用連結新增為書籤",
+  "clearCache": "清除快取",
+  "clearCacheDesc": "刪除快取的書籤資料。如果已設定 GitHub，同步將自動執行。",
+  "clearCacheSuccess": "快取已清除。",
+  "moveToFolder": "移動到資料夾",
+  "moveToFolderSuccess": "書籤已移動",
+  "moveToFolderFailed": "書籤移動失敗",
+  "deleteBookmark": "刪除書籤",
+  "deleteBookmarkConfirm": "刪除書籤「{title}」？",
+  "@deleteBookmarkConfirm": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "bookmarkDeleted": "書籤已刪除",
+  "orderUpdated": "順序已更新",
+  "rootFolder": "根資料夾",
+  "rootFolderHelp": "選擇一個資料夾，其子資料夾將成為索引標籤。預設顯示所有最上層資料夾。",
+  "allFolders": "所有資料夾",
+  "selectRootFolder": "選擇根資料夾",
+  "exportPasswordTitle": "匯出密碼",
+  "exportPasswordHint": "留空以進行未加密的匯出",
+  "importPasswordTitle": "加密檔案",
+  "importPasswordHint": "輸入加密密碼",
+  "importSettingsAction": "匯入設定",
+  "importingSettings": "正在匯入設定…",
+  "orImportExisting": "或匯入現有設定",
+  "wrongPassword": "密碼錯誤。請重試。",
+  "showSecret": "顯示密鑰",
+  "hideSecret": "隱藏密鑰",
+  "export_": "匯出",
+  "resetAll": "重設所有資料",
+  "resetConfirmTitle": "重設應用程式？",
+  "resetConfirmMessage": "所有設定檔、設定和快取的書籤將被刪除。應用程式將恢復到初始狀態。",
+  "resetSuccess": "所有資料已重設",
+  "settingsSyncClientName": "用戶端名稱",
+  "settingsSyncClientNameHint": "例如 base-android 或 laptop-linux",
+  "settingsSyncClientNameRequired": "請輸入個人模式的用戶端名稱。",
+  "settingsSyncCreateBtn": "建立我的用戶端設定",
+  "generalLanguageTitle": "語言",
+  "generalThemeTitle": "主題",
+  "appLanguage": "應用程式語言",
+  "appTheme": "應用程式主題",
+  "appLanguageSystem": "系統預設",
+  "appThemeSystem": "系統預設",
+  "appThemeLight": "淺色",
+  "appThemeDark": "深色",
+  "appLanguageGerman": "德語",
+  "appLanguageEnglish": "英語",
+  "appLanguageSpanish": "西班牙語",
+  "appLanguageFrench": "法語",
+  "basePathBrowse": "瀏覽資料夾",
+  "basePathBrowseTitle": "選擇儲存庫資料夾",
+  "subTabFolders": "資料夾",
+  "appLanguagePortugueseBrazil": "葡萄牙語（巴西）",
+  "appLanguageItalian": "義大利語",
+  "appLanguageJapanese": "日語",
+  "appLanguageChineseSimplified": "中文（簡體）",
+  "appLanguageKorean": "韓語",
+  "appLanguageRussian": "俄語",
+  "appLanguageTurkish": "土耳其語",
+  "appLanguagePolish": "波蘭語"
+}

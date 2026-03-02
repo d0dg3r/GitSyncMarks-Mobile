@@ -57,7 +57,8 @@ Future<void> _handleImport(
       }
       return;
     }
-    final picked = result?.files.isNotEmpty == true ? result!.files.single : null;
+    final picked =
+        result?.files.isNotEmpty == true ? result!.files.single : null;
     String content;
     if (kIsWeb) {
       final bytes = picked?.bytes ?? webFallback?.bytes;
@@ -72,27 +73,41 @@ Future<void> _handleImport(
     if (SettingsImportExportService.isEncrypted(content)) {
       if (!context.mounted) return;
       final controller = TextEditingController();
+      var isObscured = true;
       final password = await showDialog<String>(
         context: context,
-        builder: (ctx) => AlertDialog(
-          title: Text(l.importPasswordTitle),
-          content: TextField(
-            controller: controller,
-            obscureText: true,
-            decoration: InputDecoration(hintText: l.importPasswordHint),
-            autofocus: true,
-            onSubmitted: (v) => Navigator.pop(ctx, v),
+        builder: (ctx) => StatefulBuilder(
+          builder: (ctx, setDialogState) => AlertDialog(
+            title: Text(l.importPasswordTitle),
+            content: TextField(
+              controller: controller,
+              obscureText: isObscured,
+              decoration: InputDecoration(
+                hintText: l.importPasswordHint,
+                suffixIcon: IconButton(
+                  tooltip: isObscured ? l.showSecret : l.hideSecret,
+                  onPressed: () {
+                    setDialogState(() => isObscured = !isObscured);
+                  },
+                  icon: Icon(
+                    isObscured ? Icons.visibility : Icons.visibility_off,
+                  ),
+                ),
+              ),
+              autofocus: true,
+              onSubmitted: (v) => Navigator.pop(ctx, v),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(ctx),
+                child: Text(l.cancel),
+              ),
+              FilledButton(
+                onPressed: () => Navigator.pop(ctx, controller.text),
+                child: Text(l.import_),
+              ),
+            ],
           ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(ctx),
-              child: Text(l.cancel),
-            ),
-            FilledButton(
-              onPressed: () => Navigator.pop(ctx, controller.text),
-              child: Text(l.import_),
-            ),
-          ],
         ),
       );
       if (password == null || password.isEmpty) return;
@@ -257,7 +272,7 @@ class _BookmarkListScreenState extends State<BookmarkListScreen> {
           },
         ),
         if (_isImporting)
-          Positioned.fill(
+          const Positioned.fill(
             child: ModalBarrier(dismissible: false),
           ),
         if (_isImporting)
@@ -335,7 +350,8 @@ class _TabbedBookmarkViewState extends State<_TabbedBookmarkView> {
   @override
   void initState() {
     super.initState();
-    _searchController = TextEditingController(text: widget.provider.searchQuery);
+    _searchController =
+        TextEditingController(text: widget.provider.searchQuery);
   }
 
   @override
@@ -452,9 +468,7 @@ class _TabbedBookmarkViewState extends State<_TabbedBookmarkView> {
               TabBar(
                 tabAlignment: TabAlignment.start,
                 isScrollable: true,
-                tabs: folders
-                    .map((f) => Tab(text: f.title))
-                    .toList(),
+                tabs: folders.map((f) => Tab(text: f.title)).toList(),
               ),
             if (_searchExpanded)
               Padding(
@@ -491,7 +505,8 @@ class _TabbedBookmarkViewState extends State<_TabbedBookmarkView> {
                             folder: folder,
                             provider: provider,
                             canReorder: provider.searchQuery.trim().isEmpty &&
-                                (provider.activeProfile?.allowMoveReorder ?? false),
+                                (provider.activeProfile?.allowMoveReorder ??
+                                    false),
                             onEditAction: _onEditAction,
                           ),
                         );
@@ -522,7 +537,8 @@ class _TabbedBookmarkViewState extends State<_TabbedBookmarkView> {
                   if (autoSyncEnabled && nextAt != null) ...[
                     const SizedBox(width: 8),
                     Text(
-                      l.nextSyncIn(_formatDuration(nextAt.difference(DateTime.now()))),
+                      l.nextSyncIn(
+                          _formatDuration(nextAt.difference(DateTime.now()))),
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                             color: scheme.outline,
                           ),
@@ -555,19 +571,32 @@ class _StatusArea extends StatelessWidget {
     final l = AppLocalizations.of(context)!;
     final scheme = Theme.of(context).colorScheme;
     final lastSync = provider.lastSyncTime;
+    final lastSyncCommit = provider.lastSyncCommitShort;
     final count = provider.bookmarkCount;
     final folderCount = provider.displayedRootFolders.length;
 
     return Row(
       children: [
         Expanded(
-          child: Text(
-            lastSync != null
-                ? l.lastSynced(_formatTimeAgo(lastSync))
-                : l.neverSynced,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: scheme.outline,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                lastSync != null
+                    ? l.lastSynced(_formatTimeAgo(lastSync))
+                    : l.neverSynced,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: scheme.outline,
+                    ),
+              ),
+              if (lastSyncCommit != null)
+                Text(
+                  '${l.syncCommit}: $lastSyncCommit',
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: scheme.outline,
+                      ),
                 ),
+            ],
           ),
         ),
         Text(
@@ -776,15 +805,20 @@ class _FolderContentList extends StatelessWidget {
         final folderPath = provider.getFolderPath(folder);
         if (folderPath != null) {
           onEditAction?.call();
-          provider.reorderInFolder(folder, folderPath, oldIndex, adj).then((ok) {
+          provider
+              .reorderInFolder(folder, folderPath, oldIndex, adj)
+              .then((ok) {
             if (context.mounted) {
               final l = AppLocalizations.of(context)!;
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
-                    ok ? l.orderUpdated : (provider.error ?? l.moveToFolderFailed),
+                    ok
+                        ? l.orderUpdated
+                        : (provider.error ?? l.moveToFolderFailed),
                   ),
-                  backgroundColor: ok ? null : Theme.of(context).colorScheme.errorContainer,
+                  backgroundColor:
+                      ok ? null : Theme.of(context).colorScheme.errorContainer,
                 ),
               );
             }
@@ -998,9 +1032,12 @@ void _showMoveToFolderDialog(
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
-                    ok ? l.moveToFolderSuccess : (provider.error ?? l.moveToFolderFailed),
+                    ok
+                        ? l.moveToFolderSuccess
+                        : (provider.error ?? l.moveToFolderFailed),
                   ),
-                  backgroundColor: ok ? null : Theme.of(context).colorScheme.errorContainer,
+                  backgroundColor:
+                      ok ? null : Theme.of(context).colorScheme.errorContainer,
                 ),
               );
             }
@@ -1031,44 +1068,48 @@ class _FolderPickerList extends StatelessWidget {
 
     return ListView(
       shrinkWrap: true,
-      children: folders.map((f) {
-        final isSource = identical(f, sourceFolder);
-        final hasSubfolders = f.children.any((c) => c is BookmarkFolder);
-        final childFolders = f.children.whereType<BookmarkFolder>().toList();
+      children: folders
+          .map((f) {
+            final isSource = identical(f, sourceFolder);
+            final hasSubfolders = f.children.any((c) => c is BookmarkFolder);
+            final childFolders =
+                f.children.whereType<BookmarkFolder>().toList();
 
-        if (hasSubfolders && childFolders.isNotEmpty) {
-          return ExpansionTile(
-            leading: Icon(Icons.folder, color: scheme.primary, size: 22),
-            title: Row(
-              children: [
-                Expanded(child: Text(f.title)),
-                if (!isSource)
-                  TextButton(
-                    onPressed: () => onSelect(f),
-                    child: Text(l.selectFolder),
+            if (hasSubfolders && childFolders.isNotEmpty) {
+              return ExpansionTile(
+                leading: Icon(Icons.folder, color: scheme.primary, size: 22),
+                title: Row(
+                  children: [
+                    Expanded(child: Text(f.title)),
+                    if (!isSource)
+                      TextButton(
+                        onPressed: () => onSelect(f),
+                        child: Text(l.selectFolder),
+                      ),
+                  ],
+                ),
+                children: [
+                  _FolderPickerList(
+                    folders: childFolders,
+                    sourceFolder: sourceFolder,
+                    onSelect: onSelect,
+                    depth: depth + 1,
                   ),
-              ],
-            ),
-            children: [
-              _FolderPickerList(
-                folders: childFolders,
-                sourceFolder: sourceFolder,
-                onSelect: onSelect,
-                depth: depth + 1,
+                ],
+              );
+            }
+            if (isSource) return null;
+            return ListTile(
+              leading: Icon(Icons.folder, color: scheme.primary, size: 22),
+              title: Text(f.title),
+              trailing: TextButton(
+                onPressed: () => onSelect(f),
+                child: Text(l.selectFolder),
               ),
-            ],
-          );
-        }
-        if (isSource) return null;
-        return ListTile(
-          leading: Icon(Icons.folder, color: scheme.primary, size: 22),
-          title: Text(f.title),
-          trailing: TextButton(
-            onPressed: () => onSelect(f),
-            child: Text(l.selectFolder),
-          ),
-        );
-      }).whereType<Widget>().toList(),
+            );
+          })
+          .whereType<Widget>()
+          .toList(),
     );
   }
 }
@@ -1103,9 +1144,7 @@ class _FolderTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final folderIcon = Icon(
-      initiallyExpanded || level == 0
-          ? Icons.folder_open
-          : Icons.folder,
+      initiallyExpanded || level == 0 ? Icons.folder_open : Icons.folder,
       color: scheme.primary,
       size: 22,
     );
@@ -1142,8 +1181,7 @@ class _FolderTile extends StatelessWidget {
         shape: const RoundedRectangleBorder(),
         collapsedShape: const RoundedRectangleBorder(),
         tilePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-        childrenPadding:
-            const EdgeInsets.only(left: 8, right: 8, bottom: 8),
+        childrenPadding: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
         title: Text(
           folder.title,
           style: Theme.of(context).textTheme.titleSmall?.copyWith(
@@ -1199,7 +1237,8 @@ class _FolderTile extends StatelessWidget {
                   content: Text(
                     ok ? l.orderUpdated : (prov.error ?? l.moveToFolderFailed),
                   ),
-                  backgroundColor: ok ? null : Theme.of(context).colorScheme.errorContainer,
+                  backgroundColor:
+                      ok ? null : Theme.of(context).colorScheme.errorContainer,
                 ),
               );
             }
@@ -1293,7 +1332,6 @@ class _ReorderableBookmarkTile extends StatelessWidget {
 
 class _BookmarkTile extends StatelessWidget {
   const _BookmarkTile({
-    super.key,
     required this.bookmark,
     this.sourceFolder,
     this.provider,
@@ -1332,19 +1370,17 @@ class _BookmarkTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final l = AppLocalizations.of(context)!;
-    final hasCredentials = sourceFolder != null &&
-        provider != null &&
-        provider!.hasCredentials;
-    final canMove = hasCredentials &&
-        (provider!.activeProfile?.allowMoveReorder ?? false);
+    final hasCredentials =
+        sourceFolder != null && provider != null && provider!.hasCredentials;
+    final canMove =
+        hasCredentials && (provider!.activeProfile?.allowMoveReorder ?? false);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
       child: ListTile(
         dense: true,
         visualDensity: VisualDensity.compact,
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -1385,8 +1421,8 @@ class _BookmarkTile extends StatelessWidget {
                             },
                           ),
                         ListTile(
-                          leading: Icon(Icons.delete_outline,
-                              color: scheme.error),
+                          leading:
+                              Icon(Icons.delete_outline, color: scheme.error),
                           title: Text(l.deleteBookmark,
                               style: TextStyle(color: scheme.error)),
                           onTap: () {
@@ -1451,8 +1487,8 @@ class _BookmarkTile extends StatelessWidget {
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-                content: Text(
-                    AppLocalizations.of(context)!.couldNotOpenUrl(url))),
+                content:
+                    Text(AppLocalizations.of(context)!.couldNotOpenUrl(url))),
           );
         }
       }
@@ -1460,8 +1496,7 @@ class _BookmarkTile extends StatelessWidget {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-              content:
-                  Text(AppLocalizations.of(context)!.couldNotOpenLink)),
+              content: Text(AppLocalizations.of(context)!.couldNotOpenLink)),
         );
       }
     }

@@ -73,9 +73,10 @@ class SettingsImportExportService {
       profiles: profiles,
       activeProfileId: activeId,
       syncSettingsToGit: syncSettingsToGit,
-      settingsSyncMode: (settingsSyncMode == 'global' || settingsSyncMode == 'individual')
-          ? settingsSyncMode
-          : null,
+      settingsSyncMode:
+          (settingsSyncMode == 'global' || settingsSyncMode == 'individual')
+              ? 'individual'
+              : null,
     );
   }
 
@@ -107,7 +108,9 @@ class SettingsImportExportService {
       data['syncOnStart'] = activeProfile.syncOnStart;
     }
     if (syncSettingsToGit != null) data['syncSettingsToGit'] = syncSettingsToGit;
-    if (settingsSyncMode != null) data['settingsSyncMode'] = settingsSyncMode;
+    if (settingsSyncMode != null) {
+      data['settingsSyncMode'] = 'individual';
+    }
     return const JsonEncoder.withIndent('  ').convert(data);
   }
 
