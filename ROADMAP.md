@@ -56,9 +56,9 @@ import on empty state, golden_toolkit for screenshots, F-Droid screenshots/icon
 
 ---
 
-## Current (post-v0.3.3)
+## Current (post-v0.3.4)
 
-- **Features:** Stable v0.3.3 feature set shipped (settings sync profile-path compatibility, client-name flow, folder browser, General language/theme settings, and full localization coverage)
+- **Features:** Stable v0.3.4 feature set shipped (settings sync profile-path compatibility, client-name flow, folder browser, General language/theme settings, and full localization coverage)
 - **Platforms:** Android (beta), iOS, Windows, macOS, Linux (alpha)
 - **Release:** Stable tags (`vX.Y.Z`) create latest releases; suffixed tags (`-beta/-rc/-test`) create pre-releases
 
@@ -77,4 +77,3 @@ import on empty state, golden_toolkit for screenshots, F-Droid screenshots/icon
 - **iOS:** TestFlight / IPA distribution
 - **Flathub:** Flathub submission for Linux
 - Further platform polish (Windows, macOS, Linux to stable)
-

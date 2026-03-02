@@ -18,7 +18,7 @@ When opening this project fresh: read CONTEXT.md and PLAN.md first so you have f
 | [BETA_JOIN.md](../BETA_JOIN.md) | Beta testing signup (Google Play launch) |
 | [AGENTS.md](../AGENTS.md) | AI agent guidance (Cursor rules, workflow) |
 
-## Current Status (v0.3.3)
+## Current Status (v0.3.4)
 
 - Bookmark sync, move, reorder, delete, add via share
 - Settings Sync to Git (extension-compatible, Global/Individual mode, `profiles/<alias>/settings.enc`)
