@@ -50,6 +50,13 @@ We're looking for beta testers before the public Google Play Store launch.
 3. Open the file on your Android device (allow from unknown sources if prompted)
 4. Install the app
 
+#### Android update compatibility (important)
+
+- Android updates without uninstall require the **same app ID and same signing certificate**.
+- This project uses a single release signing identity for GitHub release APKs and Play upload artifacts.
+- F-Droid cross-channel updates are configured via upstream-signed APK verification (`AllowedAPKSigningKeys` + `Builds.binary` in F-Droid metadata).
+- Local `debug` builds are signed with a different key by design, so `debug` -> `release` upgrades can fail and require uninstall.
+
 ### Linux (Flatpak, recommended)
 
 1. Download `GitSyncMarks-App-vX.X.X.flatpak` from [Releases](https://github.com/d0dg3r/GitSyncMarks-App/releases)
@@ -144,6 +151,12 @@ git tag v0.3.0-beta.1 && git push origin v0.3.0-beta.1
 - `v1.2.3-beta.1`, `v1.2.3-rc.1`, `v1.2.3-test.1` — pre-release (any tag with `-` suffix)
 
 Artifacts appear under [Releases](https://github.com/d0dg3r/GitSyncMarks-App/releases): APK (Android), Flatpak + ZIP (Linux), ZIP (Windows, macOS).
+
+Release safety checks now enforce Android signing consistency:
+
+- Tagged releases fail early if Android signing secrets are missing
+- APK and AAB are built after signing setup from the same key configuration
+- CI verifies the APK certificate fingerprint against the configured keystore
 
 ### Flatpak-only test
 

@@ -9,6 +9,7 @@ on:
   pull_request:
     paths:
       - 'fdroid/metadata/*-fdroid-submit.yml'
+  workflow_dispatch:
 
 jobs:
   validate-no-prereleases:
@@ -27,3 +28,110 @@ jobs:
             fi
           done
           echo "OK: All submit metadata files contain only stable versions."
+
+  verify-reproducible-upstream-signature:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install verification tooling
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y apksigner
+          python -m pip install --upgrade pip
+          pip install pyyaml
+
+      - name: Verify binary signer and deterministic metadata settings
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/fdroid-verify
+          python - <<'PY'
+          import glob
+          import pathlib
+          import re
+          import subprocess
+          import urllib.request
+          import yaml
+
+          out_dir = pathlib.Path("build/fdroid-verify")
+          files = sorted(glob.glob("fdroid/metadata/*-fdroid-submit.yml"))
+          if not files:
+              print("No submit metadata files found; skipping.")
+              raise SystemExit(0)
+
+          for meta_path in files:
+              raw = pathlib.Path(meta_path).read_text(encoding="utf-8")
+              doc = yaml.safe_load(raw)
+              app_id = pathlib.Path(meta_path).stem.replace("-fdroid-submit", "")
+              app_dir = out_dir / app_id
+              app_dir.mkdir(parents=True, exist_ok=True)
+
+              allowed = str(doc.get("AllowedAPKSigningKeys", "")).strip().lower()
+              if not re.fullmatch(r"[0-9a-f]{64}", allowed):
+                  raise SystemExit(f"{meta_path}: AllowedAPKSigningKeys must be a 64-char SHA256 hex fingerprint")
+
+              update_check_mode = str(doc.get("UpdateCheckMode", "")).strip()
+              if update_check_mode != "Tags ^v[0-9.]+$":
+                  raise SystemExit(f"{meta_path}: UpdateCheckMode must be exactly 'Tags ^v[0-9.]+$'")
+
+              current_version = str(doc.get("CurrentVersion", "")).strip()
+              if not current_version:
+                  raise SystemExit(f"{meta_path}: CurrentVersion is missing")
+
+              builds = doc.get("Builds", [])
+              matching = [b for b in builds if str(b.get("versionName", "")).strip() == current_version]
+              if len(matching) != 1:
+                  raise SystemExit(f"{meta_path}: expected exactly one build block for CurrentVersion={current_version}")
+              build = matching[0]
+
+              build_cmds = "\n".join(build.get("build", []))
+              if "--release" not in build_cmds or "--target-platform android-arm64" not in build_cmds:
+                  raise SystemExit(
+                      f"{meta_path}: build commands must include '--release --target-platform android-arm64' for reproducible upstream APK matching"
+                  )
+
+              binary_tpl = build.get("binary")
+              if not binary_tpl:
+                  raise SystemExit(f"{meta_path}: missing Builds.binary for upstream-signed APK verification")
+
+              binary_url = str(binary_tpl).replace("%v", current_version)
+              apk_path = app_dir / f"{app_id}-{current_version}.apk"
+              print(f"Downloading {binary_url}")
+              urllib.request.urlretrieve(binary_url, apk_path)
+
+              cert_output = subprocess.check_output(
+                  ["apksigner", "verify", "--print-certs", str(apk_path)],
+                  text=True,
+                  stderr=subprocess.STDOUT,
+              )
+              (app_dir / "apksigner-output.txt").write_text(cert_output, encoding="utf-8")
+
+              m = re.search(r"Signer #1 certificate SHA-256 digest:\\s*([0-9A-Fa-f:]+)", cert_output)
+              if not m:
+                  raise SystemExit(f"{meta_path}: could not extract APK SHA256 digest from apksigner output")
+              apk_sha = m.group(1).replace(":", "").strip().lower()
+
+              summary = (
+                  f"metadata: {meta_path}\n"
+                  f"current_version: {current_version}\n"
+                  f"binary_url: {binary_url}\n"
+                  f"allowed_signing_key: {allowed}\n"
+                  f"apk_signing_key: {apk_sha}\n"
+              )
+              (app_dir / "summary.txt").write_text(summary, encoding="utf-8")
+
+              if apk_sha != allowed:
+                  raise SystemExit(
+                      f"{meta_path}: APK signer mismatch. allowed={allowed}, apk={apk_sha}"
+                  )
+
+          print("OK: upstream binary signatures and deterministic metadata settings verified.")
+          PY
+
+      - name: Upload verification logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fdroid-reproducibility-verification
+          path: build/fdroid-verify/
