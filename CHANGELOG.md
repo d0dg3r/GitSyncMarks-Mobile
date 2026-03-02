@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.3] - 2026-03-01
+
 ### Added
 
 - **Base path folder browser:** GitHub connection now includes a folder browser to select the repository base path instead of typing paths manually
@@ -37,8 +39,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Theme setting localization parity:** `Settings > General` theme labels (`System`, `Light`, `Dark`) are now translated in all supported app locales
 - **F-Droid:** 0.3.2 build commit in submit metadata now matches v0.3.2 tag (`715e5e2`); was `cecdde3` (wrong commit)
 - **F-Droid check apk:** Removed version 0.3.1 (versionCode 8) from build list – APK contained "Dependency metadata" signing block (fix only in 0.3.2); CI now passes
-
-### Changed
 
 - **Pre-1.0 beta disclaimer:** Add status notice to README, store descriptions (F-Droid, Play Store), Flatpak metainfo, and docs; Android marked as Beta; all platforms best-effort before 1.0
 - **Flatpak app ID:** GitSyncMarksMobile → GitSyncMarksApp (`io.github.d0dg3r.GitSyncMarksApp`); existing Flatpak users must uninstall the old app and install the new one
