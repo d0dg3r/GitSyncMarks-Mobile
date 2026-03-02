@@ -38,17 +38,19 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Build APK
-        run: flutter build apk --release --target-platform android-arm64
-
-      - name: Check Play Store signing
+      - name: Check release signing secrets
         id: signing
         run: echo "available=${{ secrets.ANDROID_KEYSTORE_BASE64 != '' }}" >> $GITHUB_OUTPUT
 
-      - name: Setup Play Store signing
-        if: steps.signing.outputs.available == 'true'
+      - name: Require release signing for tagged builds
+        if: steps.signing.outputs.available != 'true'
         run: |
-          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > android/upload-keystore.jks
+          echo "::error::Missing ANDROID_KEYSTORE_BASE64 secret. Release builds require a configured upload keystore."
+          exit 1
+
+      - name: Setup Android signing
+        run: |
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > upload-keystore.jks
           cat > android/key.properties << EOF
           storePassword=${{ secrets.KEYSTORE_PASSWORD }}
           keyPassword=${{ secrets.KEY_PASSWORD }}
@@ -56,9 +58,36 @@ jobs:
           storeFile=../upload-keystore.jks
           EOF
 
+      - name: Build APK
+        run: flutter build apk --release --target-platform android-arm64
+
       - name: Build AAB (Play Store)
-        if: steps.signing.outputs.available == 'true'
         run: flutter build appbundle --release
+
+      - name: Verify APK signer fingerprint
+        shell: bash
+        run: |
+          set -euo pipefail
+          APK_PATH="build/app/outputs/flutter-apk/app-release.apk"
+          KEYSTORE_PATH="upload-keystore.jks"
+          BT_DIR="$(ls -1d "$ANDROID_HOME"/build-tools/* | sort -V | tail -n 1)"
+          APKSIGNER="$BT_DIR/apksigner"
+          if [ ! -x "$APKSIGNER" ]; then
+            echo "::error::apksigner not found at $APKSIGNER"
+            exit 1
+          fi
+          APK_SHA256="$("$APKSIGNER" verify --print-certs "$APK_PATH" | sed -n 's/.*Signer #1 certificate SHA-256 digest: //p' | head -n1 | tr -d '[:space:]' | tr '[:lower:]' '[:upper:]')"
+          KEY_SHA256="$(keytool -list -v -keystore "$KEYSTORE_PATH" -storepass "${{ secrets.KEYSTORE_PASSWORD }}" -alias "${{ secrets.KEY_ALIAS }}" -keypass "${{ secrets.KEY_PASSWORD }}" | sed -n 's/^[[:space:]]*SHA256: //p' | head -n1 | tr -d '[:space:]' | tr '[:lower:]' '[:upper:]')"
+          echo "APK certificate SHA256: $APK_SHA256"
+          echo "Keystore certificate SHA256: $KEY_SHA256"
+          if [ -z "$APK_SHA256" ] || [ -z "$KEY_SHA256" ]; then
+            echo "::error::Failed to extract certificate SHA256 fingerprints."
+            exit 1
+          fi
+          if [ "$APK_SHA256" != "$KEY_SHA256" ]; then
+            echo "::error::APK signer does not match configured upload keystore."
+            exit 1
+          fi
 
       - name: Install Linux build dependencies
         run: |
