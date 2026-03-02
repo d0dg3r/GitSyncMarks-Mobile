@@ -41,6 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Android container locale pinning:** Release job now exports `LANG/LC_ALL/LANGUAGE=en_US.UTF-8` to prevent empty Java `user.country` values that break Gradle file-access journal initialization
 - **Android deterministic timestamp fix:** Container prerequisites now include `git`, and `SOURCE_DATE_EPOCH` export now fails fast unless a valid commit timestamp is resolved (prevents empty-value Gradle/Java 21 crashes)
 - **Android container workspace ownership:** Release workflow now normalizes `$GITHUB_WORKSPACE` ownership immediately after checkout so git timestamp resolution works without `dubious ownership` failures
+- **Split Android release outputs by environment:** APK stays in the F-Droid-compatible container job for reproducibility alignment, while Play Store AAB now builds in a separate Ubuntu job to avoid container symbol-stripping/toolchain incompatibilities
 
 ## [0.3.3] - 2026-03-01
 
