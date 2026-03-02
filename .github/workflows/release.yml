@@ -22,6 +22,9 @@ jobs:
           set -euo pipefail
           echo "GRADLE_USER_HOME=/tmp/gradle-user-home" >> "$GITHUB_ENV"
           echo "GRADLE_OPTS=-Dorg.gradle.vfs.watch=false -Dorg.gradle.daemon=false" >> "$GITHUB_ENV"
+          echo "LANG=en_US.UTF-8" >> "$GITHUB_ENV"
+          echo "LC_ALL=en_US.UTF-8" >> "$GITHUB_ENV"
+          echo "LANGUAGE=en_US:en" >> "$GITHUB_ENV"
           mkdir -p /tmp/gradle-user-home
 
       - name: Install container prerequisites

@@ -38,6 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Android container Gradle tmp-home:** `GRADLE_USER_HOME` now points to `/tmp/gradle-user-home` to avoid workspace mount side effects on Gradle access-time journal parsing
 - **Android container Gradle deep clean:** Release job now also clears project-level Gradle caches (`.gradle`, `android/.gradle`) and enables `org.gradle.daemon=false` for deterministic cold startup
 - **Android release debug verbosity:** APK build step now runs with `--verbose` to capture full Gradle diagnostics during CI failure triage
+- **Android container locale pinning:** Release job now exports `LANG/LC_ALL/LANGUAGE=en_US.UTF-8` to prevent empty Java `user.country` values that break Gradle file-access journal initialization
 
 ## [0.3.3] - 2026-03-01
 
