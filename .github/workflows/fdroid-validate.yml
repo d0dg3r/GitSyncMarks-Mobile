@@ -107,12 +107,10 @@ jobs:
               )
               (app_dir / "apksigner-output.txt").write_text(cert_output, encoding="utf-8")
 
-              m = re.search(r"Signer #1.*SHA-?256[^:]*:\\s*([0-9A-Fa-f:]+)", cert_output)
-              if not m:
-                  m = re.search(r"SHA-?256[^:]*:\\s*([0-9A-Fa-f:]+)", cert_output)
+              m = re.search(r"([0-9A-Fa-f]{2}(?:[:\\s]?[0-9A-Fa-f]{2}){31})", cert_output)
               if not m:
                   raise SystemExit(f"{meta_path}: could not extract APK SHA256 digest from apksigner output")
-              apk_sha = m.group(1).replace(":", "").strip().lower()
+              apk_sha = re.sub(r"[^0-9A-Fa-f]", "", m.group(1)).lower()
 
               summary = (
                   f"metadata: {meta_path}\n"
