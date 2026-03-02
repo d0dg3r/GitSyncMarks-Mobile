@@ -15,7 +15,7 @@ Builds:
     versionCode: 10
     commit: 4cd87de91a070acaca729042c99aeca9c51dfaac
     output: build/app/outputs/flutter-apk/app-release.apk
-    binary:
+    binary: 
       https://github.com/d0dg3r/GitSyncMarks-App/releases/download/v%v/GitSyncMarks-App-%v.apk
     srclibs:
       - flutter@stable
