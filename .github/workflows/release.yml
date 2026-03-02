@@ -50,7 +50,7 @@ jobs:
 
       - name: Setup Android signing
         run: |
-          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > upload-keystore.jks
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > android/upload-keystore.jks
           cat > android/key.properties << EOF
           storePassword=${{ secrets.KEYSTORE_PASSWORD }}
           keyPassword=${{ secrets.KEY_PASSWORD }}
@@ -69,7 +69,7 @@ jobs:
         run: |
           set -euo pipefail
           APK_PATH="build/app/outputs/flutter-apk/app-release.apk"
-          KEYSTORE_PATH="upload-keystore.jks"
+          KEYSTORE_PATH="android/upload-keystore.jks"
           BT_DIR="$(ls -1d "$ANDROID_HOME"/build-tools/* | sort -V | tail -n 1)"
           APKSIGNER="$BT_DIR/apksigner"
           if [ ! -x "$APKSIGNER" ]; then
