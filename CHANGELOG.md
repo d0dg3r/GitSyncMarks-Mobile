@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **F-Droid reproducibility preflight:** Added CI validation that checks deterministic submit metadata settings and verifies upstream APK signer fingerprints with uploaded verification logs
 - **Release CI keystore path:** Build workflow now writes and verifies the Android upload keystore at `android/upload-keystore.jks` to match Gradle `storeFile` resolution
 - **Release CI signer check:** Keystore SHA256 normalization now strips `:` so APK and keytool fingerprints are compared in the same format
+- **F-Droid validate parser:** Reproducibility workflow now accepts variant `apksigner` SHA-256 output formats when extracting signer fingerprints
 
 ## [0.3.3] - 2026-03-01
 
