@@ -18,6 +18,15 @@ This folder contains metadata for submitting GitSyncMarks-App to [F-Droid](https
 
 The tag must exist before submitting. Use the **full commit hash** in `commit:` (not the tag name) – F-Droid's shallow clone may not fetch tags. Get it with `git rev-parse vX.Y.Z`.
 
+## Android-only CI run (manual)
+
+When you want to debug only the Android container build, run `Build & Release` manually in `android-only` mode. This starts only `build-android` and skips Linux/macOS/Windows/Flatpak and release aggregation jobs.
+
+```bash
+gh workflow run "Build & Release" -f build_scope=android-only
+gh run list --workflow "Build & Release" --limit 5
+```
+
 ## Do this, then this (copy/paste)
 
 ### Stable release

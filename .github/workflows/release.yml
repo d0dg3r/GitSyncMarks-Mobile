@@ -4,12 +4,23 @@ on:
   push:
     tags:
       - 'v*'
+  workflow_dispatch:
+    inputs:
+      build_scope:
+        description: "Build scope"
+        required: true
+        default: "full"
+        type: choice
+        options:
+          - full
+          - android-only
 
 permissions:
   contents: write
 
 jobs:
   build-android:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.build_scope == 'android-only' || inputs.build_scope == 'full' }}
     runs-on: ubuntu-latest
     container:
       image: registry.gitlab.com/fdroid/fdroidserver:buildserver-trixie
@@ -202,6 +213,7 @@ jobs:
           path: build/release/
 
   build-android-aab:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.build_scope == 'full' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -258,6 +270,7 @@ jobs:
           path: build/release/
 
   build-linux:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.build_scope == 'full' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -313,6 +326,7 @@ jobs:
           path: build/release/GitSyncMarks-App-Linux-Portable.tar.gz
 
   build-windows:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.build_scope == 'full' }}
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
@@ -347,6 +361,7 @@ jobs:
           path: build/release/
 
   build-macos:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.build_scope == 'full' }}
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
@@ -412,6 +427,7 @@ jobs:
           path: flatpak/screenshots/
 
   build-flatpak:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.build_scope == 'full' }}
     runs-on: ubuntu-latest
     needs: build-linux
     container:
@@ -453,6 +469,7 @@ jobs:
           path: "**/GitSyncMarks-App-*.flatpak"
 
   release:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.build_scope == 'full' }}
     runs-on: ubuntu-latest
     needs: [build-android, build-android-aab, build-linux, build-windows, build-macos, build-flatpak]
     steps:

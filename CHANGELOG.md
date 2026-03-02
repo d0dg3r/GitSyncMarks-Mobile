@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **Android-only manual CI mode:** `Build & Release` now supports `workflow_dispatch` with `build_scope=android-only`, so only `build-android` runs while desktop/flatpak/release jobs are skipped.
+
 ## [0.3.4] - 2026-03-02
 
 ### Changed
