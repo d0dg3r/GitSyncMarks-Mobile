@@ -20,9 +20,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          echo "GRADLE_USER_HOME=$GITHUB_WORKSPACE/.gradle" >> "$GITHUB_ENV"
+          echo "GRADLE_USER_HOME=/tmp/gradle-user-home" >> "$GITHUB_ENV"
           echo "GRADLE_OPTS=-Dorg.gradle.vfs.watch=false" >> "$GITHUB_ENV"
-          mkdir -p "$GITHUB_WORKSPACE/.gradle"
+          mkdir -p /tmp/gradle-user-home
 
       - name: Install container prerequisites
         run: |

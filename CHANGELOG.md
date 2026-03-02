@@ -32,9 +32,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Containerized Flutter git safety fix:** Android container job now normalizes ownership of `$FLUTTER_ROOT` after setup to avoid `git dubious ownership` failures during `flutter pub get`
 - **Containerized Android SDK discovery:** Android container job now auto-detects SDK path (`ANDROID_HOME`/`ANDROID_SDK_ROOT`) in the F-Droid build image before APK build
 - **Android container Gradle stability:** Disabled Gradle cache restore in the containerized Android release job to avoid corrupted file-access journal cache failures
-- **Android container Gradle home isolation:** Android release job now uses workspace-local `GRADLE_USER_HOME` to avoid inherited broken global Gradle cache journals
+- **Android container Gradle home isolation:** Android release job now isolates `GRADLE_USER_HOME` from host/global caches inside the container environment
 - **Android container Gradle env pinning:** `GRADLE_USER_HOME` is now exported from `$GITHUB_WORKSPACE` at runtime and `GRADLE_OPTS` disables VFS file watching
 - **Android container Gradle journal reset:** Release job now removes `journal-1` and `file-access.bin` artifacts before APK build to prevent bootstrap journal parse crashes
+- **Android container Gradle tmp-home:** `GRADLE_USER_HOME` now points to `/tmp/gradle-user-home` to avoid workspace mount side effects on Gradle access-time journal parsing
 
 ## [0.3.3] - 2026-03-01
 
