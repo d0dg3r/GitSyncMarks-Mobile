@@ -137,6 +137,8 @@ The bookmark format comes from [GitSyncMarks](https://github.com/d0dg3r/GitSyncM
 
 Releases are built automatically on tag push (`v*`). All tags trigger builds for all platforms.
 
+Use the mandatory release runbook and gate checks in [docs/RELEASE-CHECKLIST.md](docs/RELEASE-CHECKLIST.md) for stable releases and tag recovery.
+
 ```bash
 # Stable release (marked as "latest")
 git tag v0.3.0 && git push origin v0.3.0
@@ -186,6 +188,7 @@ Android is the main focus. All other platforms share the same Flutter codebase a
 - **[docs/README.md](docs/README.md)** — Project context and continuation guide
 - **[docs/PLAN.md](docs/PLAN.md)** — Implementation phases
 - **[docs/BOOKMARK-FORMAT.md](docs/BOOKMARK-FORMAT.md)** — Bookmark JSON structure
+- **[docs/RELEASE-CHECKLIST.md](docs/RELEASE-CHECKLIST.md)** — Stable release sequence, verification gates, and recovery flow
 - **[store/README.md](store/README.md)** — App store submission (descriptions, screenshots)
 - **[CHANGELOG.md](CHANGELOG.md)** — Version history
 - **[ROADMAP.md](ROADMAP.md)** — Milestones and future plans

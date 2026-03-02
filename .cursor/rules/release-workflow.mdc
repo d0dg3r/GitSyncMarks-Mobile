@@ -8,7 +8,7 @@ globs: pubspec.yaml, CHANGELOG.md, .github/workflows/*, fdroid/**/*
 
 When preparing or executing a release:
 
-1. **Order:** Merge → Tag on final commit → Verify F-Droid commit hash
+1. **Order (mandatory):** Finalize version/changelog → Merge to `main` → Tag on final merge commit → Verify GitHub release workflow success → Verify F-Droid `commit:` hash → Submit to F-Droid
 
 2. **Tag:** Set on exactly the final merge commit (not on an older commit)
 
@@ -18,6 +18,14 @@ When preparing or executing a release:
 
 5. **Screenshots:** Generate locally with `./scripts/generate-screenshots.sh` before tagging (Light + Dark for README, Flatpak, F-Droid). CI screenshot disabled until fonts/CI consistency is fixed.
 
-6. **Before F-Droid MR:** Run `./fdroid/submit-to-gitlab.sh` – validates and copies the submit file
+6. **Before F-Droid MR:** Run `./fdroid/submit-to-gitlab.sh` – validates version/tag/hash/changelog gates and copies the submit file
 
-See also [release-checklist-hygiene.mdc](release-checklist-hygiene.mdc) and [fdroid-maintenance.mdc](fdroid-maintenance.mdc).
+7. **Hard stop gates:** Do not submit if any of these fail:
+   - `pubspec.yaml` version != `CurrentVersion` in submit metadata
+   - missing F-Droid changelog file for `CurrentVersionCode`
+   - missing tag `vX.Y.Z` for `CurrentVersion`
+   - tag commit != submit metadata `commit:`
+
+8. **Recovery for wrong tag/release:** If a release tag was set on the wrong commit, delete local+remote tag, finish merges, recreate the tag on final `main` commit, and then update submit metadata `commit:` to the new tag hash.
+
+See also [release-checklist-hygiene.mdc](release-checklist-hygiene.mdc), [fdroid-maintenance.mdc](fdroid-maintenance.mdc), and [fdroid/README.md](fdroid/README.md).

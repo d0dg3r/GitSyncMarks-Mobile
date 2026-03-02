@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Android release signing policy:** `release` builds now require valid `android/key.properties` and no longer fall back to debug signing
 - **Release workflow signing order:** CI now configures Android signing before building APK/AAB and verifies APK signer fingerprint against the configured keystore
 - **F-Droid submit strategy:** Metadata now starts from current stable release only and uses upstream APK verification (`Builds.binary` + `AllowedAPKSigningKeys`) for channel-compatible updates
+- **Release SOP:** Added mandatory release order and hard stop gates (version/code/tag/hash checks) across GitHub and F-Droid flows
+- **F-Droid submit automation:** `submit-to-gitlab.sh` now supports `--validate-only` and writes proof logs under `fdroid/proofs/`
 
 ### Fixed
 

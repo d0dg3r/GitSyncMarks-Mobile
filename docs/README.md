@@ -12,6 +12,7 @@ When opening this project fresh: read CONTEXT.md and PLAN.md first so you have f
 | [PLAN.md](PLAN.md) | Implementation plan, phases, next steps |
 | [ROADMAP.md](../ROADMAP.md) | Milestones, current status, future vision |
 | [BOOKMARK-FORMAT.md](BOOKMARK-FORMAT.md) | GitSyncMarks repo structure (JSON format, API) |
+| [RELEASE-CHECKLIST.md](RELEASE-CHECKLIST.md) | Mandatory release order, gates, and recovery commands |
 | [ARCHITECTURE.md](../ARCHITECTURE.md) | Technical architecture, CI/Release |
 | [CHANGELOG.md](../CHANGELOG.md) | Version history |
 | [BETA_JOIN.md](../BETA_JOIN.md) | Beta testing signup (Google Play launch) |

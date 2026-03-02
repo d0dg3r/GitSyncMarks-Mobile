@@ -17,6 +17,37 @@ This folder contains metadata for submitting GitSyncMarks-App to [F-Droid](https
 
 The tag must exist before submitting. Use the **full commit hash** in `commit:` (not the tag name) – F-Droid's shallow clone may not fetch tags. Get it with `git rev-parse vX.Y.Z`.
 
+## Do this, then this (copy/paste)
+
+### Stable release
+
+```bash
+git checkout main
+git pull
+git tag vX.Y.Z
+git push origin vX.Y.Z
+./fdroid/submit-to-gitlab.sh --validate-only
+./fdroid/submit-to-gitlab.sh YOUR_GITLAB_USER
+```
+
+### Recovery if tag was wrong
+
+```bash
+git checkout main
+git pull
+git tag -d vX.Y.Z
+git push origin :refs/tags/vX.Y.Z
+git tag vX.Y.Z
+git push origin vX.Y.Z
+```
+
+After retagging, update `commit:` in submit metadata to `git rev-parse vX.Y.Z`, then run:
+
+```bash
+./fdroid/submit-to-gitlab.sh --validate-only
+./fdroid/submit-to-gitlab.sh YOUR_GITLAB_USER
+```
+
 ## One-command submission (GitLab + SSH)
 
 1. Fork [fdroiddata](https://gitlab.com/fdroid/fdroiddata) on GitLab (once)
