@@ -1,0 +1,344 @@
+{
+  "@@locale": "ko",
+  "appTitle": "GitSyncMarks",
+  "settings": "설정",
+  "about": "앱 정보",
+  "help": "도움말",
+  "noBookmarksYet": "북마크가 아직 없습니다",
+  "tapSyncToFetch": "GitHub에서 북마크를 가져오려면 동기화를 탭하세요",
+  "configureInSettings": "설정에서 GitHub 연결을 구성하세요",
+  "sync": "동기화",
+  "openSettings": "설정 열기",
+  "error": "오류",
+  "retry": "다시 시도",
+  "couldNotOpenUrl": "{url}을 열 수 없습니다",
+  "@couldNotOpenUrl": {
+    "placeholders": {
+      "url": {
+        "type": "Object"
+      }
+    }
+  },
+  "couldNotOpenLink": "링크를 열 수 없습니다",
+  "pleaseFillTokenOwnerRepo": "Token, Owner, Repo를 입력해 주세요",
+  "settingsSaved": "설정이 저장되었습니다",
+  "connectionSuccessful": "연결 성공",
+  "connectionFailed": "연결 실패",
+  "syncComplete": "동기화 완료",
+  "syncFailed": "동기화 실패",
+  "githubConnection": "GitHub 연결",
+  "personalAccessToken": "개인 액세스 토큰 (PAT)",
+  "tokenHint": "ghp_xxxxxxxxxxxxxxxxxxxx",
+  "tokenHelper": "Classic PAT: Scope 'repo'. Fine-grained: Contents Read. 생성 위치: GitHub → Settings → Developer settings → Personal access tokens",
+  "repositoryOwner": "저장소 소유자",
+  "ownerHint": "your-github-username",
+  "repositoryName": "저장소 이름",
+  "repoHint": "my-bookmarks",
+  "branch": "브랜치",
+  "branchHint": "main",
+  "basePath": "기본 경로",
+  "basePathHint": "bookmarks",
+  "displayedFolders": "표시할 폴더",
+  "displayedFoldersHelp": "연결 테스트 후 사용 가능. 빈 선택 = 모든 폴더. 하나 이상 선택 = 선택한 폴더만.",
+  "save": "저장",
+  "testConnection": "연결 테스트",
+  "syncBookmarks": "북마크 동기화",
+  "version": "버전 {appVersion}",
+  "@version": {
+    "placeholders": {
+      "appVersion": {
+        "type": "String"
+      }
+    }
+  },
+  "authorBy": "Joe Mild 제작",
+  "aboutDescription": "GitSyncMarks용 모바일 앱 – GitHub 저장소의 북마크를 보고 브라우저에서 엽니다.",
+  "projects": "프로젝트",
+  "formatFromGitSyncMarks": "북마크 형식은 GitSyncMarks에서 가져옵니다.",
+  "gitSyncMarksDesc": "GitSyncMarks 기반 – 양방향 북마크 동기화를 위한 브라우저 확장 프로그램. 이 프로젝트는 GitSyncMarks를 참조로 개발되었습니다.",
+  "licenseMit": "라이선스: MIT",
+  "quickGuide": "빠른 가이드",
+  "help1Title": "1. 토큰 설정",
+  "help1Body": "GitHub Personal Access Token (PAT)를 생성하세요. Classic PAT: Scope 'repo'. Fine-grained: Contents Read. 생성 위치: GitHub → Settings → Developer settings → Personal access tokens",
+  "help2Title": "2. 저장소 연결",
+  "help2Body": "설정에서 Owner, Repo 이름, Branch를 입력하세요. 저장소는 GitSyncMarks 형식(toolbar, menu, other 등의 폴더에 북마크당 JSON 파일)을 따라야 합니다.",
+  "help3Title": "3. 연결 테스트",
+  "help3Body": "「Test Connection」을 클릭하여 토큰 및 저장소 접근을 확인하세요. 성공하면 사용 가능한 루트 폴더가 표시됩니다.",
+  "help4Title": "4. 폴더 선택",
+  "help4Body": "표시할 폴더를 선택하세요 (예: toolbar, mobile). 빈 선택 = 모두. 하나 이상 선택 = 선택한 폴더만.",
+  "help5Title": "5. 동기화",
+  "help5Body": "「Sync Bookmarks」를 클릭하여 북마크를 불러옵니다. 메인 화면에서 당겨서 새로 고칩니다.",
+  "whichRepoFormat": "어떤 저장소 형식인가요?",
+  "repoFormatDescription": "저장소는 GitSyncMarks 형식을 따라야 합니다: Base Path (예: \"bookmarks\")에 toolbar, menu, other, mobile 같은 하위 폴더. 각 폴더에는 _order.json과 title, url이 있는 북마크당 JSON 파일이 있습니다.",
+  "support": "지원",
+  "supportText": "질문이나 오류 메시지가 있으신가요? 프로젝트 저장소에 이슈를 열어 주세요.",
+  "gitSyncMarksAndroidIssues": "GitSyncMarks-App (GitHub Issues)",
+  "profiles": "프로필",
+  "profile": "프로필",
+  "activeProfile": "활성 프로필",
+  "addProfile": "프로필 추가",
+  "renameProfile": "프로필 이름 변경",
+  "deleteProfile": "프로필 삭제",
+  "deleteProfileConfirm": "프로필 \"{name}\"을 삭제하시겠습니까?",
+  "@deleteProfileConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "profileName": "프로필 이름",
+  "profileCount": "{count}/{max} 프로필",
+  "@profileCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "maxProfilesReached": "최대 프로필 수에 도달했습니다 ({max})",
+  "@maxProfilesReached": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "profileAdded": "프로필 \"{name}\"이 추가되었습니다",
+  "@profileAdded": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "profileRenamed": "프로필이 \"{name}\"으로 변경되었습니다",
+  "@profileRenamed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "profileDeleted": "프로필이 삭제되었습니다",
+  "cannotDeleteLastProfile": "마지막 프로필은 삭제할 수 없습니다",
+  "importExport": "가져오기 / 내보내기",
+  "importSettings": "설정 가져오기",
+  "exportSettings": "설정 내보내기",
+  "importSettingsDesc": "GitSyncMarks 설정 파일(JSON)에서 프로필 가져오기",
+  "exportSettingsDesc": "모든 프로필을 GitSyncMarks 설정 파일로 내보내기",
+  "importSuccess": "{count}개의 프로필을 가져왔습니다",
+  "@importSuccess": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importFailed": "가져오기 실패: {error}",
+  "@importFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "importConfirm": "{count}개의 프로필을 가져오시겠습니까? 기존 모든 프로필이 교체됩니다.",
+  "@importConfirm": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "exportSuccess": "설정을 내보냈습니다",
+  "cancel": "취소",
+  "delete": "삭제",
+  "rename": "이름 변경",
+  "add": "추가",
+  "import_": "가져오기",
+  "replace": "교체",
+  "bookmarks": "북마크",
+  "info": "정보",
+  "connection": "연결",
+  "folders": "폴더",
+  "tabGitHub": "GitHub",
+  "tabSync": "동기화",
+  "tabFiles": "파일",
+  "tabGeneral": "일반",
+  "tabHelp": "도움말",
+  "tabAbout": "앱 정보",
+  "subTabProfile": "프로필",
+  "subTabConnection": "연결",
+  "subTabExportImport": "내보내기 / 가져오기",
+  "subTabSettings": "설정",
+  "searchPlaceholder": "북마크 검색...",
+  "noSearchResults": "\"{query}\"에 대한 결과 없음",
+  "clearSearch": "검색 지우기",
+  "@noSearchResults": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "automaticSync": "자동 동기화",
+  "autoSyncActive": "자동 동기화 활성",
+  "autoSyncDisabled": "자동 동기화 비활성",
+  "nextSyncIn": "다음 동기화까지 {time}",
+  "@nextSyncIn": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "syncProfileRealtime": "실시간",
+  "syncProfileFrequent": "자주",
+  "syncProfileNormal": "보통",
+  "syncProfilePowersave": "절전",
+  "syncProfileCustom": "사용자 정의",
+  "syncProfileMeaningTitle": "각 프로필의 의미:",
+  "syncProfileMeaningRealtime": "실시간: 1분마다 동기화 (최고의 신선도, 더 높은 배터리 소모).",
+  "syncProfileMeaningFrequent": "자주: 5분마다 동기화 (활성 사용에 균형).",
+  "syncProfileMeaningNormal": "보통: 15분마다 동기화 (권장 기본값).",
+  "syncProfileMeaningPowersave": "절전: 60분마다 동기화 (최소 배터리/네트워크 소모).",
+  "syncProfileMeaningCustom": "사용자 정의: 분 단위로 직접 간격을 설정합니다.",
+  "customSyncIntervalLabel": "사용자 정의 동기화 간격 (분)",
+  "customSyncIntervalHint": "1~1440 사이의 값을 입력하세요",
+  "customSyncIntervalErrorRange": "{min}~{max}분 사이의 유효한 간격을 입력하세요.",
+  "@customSyncIntervalErrorRange": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "syncCommit": "커밋",
+  "lastSynced": "마지막 동기화 {time}",
+  "@lastSynced": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "neverSynced": "동기화한 적 없음",
+  "syncOnStart": "앱 시작 시 동기화",
+  "allowMoveReorder": "이동 및 순서 변경 허용",
+  "allowMoveReorderDesc": "드래그 핸들 및 폴더 이동. 읽기 전용 보기를 위해 비활성화합니다.",
+  "allowMoveReorderDisable": "읽기 전용 활성화 (핸들 숨기기)",
+  "allowMoveReorderEnable": "편집 활성화 (핸들 표시)",
+  "bookmarkCount": "{folders}개 폴더에 {count}개 북마크",
+  "@bookmarkCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "folders": {
+        "type": "int"
+      }
+    }
+  },
+  "syncNow": "지금 동기화",
+  "addBookmark": "북마크 추가",
+  "addBookmarkTitle": "북마크 추가",
+  "bookmarkTitle": "북마크 제목",
+  "selectFolder": "폴더 선택",
+  "exportBookmarks": "북마크 내보내기",
+  "settingsSyncToGit": "설정을 Git에 동기화 (암호화)",
+  "settingsSyncPassword": "암호화 비밀번호",
+  "settingsSyncPasswordHint": "기기당 한 번 설정. 모든 기기에서 동일해야 합니다.",
+  "settingsSyncRememberPassword": "비밀번호 기억",
+  "settingsSyncPasswordSaved": "비밀번호 저장됨 (Push/Pull에 사용)",
+  "settingsSyncClearPassword": "저장된 비밀번호 지우기",
+  "settingsSyncSaveBtn": "비밀번호 저장",
+  "settingsSyncPasswordMissing": "비밀번호를 입력해 주세요.",
+  "settingsSyncWithBookmarks": "북마크 동기화 시 설정도 동기화",
+  "settingsSyncPush": "설정 푸시",
+  "settingsSyncPull": "설정 풀",
+  "settingsSyncModeLabel": "동기화 모드 (개별 전용)",
+  "settingsSyncModeGlobal": "글로벌 — 모든 기기 공유 (레거시, 마이그레이션됨)",
+  "settingsSyncModeIndividual": "개별 — 이 기기만",
+  "settingsSyncImportTitle": "다른 기기에서 가져오기",
+  "settingsSyncLoadConfigs": "사용 가능한 설정 불러오기",
+  "settingsSyncImport": "가져오기",
+  "settingsSyncImportEmpty": "기기 설정을 찾을 수 없습니다",
+  "settingsSyncImportSuccess": "설정을 성공적으로 가져왔습니다",
+  "reportIssue": "문제 신고",
+  "documentation": "문서",
+  "voteBacklog": "백로그 투표",
+  "discussions": "토론",
+  "moveUp": "위로 이동",
+  "moveDown": "아래로 이동",
+  "shareLinkAddBookmark": "공유 링크를 북마크로 추가",
+  "clearCache": "캐시 지우기",
+  "clearCacheDesc": "캐시된 북마크 데이터를 제거합니다. GitHub가 구성된 경우 자동으로 동기화됩니다.",
+  "clearCacheSuccess": "캐시가 지워졌습니다.",
+  "moveToFolder": "폴더로 이동",
+  "moveToFolderSuccess": "북마크가 이동되었습니다",
+  "moveToFolderFailed": "북마크 이동에 실패했습니다",
+  "deleteBookmark": "북마크 삭제",
+  "deleteBookmarkConfirm": "북마크 \"{title}\"을 삭제하시겠습니까?",
+  "@deleteBookmarkConfirm": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "bookmarkDeleted": "북마크가 삭제되었습니다",
+  "orderUpdated": "순서가 업데이트되었습니다",
+  "rootFolder": "루트 폴더",
+  "rootFolderHelp": "하위 폴더가 탭이 될 폴더를 선택합니다. 기본값은 모든 최상위 폴더를 표시합니다.",
+  "allFolders": "모든 폴더",
+  "selectRootFolder": "루트 폴더 선택",
+  "exportPasswordTitle": "내보내기 비밀번호",
+  "exportPasswordHint": "암호화하지 않으려면 비워 두세요",
+  "importPasswordTitle": "암호화된 파일",
+  "importPasswordHint": "암호화 비밀번호를 입력하세요",
+  "importSettingsAction": "설정 가져오기",
+  "importingSettings": "설정 가져오는 중…",
+  "orImportExisting": "또는 기존 설정 가져오기",
+  "wrongPassword": "비밀번호가 잘못되었습니다. 다시 시도하세요.",
+  "showSecret": "비밀 표시",
+  "hideSecret": "비밀 숨기기",
+  "export_": "내보내기",
+  "resetAll": "모든 데이터 초기화",
+  "resetConfirmTitle": "앱을 초기화하시겠습니까?",
+  "resetConfirmMessage": "모든 프로필, 설정 및 캐시된 북마크가 삭제됩니다. 앱이 초기 상태로 돌아갑니다.",
+  "resetSuccess": "모든 데이터가 초기화되었습니다",
+  "settingsSyncClientName": "클라이언트 이름",
+  "settingsSyncClientNameHint": "예: base-android 또는 laptop-linux",
+  "settingsSyncClientNameRequired": "개별 모드의 클라이언트 이름을 입력해 주세요.",
+  "settingsSyncCreateBtn": "내 클라이언트 설정 만들기",
+  "generalLanguageTitle": "언어",
+  "generalThemeTitle": "테마",
+  "appLanguage": "앱 언어",
+  "appTheme": "앱 테마",
+  "appLanguageSystem": "시스템 기본값",
+  "appThemeSystem": "시스템 기본값",
+  "appThemeLight": "밝게",
+  "appThemeDark": "어둡게",
+  "appLanguageGerman": "독일어",
+  "appLanguageEnglish": "영어",
+  "appLanguageSpanish": "스페인어",
+  "appLanguageFrench": "프랑스어",
+  "basePathBrowse": "폴더 찾아보기",
+  "basePathBrowseTitle": "저장소 폴더 선택",
+  "subTabFolders": "폴더",
+  "appLanguagePortugueseBrazil": "포르투갈어 (브라질)",
+  "appLanguageItalian": "이탈리아어",
+  "appLanguageJapanese": "일본어",
+  "appLanguageChineseSimplified": "중국어 (간체)",
+  "appLanguageKorean": "한국어",
+  "appLanguageRussian": "러시아어",
+  "appLanguageTurkish": "터키어",
+  "appLanguagePolish": "폴란드어"
+}

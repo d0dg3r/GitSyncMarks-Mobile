@@ -1,0 +1,344 @@
+{
+  "@@locale": "pl",
+  "appTitle": "GitSyncMarks",
+  "settings": "Ustawienia",
+  "about": "O aplikacji",
+  "help": "Pomoc",
+  "noBookmarksYet": "Brak zakładek",
+  "tapSyncToFetch": "Naciśnij Synchronizuj, aby pobrać zakładki z GitHub",
+  "configureInSettings": "Skonfiguruj połączenie z GitHub w Ustawieniach",
+  "sync": "Synchronizuj",
+  "openSettings": "Otwórz ustawienia",
+  "error": "Błąd",
+  "retry": "Ponów",
+  "couldNotOpenUrl": "Nie można otworzyć {url}",
+  "@couldNotOpenUrl": {
+    "placeholders": {
+      "url": {
+        "type": "Object"
+      }
+    }
+  },
+  "couldNotOpenLink": "Nie można otworzyć łącza",
+  "pleaseFillTokenOwnerRepo": "Wypełnij Token, Owner i Repo",
+  "settingsSaved": "Ustawienia zapisane",
+  "connectionSuccessful": "Połączenie udane",
+  "connectionFailed": "Połączenie nieudane",
+  "syncComplete": "Synchronizacja zakończona",
+  "syncFailed": "Synchronizacja nieudana",
+  "githubConnection": "Połączenie z GitHub",
+  "personalAccessToken": "Osobisty token dostępu (PAT)",
+  "tokenHint": "ghp_xxxxxxxxxxxxxxxxxxxx",
+  "tokenHelper": "Classic PAT: Zakres 'repo'. Fine-grained: Contents Read. Utwórz w: GitHub → Settings → Developer settings → Personal access tokens",
+  "repositoryOwner": "Właściciel repozytorium",
+  "ownerHint": "twoja-nazwa-uzytkownika-github",
+  "repositoryName": "Nazwa repozytorium",
+  "repoHint": "moje-zakladki",
+  "branch": "Gałąź",
+  "branchHint": "main",
+  "basePath": "Ścieżka bazowa",
+  "basePathHint": "zakladki",
+  "displayedFolders": "Wyświetlane foldery",
+  "displayedFoldersHelp": "Dostępne po Teście połączenia. Puste zaznaczenie = wszystkie foldery. Przynajmniej jeden wybrany = tylko te foldery.",
+  "save": "Zapisz",
+  "testConnection": "Testuj połączenie",
+  "syncBookmarks": "Synchronizuj zakładki",
+  "version": "Wersja {appVersion}",
+  "@version": {
+    "placeholders": {
+      "appVersion": {
+        "type": "String"
+      }
+    }
+  },
+  "authorBy": "Autor: Joe Mild",
+  "aboutDescription": "Aplikacja mobilna dla GitSyncMarks – przeglądaj zakładki z repozytorium GitHub i otwieraj je w przeglądarce.",
+  "projects": "Projekty",
+  "formatFromGitSyncMarks": "Format zakładek pochodzi z GitSyncMarks.",
+  "gitSyncMarksDesc": "Oparty na GitSyncMarks – rozszerzeniu przeglądarki do dwukierunkowej synchronizacji zakładek. Projekt opracowany z GitSyncMarks jako wzorzec.",
+  "licenseMit": "Licencja: MIT",
+  "quickGuide": "Szybki przewodnik",
+  "help1Title": "1. Skonfiguruj token",
+  "help1Body": "Utwórz GitHub Personal Access Token (PAT). Classic PAT: Zakres 'repo'. Fine-grained: Contents Read. Utwórz w: GitHub → Settings → Developer settings → Personal access tokens",
+  "help2Title": "2. Połącz repozytorium",
+  "help2Body": "Wprowadź Owner, nazwę Repo i Branch w Ustawieniach. Twoje repozytorium powinno być zgodne z formatem GitSyncMarks (foldery jak toolbar, menu, other z plikami JSON na zakładkę).",
+  "help3Title": "3. Testuj połączenie",
+  "help3Body": "Kliknij \"Test Connection\", aby zweryfikować token i dostęp do repozytorium. Po sukcesie wyświetlane są dostępne foldery główne.",
+  "help4Title": "4. Wybierz foldery",
+  "help4Body": "Wybierz, które foldery wyświetlać (np. toolbar, mobile). Puste zaznaczenie = wszystkie. Przynajmniej jeden wybrany = tylko te foldery.",
+  "help5Title": "5. Synchronizuj",
+  "help5Body": "Kliknij \"Sync Bookmarks\", aby załadować zakładki. Pociągnij, aby odświeżyć na ekranie głównym.",
+  "whichRepoFormat": "Jaki format repozytorium?",
+  "repoFormatDescription": "Repozytorium powinno być zgodne z formatem GitSyncMarks: Base Path (np. bookmarks) z podfolderami jak toolbar, menu, other, mobile. Każdy folder ma _order.json i pliki JSON na zakładkę z title i url.",
+  "support": "Wsparcie",
+  "supportText": "Pytania lub komunikaty o błędach? Otwórz zgłoszenie w repozytorium projektu.",
+  "gitSyncMarksAndroidIssues": "GitSyncMarks-App (GitHub Issues)",
+  "profiles": "Profile",
+  "profile": "Profil",
+  "activeProfile": "Aktywny profil",
+  "addProfile": "Dodaj profil",
+  "renameProfile": "Zmień nazwę profilu",
+  "deleteProfile": "Usuń profil",
+  "deleteProfileConfirm": "Usunąć profil \"{name}\"?",
+  "@deleteProfileConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "profileName": "Nazwa profilu",
+  "profileCount": "{count}/{max} profili",
+  "@profileCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "maxProfilesReached": "Osiągnięto maksymalną liczbę profili ({max})",
+  "@maxProfilesReached": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "profileAdded": "Profil \"{name}\" dodany",
+  "@profileAdded": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "profileRenamed": "Profil zmieniono na \"{name}\"",
+  "@profileRenamed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "profileDeleted": "Profil usunięty",
+  "cannotDeleteLastProfile": "Nie można usunąć ostatniego profilu",
+  "importExport": "Importuj / Eksportuj",
+  "importSettings": "Importuj ustawienia",
+  "exportSettings": "Eksportuj ustawienia",
+  "importSettingsDesc": "Importuj profile z pliku ustawień GitSyncMarks (JSON)",
+  "exportSettingsDesc": "Eksportuj wszystkie profile jako plik ustawień GitSyncMarks",
+  "importSuccess": "Zaimportowano {count} profil(e/i)",
+  "@importSuccess": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importFailed": "Import nieudany: {error}",
+  "@importFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "importConfirm": "Importować {count} profil(e/i)? Wszystkie istniejące profile zostaną zastąpione.",
+  "@importConfirm": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "exportSuccess": "Ustawienia wyeksportowane",
+  "cancel": "Anuluj",
+  "delete": "Usuń",
+  "rename": "Zmień nazwę",
+  "add": "Dodaj",
+  "import_": "Importuj",
+  "replace": "Zastąp",
+  "bookmarks": "Zakładki",
+  "info": "Informacje",
+  "connection": "Połączenie",
+  "folders": "Foldery",
+  "tabGitHub": "GitHub",
+  "tabSync": "Synchronizuj",
+  "tabFiles": "Pliki",
+  "tabGeneral": "Ogólne",
+  "tabHelp": "Pomoc",
+  "tabAbout": "O aplikacji",
+  "subTabProfile": "Profil",
+  "subTabConnection": "Połączenie",
+  "subTabExportImport": "Eksportuj / Importuj",
+  "subTabSettings": "Ustawienia",
+  "searchPlaceholder": "Szukaj zakładek...",
+  "noSearchResults": "Brak wyników dla \"{query}\"",
+  "clearSearch": "Wyczyść wyszukiwanie",
+  "@noSearchResults": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "automaticSync": "Automatyczna synchronizacja",
+  "autoSyncActive": "Autosynchronizacja aktywna",
+  "autoSyncDisabled": "Autosynchronizacja wyłączona",
+  "nextSyncIn": "Następna synchronizacja za {time}",
+  "@nextSyncIn": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "syncProfileRealtime": "Czas rzeczywisty",
+  "syncProfileFrequent": "Częste",
+  "syncProfileNormal": "Normalne",
+  "syncProfilePowersave": "Oszczędzanie energii",
+  "syncProfileCustom": "Niestandardowy",
+  "syncProfileMeaningTitle": "Co oznaczają te profile:",
+  "syncProfileMeaningRealtime": "Czas rzeczywisty: synchronizacja co minutę (najwyższa aktualność, wyższe zużycie baterii).",
+  "syncProfileMeaningFrequent": "Częste: synchronizacja co 5 minut (zrównoważone dla aktywnego użytkowania).",
+  "syncProfileMeaningNormal": "Normalne: synchronizacja co 15 minut (zalecana domyślna).",
+  "syncProfileMeaningPowersave": "Oszczędzanie energii: synchronizacja co 60 minut (minimalne zużycie baterii/sieci).",
+  "syncProfileMeaningCustom": "Niestandardowy: ustaw własny interwał w minutach.",
+  "customSyncIntervalLabel": "Niestandardowy interwał synchronizacji (minuty)",
+  "customSyncIntervalHint": "Wprowadź wartość od 1 do 1440",
+  "customSyncIntervalErrorRange": "Wprowadź prawidłowy interwał od {min} do {max} minut.",
+  "@customSyncIntervalErrorRange": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "syncCommit": "Commit",
+  "lastSynced": "Ostatnia synchronizacja {time}",
+  "@lastSynced": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "neverSynced": "Nigdy nie synchronizowano",
+  "syncOnStart": "Synchronizuj przy uruchomieniu",
+  "allowMoveReorder": "Zezwól na przenoszenie i zmienianie kolejności",
+  "allowMoveReorderDesc": "Uchwyty przeciągania i przenoszenie do folderu. Wyłącz dla widoku tylko do odczytu.",
+  "allowMoveReorderDisable": "Tylko do odczytu (ukryj uchwyty)",
+  "allowMoveReorderEnable": "Włącz edytowanie (pokaż uchwyty)",
+  "bookmarkCount": "{count} zakładek w {folders} folderach",
+  "@bookmarkCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "folders": {
+        "type": "int"
+      }
+    }
+  },
+  "syncNow": "Synchronizuj teraz",
+  "addBookmark": "Dodaj zakładkę",
+  "addBookmarkTitle": "Dodaj zakładkę",
+  "bookmarkTitle": "Tytuł zakładki",
+  "selectFolder": "Wybierz folder",
+  "exportBookmarks": "Eksportuj zakładki",
+  "settingsSyncToGit": "Synchronizuj ustawienia z Git (zaszyfrowane)",
+  "settingsSyncPassword": "Hasło szyfrowania",
+  "settingsSyncPasswordHint": "Ustaw raz na urządzenie. Musi być takie samo na wszystkich urządzeniach.",
+  "settingsSyncRememberPassword": "Zapamiętaj hasło",
+  "settingsSyncPasswordSaved": "Hasło zapisane (używane do Push/Pull)",
+  "settingsSyncClearPassword": "Wyczyść zapisane hasło",
+  "settingsSyncSaveBtn": "Zapisz hasło",
+  "settingsSyncPasswordMissing": "Wprowadź hasło.",
+  "settingsSyncWithBookmarks": "Synchronizuj ustawienia podczas synchronizacji zakładek",
+  "settingsSyncPush": "Wyślij ustawienia",
+  "settingsSyncPull": "Pobierz ustawienia",
+  "settingsSyncModeLabel": "Tryb synchronizacji (tylko indywidualny)",
+  "settingsSyncModeGlobal": "Globalny — wspólny dla wszystkich urządzeń (legacy, zmigrowany)",
+  "settingsSyncModeIndividual": "Indywidualny — tylko to urządzenie",
+  "settingsSyncImportTitle": "Importuj z innego urządzenia",
+  "settingsSyncLoadConfigs": "Załaduj dostępne konfiguracje",
+  "settingsSyncImport": "Importuj",
+  "settingsSyncImportEmpty": "Nie znaleziono konfiguracji urządzeń",
+  "settingsSyncImportSuccess": "Ustawienia zaimportowane pomyślnie",
+  "reportIssue": "Zgłoś problem",
+  "documentation": "Dokumentacja",
+  "voteBacklog": "Zagłosuj na backlog",
+  "discussions": "Dyskusje",
+  "moveUp": "Przenieś w górę",
+  "moveDown": "Przenieś w dół",
+  "shareLinkAddBookmark": "Dodaj udostępniony link jako zakładkę",
+  "clearCache": "Wyczyść pamięć podręczną",
+  "clearCacheDesc": "Usuń zbuforowane dane zakładek. Synchronizacja uruchomi się automatycznie, jeśli GitHub jest skonfigurowany.",
+  "clearCacheSuccess": "Pamięć podręczna wyczyszczona.",
+  "moveToFolder": "Przenieś do folderu",
+  "moveToFolderSuccess": "Zakładka przeniesiona",
+  "moveToFolderFailed": "Nie udało się przenieść zakładki",
+  "deleteBookmark": "Usuń zakładkę",
+  "deleteBookmarkConfirm": "Usunąć zakładkę \"{title}\"?",
+  "@deleteBookmarkConfirm": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "bookmarkDeleted": "Zakładka usunięta",
+  "orderUpdated": "Kolejność zaktualizowana",
+  "rootFolder": "Folder główny",
+  "rootFolderHelp": "Wybierz folder, którego podfoldery stają się kartami. Domyślnie wyświetla wszystkie foldery najwyższego poziomu.",
+  "allFolders": "Wszystkie foldery",
+  "selectRootFolder": "Wybierz folder główny",
+  "exportPasswordTitle": "Hasło eksportu",
+  "exportPasswordHint": "Pozostaw puste dla niezaszyfrowanego eksportu",
+  "importPasswordTitle": "Zaszyfrowany plik",
+  "importPasswordHint": "Wprowadź hasło szyfrowania",
+  "importSettingsAction": "Importuj ustawienia",
+  "importingSettings": "Importowanie ustawień…",
+  "orImportExisting": "lub importuj istniejące ustawienia",
+  "wrongPassword": "Błędne hasło. Spróbuj ponownie.",
+  "showSecret": "Pokaż sekret",
+  "hideSecret": "Ukryj sekret",
+  "export_": "Eksportuj",
+  "resetAll": "Zresetuj wszystkie dane",
+  "resetConfirmTitle": "Zresetować aplikację?",
+  "resetConfirmMessage": "Wszystkie profile, ustawienia i zbuforowane zakładki zostaną usunięte. Aplikacja wróci do stanu początkowego.",
+  "resetSuccess": "Wszystkie dane zostały zresetowane",
+  "settingsSyncClientName": "Nazwa klienta",
+  "settingsSyncClientNameHint": "np. base-android lub laptop-linux",
+  "settingsSyncClientNameRequired": "Wprowadź nazwę klienta dla trybu indywidualnego.",
+  "settingsSyncCreateBtn": "Utwórz moje ustawienie klienta",
+  "generalLanguageTitle": "Język",
+  "generalThemeTitle": "Motyw",
+  "appLanguage": "Język aplikacji",
+  "appTheme": "Motyw aplikacji",
+  "appLanguageSystem": "Domyślny systemowy",
+  "appThemeSystem": "Domyślny systemowy",
+  "appThemeLight": "Jasny",
+  "appThemeDark": "Ciemny",
+  "appLanguageGerman": "Niemiecki",
+  "appLanguageEnglish": "Angielski",
+  "appLanguageSpanish": "Hiszpański",
+  "appLanguageFrench": "Francuski",
+  "basePathBrowse": "Przeglądaj foldery",
+  "basePathBrowseTitle": "Wybierz folder repozytorium",
+  "subTabFolders": "Foldery",
+  "appLanguagePortugueseBrazil": "Portugalski (Brazylia)",
+  "appLanguageItalian": "Włoski",
+  "appLanguageJapanese": "Japoński",
+  "appLanguageChineseSimplified": "Chiński (uproszczony)",
+  "appLanguageKorean": "Koreański",
+  "appLanguageRussian": "Rosyjski",
+  "appLanguageTurkish": "Turecki",
+  "appLanguagePolish": "Polski"
+}

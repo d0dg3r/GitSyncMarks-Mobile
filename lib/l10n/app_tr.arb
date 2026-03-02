@@ -1,0 +1,344 @@
+{
+  "@@locale": "tr",
+  "appTitle": "GitSyncMarks",
+  "settings": "Ayarlar",
+  "about": "Hakkında",
+  "help": "Yardım",
+  "noBookmarksYet": "Henüz yer imi yok",
+  "tapSyncToFetch": "GitHub'dan yer imlerini çekmek için Senkronize'ye dokunun",
+  "configureInSettings": "Ayarlar'da GitHub bağlantısını yapılandırın",
+  "sync": "Senkronize Et",
+  "openSettings": "Ayarları Aç",
+  "error": "Hata",
+  "retry": "Tekrar Dene",
+  "couldNotOpenUrl": "{url} açılamadı",
+  "@couldNotOpenUrl": {
+    "placeholders": {
+      "url": {
+        "type": "Object"
+      }
+    }
+  },
+  "couldNotOpenLink": "Bağlantı açılamadı",
+  "pleaseFillTokenOwnerRepo": "Lütfen Token, Owner ve Repo'yu doldurun",
+  "settingsSaved": "Ayarlar kaydedildi",
+  "connectionSuccessful": "Bağlantı başarılı",
+  "connectionFailed": "Bağlantı başarısız",
+  "syncComplete": "Senkronizasyon tamamlandı",
+  "syncFailed": "Senkronizasyon başarısız",
+  "githubConnection": "GitHub Bağlantısı",
+  "personalAccessToken": "Kişisel Erişim Tokeni (PAT)",
+  "tokenHint": "ghp_xxxxxxxxxxxxxxxxxxxx",
+  "tokenHelper": "Klasik PAT: Kapsam 'repo'. Fine-grained: Contents Read. Oluştur: GitHub → Settings → Developer settings → Personal access tokens",
+  "repositoryOwner": "Depo Sahibi",
+  "ownerHint": "github-kullanici-adiniz",
+  "repositoryName": "Depo Adı",
+  "repoHint": "yer-imlerim",
+  "branch": "Dal",
+  "branchHint": "main",
+  "basePath": "Temel Yol",
+  "basePathHint": "yer-imleri",
+  "displayedFolders": "Görüntülenen Klasörler",
+  "displayedFoldersHelp": "Bağlantı Testi'nden sonra kullanılabilir. Boş seçim = tüm klasörler. En az bir seçili = yalnızca bu klasörler.",
+  "save": "Kaydet",
+  "testConnection": "Bağlantıyı Test Et",
+  "syncBookmarks": "Yer İmlerini Senkronize Et",
+  "version": "Sürüm {appVersion}",
+  "@version": {
+    "placeholders": {
+      "appVersion": {
+        "type": "String"
+      }
+    }
+  },
+  "authorBy": "Joe Mild tarafından",
+  "aboutDescription": "GitSyncMarks için mobil uygulama – GitHub deposundaki yer imlerinizi görüntüleyin ve tarayıcınızda açın.",
+  "projects": "Projeler",
+  "formatFromGitSyncMarks": "Yer imi formatı GitSyncMarks'tan gelmektedir.",
+  "gitSyncMarksDesc": "GitSyncMarks'a dayalı – çift yönlü yer imi senkronizasyonu için tarayıcı uzantısı. Bu proje GitSyncMarks referans alınarak geliştirilmiştir.",
+  "licenseMit": "Lisans: MIT",
+  "quickGuide": "Hızlı Kılavuz",
+  "help1Title": "1. Token kurulumu",
+  "help1Body": "Bir GitHub Personal Access Token (PAT) oluşturun. Klasik PAT: Kapsam 'repo'. Fine-grained: Contents Read. Oluştur: GitHub → Settings → Developer settings → Personal access tokens",
+  "help2Title": "2. Depoyu bağlayın",
+  "help2Body": "Ayarlar'da Owner, Repo adı ve Branch'i girin. Deponuz GitSyncMarks formatını takip etmelidir (toolbar, menu, other gibi klasörlerde yer işareti başına JSON dosyaları).",
+  "help3Title": "3. Bağlantıyı Test Edin",
+  "help3Body": "Token ve depo erişimini doğrulamak için \"Test Connection\"a tıklayın. Başarılıysa, mevcut kök klasörler gösterilir.",
+  "help4Title": "4. Klasörleri seçin",
+  "help4Body": "Hangi klasörlerin görüntüleneceğini seçin (örn. toolbar, mobile). Boş seçim = hepsi. En az bir seçili = yalnızca bu klasörler.",
+  "help5Title": "5. Senkronize Edin",
+  "help5Body": "Yer imlerini yüklemek için \"Sync Bookmarks\"a tıklayın. Ana ekranda yenilemek için aşağı çekin.",
+  "whichRepoFormat": "Hangi depo formatı?",
+  "repoFormatDescription": "Depo GitSyncMarks formatını takip etmelidir: Base Path (örn. \"bookmarks\") ile toolbar, menu, other, mobile gibi alt klasörler. Her klasörde title ve url içeren yer imi başına _order.json ve JSON dosyaları bulunur.",
+  "support": "Destek",
+  "supportText": "Sorular veya hata mesajları? Proje deposunda bir issue açın.",
+  "gitSyncMarksAndroidIssues": "GitSyncMarks-App (GitHub Issues)",
+  "profiles": "Profiller",
+  "profile": "Profil",
+  "activeProfile": "Aktif Profil",
+  "addProfile": "Profil Ekle",
+  "renameProfile": "Profili Yeniden Adlandır",
+  "deleteProfile": "Profili Sil",
+  "deleteProfileConfirm": "\"{name}\" profili silinsin mi?",
+  "@deleteProfileConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "profileName": "Profil adı",
+  "profileCount": "{count}/{max} profil",
+  "@profileCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "maxProfilesReached": "Maksimum profil sayısına ulaşıldı ({max})",
+  "@maxProfilesReached": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "profileAdded": "\"{name}\" profili eklendi",
+  "@profileAdded": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "profileRenamed": "Profil \"{name}\" olarak yeniden adlandırıldı",
+  "@profileRenamed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "profileDeleted": "Profil silindi",
+  "cannotDeleteLastProfile": "Son profil silinemez",
+  "importExport": "İçe / Dışa Aktar",
+  "importSettings": "Ayarları İçe Aktar",
+  "exportSettings": "Ayarları Dışa Aktar",
+  "importSettingsDesc": "GitSyncMarks ayar dosyasından (JSON) profilleri içe aktar",
+  "exportSettingsDesc": "Tüm profilleri GitSyncMarks ayar dosyası olarak dışa aktar",
+  "importSuccess": "{count} profil içe aktarıldı",
+  "@importSuccess": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importFailed": "İçe aktarma başarısız: {error}",
+  "@importFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "importConfirm": "{count} profil içe aktarılsın mı? Tüm mevcut profiller değiştirilecektir.",
+  "@importConfirm": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "exportSuccess": "Ayarlar dışa aktarıldı",
+  "cancel": "İptal",
+  "delete": "Sil",
+  "rename": "Yeniden Adlandır",
+  "add": "Ekle",
+  "import_": "İçe Aktar",
+  "replace": "Değiştir",
+  "bookmarks": "Yer İmleri",
+  "info": "Bilgi",
+  "connection": "Bağlantı",
+  "folders": "Klasörler",
+  "tabGitHub": "GitHub",
+  "tabSync": "Senkronize Et",
+  "tabFiles": "Dosyalar",
+  "tabGeneral": "Genel",
+  "tabHelp": "Yardım",
+  "tabAbout": "Hakkında",
+  "subTabProfile": "Profil",
+  "subTabConnection": "Bağlantı",
+  "subTabExportImport": "Dışa / İçe Aktar",
+  "subTabSettings": "Ayarlar",
+  "searchPlaceholder": "Yer imlerini ara...",
+  "noSearchResults": "\"{query}\" için sonuç yok",
+  "clearSearch": "Aramayı temizle",
+  "@noSearchResults": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "automaticSync": "Otomatik senkronizasyon",
+  "autoSyncActive": "Otomatik senkronizasyon aktif",
+  "autoSyncDisabled": "Otomatik senkronizasyon devre dışı",
+  "nextSyncIn": "Sonraki senkronizasyon {time} içinde",
+  "@nextSyncIn": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "syncProfileRealtime": "Gerçek zamanlı",
+  "syncProfileFrequent": "Sık",
+  "syncProfileNormal": "Normal",
+  "syncProfilePowersave": "Güç tasarrufu",
+  "syncProfileCustom": "Özel",
+  "syncProfileMeaningTitle": "Bu profiller ne anlama gelir:",
+  "syncProfileMeaningRealtime": "Gerçek zamanlı: her dakika senkronize eder (en güncel, daha yüksek pil kullanımı).",
+  "syncProfileMeaningFrequent": "Sık: her 5 dakikada senkronize eder (aktif kullanım için dengeli).",
+  "syncProfileMeaningNormal": "Normal: her 15 dakikada senkronize eder (önerilen varsayılan).",
+  "syncProfileMeaningPowersave": "Güç tasarrufu: her 60 dakikada senkronize eder (en düşük pil/ağ kullanımı).",
+  "syncProfileMeaningCustom": "Özel: kendi aralığınızı dakika cinsinden belirleyin.",
+  "customSyncIntervalLabel": "Özel senkronizasyon aralığı (dakika)",
+  "customSyncIntervalHint": "1 ile 1440 arasında bir değer girin",
+  "customSyncIntervalErrorRange": "Lütfen {min} ile {max} dakika arasında geçerli bir aralık girin.",
+  "@customSyncIntervalErrorRange": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "syncCommit": "Commit",
+  "lastSynced": "Son senkronizasyon {time}",
+  "@lastSynced": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "neverSynced": "Hiç senkronize edilmedi",
+  "syncOnStart": "Uygulama başlangıcında senkronize et",
+  "allowMoveReorder": "Taşımaya ve yeniden sıralamaya izin ver",
+  "allowMoveReorderDesc": "Sürükleme tutamaçları ve klasöre taşıma. Salt okunur görünüm için devre dışı bırakın.",
+  "allowMoveReorderDisable": "Salt okunur (tutamaçları gizle)",
+  "allowMoveReorderEnable": "Düzenlemeyi etkinleştir (tutamaçları göster)",
+  "bookmarkCount": "{folders} klasörde {count} yer imi",
+  "@bookmarkCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "folders": {
+        "type": "int"
+      }
+    }
+  },
+  "syncNow": "Şimdi Senkronize Et",
+  "addBookmark": "Yer imi ekle",
+  "addBookmarkTitle": "Yer İmi Ekle",
+  "bookmarkTitle": "Yer imi başlığı",
+  "selectFolder": "Klasör seç",
+  "exportBookmarks": "Yer imlerini dışa aktar",
+  "settingsSyncToGit": "Ayarları Git'e senkronize et (şifreli)",
+  "settingsSyncPassword": "Şifreleme şifresi",
+  "settingsSyncPasswordHint": "Cihaz başına bir kez ayarlayın. Tüm cihazlarda aynı olmalıdır.",
+  "settingsSyncRememberPassword": "Şifreyi hatırla",
+  "settingsSyncPasswordSaved": "Şifre kaydedildi (Push/Pull için kullanılır)",
+  "settingsSyncClearPassword": "Kayıtlı şifreyi temizle",
+  "settingsSyncSaveBtn": "Şifreyi kaydet",
+  "settingsSyncPasswordMissing": "Lütfen bir şifre girin.",
+  "settingsSyncWithBookmarks": "Yer imi senkronizasyonunda ayarları da senkronize et",
+  "settingsSyncPush": "Ayarları gönder",
+  "settingsSyncPull": "Ayarları çek",
+  "settingsSyncModeLabel": "Senkronizasyon modu (yalnızca bireysel)",
+  "settingsSyncModeGlobal": "Global — tüm cihazlarda paylaşılan (eski, taşındı)",
+  "settingsSyncModeIndividual": "Bireysel — yalnızca bu cihaz",
+  "settingsSyncImportTitle": "Başka cihazdan içe aktar",
+  "settingsSyncLoadConfigs": "Mevcut yapılandırmaları yükle",
+  "settingsSyncImport": "İçe Aktar",
+  "settingsSyncImportEmpty": "Cihaz yapılandırması bulunamadı",
+  "settingsSyncImportSuccess": "Ayarlar başarıyla içe aktarıldı",
+  "reportIssue": "Sorun Bildir",
+  "documentation": "Belgeleme",
+  "voteBacklog": "Kapsam listesine oy ver",
+  "discussions": "Tartışmalar",
+  "moveUp": "Yukarı taşı",
+  "moveDown": "Aşağı taşı",
+  "shareLinkAddBookmark": "Paylaşılan bağlantıyı yer imi olarak ekle",
+  "clearCache": "Önbelleği temizle",
+  "clearCacheDesc": "Önbelleğe alınmış yer imi verilerini kaldırın. GitHub yapılandırılmışsa senkronizasyon otomatik çalışır.",
+  "clearCacheSuccess": "Önbellek temizlendi.",
+  "moveToFolder": "Klasöre taşı",
+  "moveToFolderSuccess": "Yer imi taşındı",
+  "moveToFolderFailed": "Yer imi taşınamadı",
+  "deleteBookmark": "Yer İmini Sil",
+  "deleteBookmarkConfirm": "\"{title}\" yer imi silinsin mi?",
+  "@deleteBookmarkConfirm": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "bookmarkDeleted": "Yer imi silindi",
+  "orderUpdated": "Sıralama güncellendi",
+  "rootFolder": "Kök Klasör",
+  "rootFolderHelp": "Alt klasörleri sekme olacak bir klasör seçin. Varsayılan tüm üst düzey klasörleri gösterir.",
+  "allFolders": "Tüm Klasörler",
+  "selectRootFolder": "Kök Klasör Seç",
+  "exportPasswordTitle": "Dışa Aktarma Şifresi",
+  "exportPasswordHint": "Şifresiz dışa aktarma için boş bırakın",
+  "importPasswordTitle": "Şifreli Dosya",
+  "importPasswordHint": "Şifreleme şifresini girin",
+  "importSettingsAction": "Ayarları İçe Aktar",
+  "importingSettings": "Ayarlar içe aktarılıyor…",
+  "orImportExisting": "veya mevcut ayarları içe aktar",
+  "wrongPassword": "Yanlış şifre. Lütfen tekrar deneyin.",
+  "showSecret": "Gizliliği göster",
+  "hideSecret": "Gizliliği gizle",
+  "export_": "Dışa Aktar",
+  "resetAll": "Tüm verileri sıfırla",
+  "resetConfirmTitle": "Uygulama Sıfırlansın mı?",
+  "resetConfirmMessage": "Tüm profiller, ayarlar ve önbelleğe alınmış yer imleri silinecektir. Uygulama ilk durumuna dönecektir.",
+  "resetSuccess": "Tüm veriler sıfırlandı",
+  "settingsSyncClientName": "İstemci adı",
+  "settingsSyncClientNameHint": "örn. base-android veya laptop-linux",
+  "settingsSyncClientNameRequired": "Lütfen bireysel mod için bir istemci adı girin.",
+  "settingsSyncCreateBtn": "İstemci ayarımı oluştur",
+  "generalLanguageTitle": "Dil",
+  "generalThemeTitle": "Tema",
+  "appLanguage": "Uygulama dili",
+  "appTheme": "Uygulama teması",
+  "appLanguageSystem": "Sistem varsayılanı",
+  "appThemeSystem": "Sistem varsayılanı",
+  "appThemeLight": "Açık",
+  "appThemeDark": "Koyu",
+  "appLanguageGerman": "Almanca",
+  "appLanguageEnglish": "İngilizce",
+  "appLanguageSpanish": "İspanyolca",
+  "appLanguageFrench": "Fransızca",
+  "basePathBrowse": "Klasörlere göz at",
+  "basePathBrowseTitle": "Depo klasörünü seçin",
+  "subTabFolders": "Klasörler",
+  "appLanguagePortugueseBrazil": "Portekizce (Brezilya)",
+  "appLanguageItalian": "İtalyanca",
+  "appLanguageJapanese": "Japonca",
+  "appLanguageChineseSimplified": "Çince (Basitleştirilmiş)",
+  "appLanguageKorean": "Korece",
+  "appLanguageRussian": "Rusça",
+  "appLanguageTurkish": "Türkçe",
+  "appLanguagePolish": "Lehçe"
+}

@@ -9,6 +9,14 @@ import 'app_localizations_de.dart';
 import 'app_localizations_en.dart';
 import 'app_localizations_es.dart';
 import 'app_localizations_fr.dart';
+import 'app_localizations_it.dart';
+import 'app_localizations_ja.dart';
+import 'app_localizations_ko.dart';
+import 'app_localizations_pl.dart';
+import 'app_localizations_pt.dart';
+import 'app_localizations_ru.dart';
+import 'app_localizations_tr.dart';
+import 'app_localizations_zh.dart';
 
 // ignore_for_file: type=lint
 
@@ -99,7 +107,17 @@ abstract class AppLocalizations {
     Locale('de'),
     Locale('en'),
     Locale('es'),
-    Locale('fr')
+    Locale('fr'),
+    Locale('it'),
+    Locale('ja'),
+    Locale('ko'),
+    Locale('pl'),
+    Locale('pt'),
+    Locale('pt', 'BR'),
+    Locale('ru'),
+    Locale('tr'),
+    Locale('zh'),
+    Locale('zh', 'CN')
   ];
 
   /// No description provided for @appTitle.
@@ -672,6 +690,12 @@ abstract class AppLocalizations {
   /// **'Files'**
   String get tabFiles;
 
+  /// No description provided for @tabGeneral.
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get tabGeneral;
+
   /// No description provided for @tabHelp.
   ///
   /// In en, this message translates to:
@@ -779,6 +803,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Custom'**
   String get syncProfileCustom;
+
+  /// No description provided for @syncProfileMeaningTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What these profiles mean:'**
+  String get syncProfileMeaningTitle;
+
+  /// No description provided for @syncProfileMeaningRealtime.
+  ///
+  /// In en, this message translates to:
+  /// **'Real-time: sync every minute (best freshness, higher battery usage).'**
+  String get syncProfileMeaningRealtime;
+
+  /// No description provided for @syncProfileMeaningFrequent.
+  ///
+  /// In en, this message translates to:
+  /// **'Frequent: sync every 5 minutes (balanced for active usage).'**
+  String get syncProfileMeaningFrequent;
+
+  /// No description provided for @syncProfileMeaningNormal.
+  ///
+  /// In en, this message translates to:
+  /// **'Normal: sync every 15 minutes (recommended default).'**
+  String get syncProfileMeaningNormal;
+
+  /// No description provided for @syncProfileMeaningPowersave.
+  ///
+  /// In en, this message translates to:
+  /// **'Power save: sync every 60 minutes (lowest battery/network usage).'**
+  String get syncProfileMeaningPowersave;
+
+  /// No description provided for @syncProfileMeaningCustom.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom: choose your own interval in minutes.'**
+  String get syncProfileMeaningCustom;
+
+  /// No description provided for @customSyncIntervalLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom sync interval (minutes)'**
+  String get customSyncIntervalLabel;
+
+  /// No description provided for @customSyncIntervalHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a value between 1 and 1440'**
+  String get customSyncIntervalHint;
+
+  /// No description provided for @customSyncIntervalErrorRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid interval between {min} and {max} minutes.'**
+  String customSyncIntervalErrorRange(int min, int max);
+
+  /// No description provided for @syncCommit.
+  ///
+  /// In en, this message translates to:
+  /// **'Commit'**
+  String get syncCommit;
 
   /// No description provided for @lastSynced.
   ///
@@ -933,13 +1017,13 @@ abstract class AppLocalizations {
   /// No description provided for @settingsSyncModeLabel.
   ///
   /// In en, this message translates to:
-  /// **'Sync mode'**
+  /// **'Sync mode (individual only)'**
   String get settingsSyncModeLabel;
 
   /// No description provided for @settingsSyncModeGlobal.
   ///
   /// In en, this message translates to:
-  /// **'Global — shared across all devices'**
+  /// **'Global — shared across all devices (legacy, migrated)'**
   String get settingsSyncModeGlobal;
 
   /// No description provided for @settingsSyncModeIndividual.
@@ -1152,6 +1236,18 @@ abstract class AppLocalizations {
   /// **'Wrong password. Please try again.'**
   String get wrongPassword;
 
+  /// No description provided for @showSecret.
+  ///
+  /// In en, this message translates to:
+  /// **'Show secret'**
+  String get showSecret;
+
+  /// No description provided for @hideSecret.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide secret'**
+  String get hideSecret;
+
   /// No description provided for @export_.
   ///
   /// In en, this message translates to:
@@ -1181,6 +1277,168 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'All data has been reset'**
   String get resetSuccess;
+
+  /// No description provided for @settingsSyncClientName.
+  ///
+  /// In en, this message translates to:
+  /// **'Client name'**
+  String get settingsSyncClientName;
+
+  /// No description provided for @settingsSyncClientNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. base-android or laptop-linux'**
+  String get settingsSyncClientNameHint;
+
+  /// No description provided for @settingsSyncClientNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a client name for individual mode.'**
+  String get settingsSyncClientNameRequired;
+
+  /// No description provided for @settingsSyncCreateBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Create my client setting'**
+  String get settingsSyncCreateBtn;
+
+  /// No description provided for @generalLanguageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get generalLanguageTitle;
+
+  /// No description provided for @generalThemeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get generalThemeTitle;
+
+  /// No description provided for @appLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'App language'**
+  String get appLanguage;
+
+  /// No description provided for @appTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'App theme'**
+  String get appTheme;
+
+  /// No description provided for @appLanguageSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'System default'**
+  String get appLanguageSystem;
+
+  /// No description provided for @appThemeSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'System default'**
+  String get appThemeSystem;
+
+  /// No description provided for @appThemeLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get appThemeLight;
+
+  /// No description provided for @appThemeDark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get appThemeDark;
+
+  /// No description provided for @appLanguageGerman.
+  ///
+  /// In en, this message translates to:
+  /// **'Deutsch'**
+  String get appLanguageGerman;
+
+  /// No description provided for @appLanguageEnglish.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get appLanguageEnglish;
+
+  /// No description provided for @appLanguageSpanish.
+  ///
+  /// In en, this message translates to:
+  /// **'Español'**
+  String get appLanguageSpanish;
+
+  /// No description provided for @appLanguageFrench.
+  ///
+  /// In en, this message translates to:
+  /// **'Français'**
+  String get appLanguageFrench;
+
+  /// No description provided for @basePathBrowse.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse folders'**
+  String get basePathBrowse;
+
+  /// No description provided for @basePathBrowseTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select repository folder'**
+  String get basePathBrowseTitle;
+
+  /// No description provided for @subTabFolders.
+  ///
+  /// In en, this message translates to:
+  /// **'Folders'**
+  String get subTabFolders;
+
+  /// No description provided for @appLanguagePortugueseBrazil.
+  ///
+  /// In en, this message translates to:
+  /// **'Portuguese (Brazil)'**
+  String get appLanguagePortugueseBrazil;
+
+  /// No description provided for @appLanguageItalian.
+  ///
+  /// In en, this message translates to:
+  /// **'Italian'**
+  String get appLanguageItalian;
+
+  /// No description provided for @appLanguageJapanese.
+  ///
+  /// In en, this message translates to:
+  /// **'Japanese'**
+  String get appLanguageJapanese;
+
+  /// No description provided for @appLanguageChineseSimplified.
+  ///
+  /// In en, this message translates to:
+  /// **'Chinese (Simplified)'**
+  String get appLanguageChineseSimplified;
+
+  /// No description provided for @appLanguageKorean.
+  ///
+  /// In en, this message translates to:
+  /// **'Korean'**
+  String get appLanguageKorean;
+
+  /// No description provided for @appLanguageRussian.
+  ///
+  /// In en, this message translates to:
+  /// **'Russian'**
+  String get appLanguageRussian;
+
+  /// No description provided for @appLanguageTurkish.
+  ///
+  /// In en, this message translates to:
+  /// **'Turkish'**
+  String get appLanguageTurkish;
+
+  /// No description provided for @appLanguagePolish.
+  ///
+  /// In en, this message translates to:
+  /// **'Polish'**
+  String get appLanguagePolish;
 }
 
 class _AppLocalizationsDelegate
@@ -1193,14 +1451,46 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['de', 'en', 'es', 'fr'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>[
+        'de',
+        'en',
+        'es',
+        'fr',
+        'it',
+        'ja',
+        'ko',
+        'pl',
+        'pt',
+        'ru',
+        'tr',
+        'zh'
+      ].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
 }
 
 AppLocalizations lookupAppLocalizations(Locale locale) {
+  // Lookup logic when language+country codes are specified.
+  switch (locale.languageCode) {
+    case 'pt':
+      {
+        switch (locale.countryCode) {
+          case 'BR':
+            return AppLocalizationsPtBr();
+        }
+        break;
+      }
+    case 'zh':
+      {
+        switch (locale.countryCode) {
+          case 'CN':
+            return AppLocalizationsZhCn();
+        }
+        break;
+      }
+  }
+
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
     case 'de':
@@ -1211,6 +1501,22 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsEs();
     case 'fr':
       return AppLocalizationsFr();
+    case 'it':
+      return AppLocalizationsIt();
+    case 'ja':
+      return AppLocalizationsJa();
+    case 'ko':
+      return AppLocalizationsKo();
+    case 'pl':
+      return AppLocalizationsPl();
+    case 'pt':
+      return AppLocalizationsPt();
+    case 'ru':
+      return AppLocalizationsRu();
+    case 'tr':
+      return AppLocalizationsTr();
+    case 'zh':
+      return AppLocalizationsZh();
   }
 
   throw FlutterError(

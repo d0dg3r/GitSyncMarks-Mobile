@@ -1,0 +1,344 @@
+{
+  "@@locale": "ja",
+  "appTitle": "GitSyncMarks",
+  "settings": "設定",
+  "about": "アプリについて",
+  "help": "ヘルプ",
+  "noBookmarksYet": "ブックマークはまだありません",
+  "tapSyncToFetch": "GitHubからブックマークを取得するにはSyncをタップ",
+  "configureInSettings": "設定でGitHub接続を構成してください",
+  "sync": "同期",
+  "openSettings": "設定を開く",
+  "error": "エラー",
+  "retry": "再試行",
+  "couldNotOpenUrl": "{url}を開けませんでした",
+  "@couldNotOpenUrl": {
+    "placeholders": {
+      "url": {
+        "type": "Object"
+      }
+    }
+  },
+  "couldNotOpenLink": "リンクを開けませんでした",
+  "pleaseFillTokenOwnerRepo": "Token、Owner、Repoを入力してください",
+  "settingsSaved": "設定を保存しました",
+  "connectionSuccessful": "接続に成功しました",
+  "connectionFailed": "接続に失敗しました",
+  "syncComplete": "同期完了",
+  "syncFailed": "同期失敗",
+  "githubConnection": "GitHub接続",
+  "personalAccessToken": "個人アクセストークン (PAT)",
+  "tokenHint": "ghp_xxxxxxxxxxxxxxxxxxxx",
+  "tokenHelper": "Classic PAT: スコープ 'repo'。Fine-grained: Contents Read。作成場所: GitHub → Settings → Developer settings → Personal access tokens",
+  "repositoryOwner": "リポジトリオーナー",
+  "ownerHint": "あなたのGitHubユーザー名",
+  "repositoryName": "リポジトリ名",
+  "repoHint": "my-bookmarks",
+  "branch": "ブランチ",
+  "branchHint": "main",
+  "basePath": "ベースパス",
+  "basePathHint": "bookmarks",
+  "displayedFolders": "表示フォルダ",
+  "displayedFoldersHelp": "接続テスト後に利用可能。空の選択 = すべてのフォルダ。1つ以上選択 = 選択したフォルダのみ。",
+  "save": "保存",
+  "testConnection": "接続テスト",
+  "syncBookmarks": "ブックマークを同期",
+  "version": "バージョン {appVersion}",
+  "@version": {
+    "placeholders": {
+      "appVersion": {
+        "type": "String"
+      }
+    }
+  },
+  "authorBy": "Joe Mild 作",
+  "aboutDescription": "GitSyncMarks用モバイルアプリ – GitHubリポジトリのブックマークを表示してブラウザで開きます。",
+  "projects": "プロジェクト",
+  "formatFromGitSyncMarks": "ブックマーク形式はGitSyncMarksによるものです。",
+  "gitSyncMarksDesc": "GitSyncMarksをベースにしています – ブックマークの双方向同期のためのブラウザ拡張機能。このプロジェクトはGitSyncMarksを参照として開発されました。",
+  "licenseMit": "ライセンス: MIT",
+  "quickGuide": "クイックガイド",
+  "help1Title": "1. トークンの設定",
+  "help1Body": "GitHub Personal Access Token (PAT)を作成してください。Classic PAT: スコープ 'repo'。Fine-grained: Contents Read。作成場所: GitHub → Settings → Developer settings → Personal access tokens",
+  "help2Title": "2. リポジトリの接続",
+  "help2Body": "設定でOwner、Repo名、Branchを入力してください。リポジトリはGitSyncMarks形式（toolbar、menu、otherなどのフォルダにブックマークごとのJSONファイル）に従う必要があります。",
+  "help3Title": "3. 接続テスト",
+  "help3Body": "「Test Connection」をクリックしてトークンとリポジトリアクセスを確認してください。成功すると、利用可能なルートフォルダが表示されます。",
+  "help4Title": "4. フォルダの選択",
+  "help4Body": "表示するフォルダを選択してください（例: toolbar、mobile）。空の選択 = すべて。1つ以上選択 = 選択したフォルダのみ。",
+  "help5Title": "5. 同期",
+  "help5Body": "「Sync Bookmarks」をクリックしてブックマークを読み込みます。メイン画面でプルして更新できます。",
+  "whichRepoFormat": "どのリポジトリ形式ですか？",
+  "repoFormatDescription": "リポジトリはGitSyncMarks形式に従う必要があります: Base Path（例: \"bookmarks\"）にtoolbar、menu、other、mobileなどのサブフォルダ。各フォルダには_order.jsonとtitleとurlを含むブックマークごとのJSONファイルがあります。",
+  "support": "サポート",
+  "supportText": "質問やエラーメッセージがありますか？プロジェクトリポジトリでissueを開いてください。",
+  "gitSyncMarksAndroidIssues": "GitSyncMarks-App (GitHub Issues)",
+  "profiles": "プロファイル",
+  "profile": "プロファイル",
+  "activeProfile": "アクティブプロファイル",
+  "addProfile": "プロファイルを追加",
+  "renameProfile": "プロファイルの名前を変更",
+  "deleteProfile": "プロファイルを削除",
+  "deleteProfileConfirm": "プロファイル「{name}」を削除しますか？",
+  "@deleteProfileConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "profileName": "プロファイル名",
+  "profileCount": "{count}/{max} プロファイル",
+  "@profileCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "maxProfilesReached": "プロファイルの最大数に達しました ({max})",
+  "@maxProfilesReached": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "profileAdded": "プロファイル「{name}」を追加しました",
+  "@profileAdded": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "profileRenamed": "プロファイルを「{name}」に名前変更しました",
+  "@profileRenamed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "profileDeleted": "プロファイルを削除しました",
+  "cannotDeleteLastProfile": "最後のプロファイルは削除できません",
+  "importExport": "インポート / エクスポート",
+  "importSettings": "設定をインポート",
+  "exportSettings": "設定をエクスポート",
+  "importSettingsDesc": "GitSyncMarks設定ファイル (JSON) からプロファイルをインポート",
+  "exportSettingsDesc": "すべてのプロファイルをGitSyncMarks設定ファイルとしてエクスポート",
+  "importSuccess": "{count}件のプロファイルをインポートしました",
+  "@importSuccess": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importFailed": "インポートに失敗しました: {error}",
+  "@importFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "importConfirm": "{count}件のプロファイルをインポートしますか？既存のすべてのプロファイルが置き換えられます。",
+  "@importConfirm": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "exportSuccess": "設定をエクスポートしました",
+  "cancel": "キャンセル",
+  "delete": "削除",
+  "rename": "名前変更",
+  "add": "追加",
+  "import_": "インポート",
+  "replace": "置換",
+  "bookmarks": "ブックマーク",
+  "info": "情報",
+  "connection": "接続",
+  "folders": "フォルダ",
+  "tabGitHub": "GitHub",
+  "tabSync": "同期",
+  "tabFiles": "ファイル",
+  "tabGeneral": "一般",
+  "tabHelp": "ヘルプ",
+  "tabAbout": "アプリについて",
+  "subTabProfile": "プロファイル",
+  "subTabConnection": "接続",
+  "subTabExportImport": "エクスポート / インポート",
+  "subTabSettings": "設定",
+  "searchPlaceholder": "ブックマークを検索...",
+  "noSearchResults": "「{query}」の結果はありません",
+  "clearSearch": "検索をクリア",
+  "@noSearchResults": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "automaticSync": "自動同期",
+  "autoSyncActive": "自動同期有効",
+  "autoSyncDisabled": "自動同期無効",
+  "nextSyncIn": "次の同期まで {time}",
+  "@nextSyncIn": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "syncProfileRealtime": "リアルタイム",
+  "syncProfileFrequent": "頻繁",
+  "syncProfileNormal": "通常",
+  "syncProfilePowersave": "省電力",
+  "syncProfileCustom": "カスタム",
+  "syncProfileMeaningTitle": "プロファイルの意味:",
+  "syncProfileMeaningRealtime": "リアルタイム: 1分ごとに同期（最高の鮮度、バッテリー消費大）。",
+  "syncProfileMeaningFrequent": "頻繁: 5分ごとに同期（アクティブな使用でバランスが取れています）。",
+  "syncProfileMeaningNormal": "通常: 15分ごとに同期（推奨デフォルト）。",
+  "syncProfileMeaningPowersave": "省電力: 60分ごとに同期（バッテリー/ネットワーク消費最小）。",
+  "syncProfileMeaningCustom": "カスタム: 自分でインターバルを分単位で設定。",
+  "customSyncIntervalLabel": "カスタム同期インターバル（分）",
+  "customSyncIntervalHint": "1〜1440の値を入力",
+  "customSyncIntervalErrorRange": "{min}〜{max}分の有効なインターバルを入力してください。",
+  "@customSyncIntervalErrorRange": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "syncCommit": "コミット",
+  "lastSynced": "最終同期 {time}",
+  "@lastSynced": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "neverSynced": "未同期",
+  "syncOnStart": "アプリ起動時に同期",
+  "allowMoveReorder": "移動と並べ替えを許可",
+  "allowMoveReorderDesc": "ドラッグハンドルとフォルダへの移動。読み取り専用表示にするには無効化してください。",
+  "allowMoveReorderDisable": "読み取り専用（ハンドルを非表示）",
+  "allowMoveReorderEnable": "編集を有効（ハンドルを表示）",
+  "bookmarkCount": "{folders}フォルダに{count}件のブックマーク",
+  "@bookmarkCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "folders": {
+        "type": "int"
+      }
+    }
+  },
+  "syncNow": "今すぐ同期",
+  "addBookmark": "ブックマークを追加",
+  "addBookmarkTitle": "ブックマークを追加",
+  "bookmarkTitle": "ブックマークのタイトル",
+  "selectFolder": "フォルダを選択",
+  "exportBookmarks": "ブックマークをエクスポート",
+  "settingsSyncToGit": "設定をGitに同期（暗号化）",
+  "settingsSyncPassword": "暗号化パスワード",
+  "settingsSyncPasswordHint": "デバイスごとに1回設定。すべてのデバイスで同じである必要があります。",
+  "settingsSyncRememberPassword": "パスワードを記憶",
+  "settingsSyncPasswordSaved": "パスワードを保存しました（Push/Pullで使用）",
+  "settingsSyncClearPassword": "保存したパスワードをクリア",
+  "settingsSyncSaveBtn": "パスワードを保存",
+  "settingsSyncPasswordMissing": "パスワードを入力してください。",
+  "settingsSyncWithBookmarks": "ブックマーク同期時に設定も同期",
+  "settingsSyncPush": "設定をプッシュ",
+  "settingsSyncPull": "設定をプル",
+  "settingsSyncModeLabel": "同期モード（個別のみ）",
+  "settingsSyncModeGlobal": "グローバル — すべてのデバイスで共有（レガシー、移行済み）",
+  "settingsSyncModeIndividual": "個別 — このデバイスのみ",
+  "settingsSyncImportTitle": "他のデバイスからインポート",
+  "settingsSyncLoadConfigs": "利用可能な設定を読み込む",
+  "settingsSyncImport": "インポート",
+  "settingsSyncImportEmpty": "デバイス設定が見つかりません",
+  "settingsSyncImportSuccess": "設定を正常にインポートしました",
+  "reportIssue": "問題を報告",
+  "documentation": "ドキュメント",
+  "voteBacklog": "バックログに投票",
+  "discussions": "ディスカッション",
+  "moveUp": "上へ移動",
+  "moveDown": "下へ移動",
+  "shareLinkAddBookmark": "共有リンクをブックマークとして追加",
+  "clearCache": "キャッシュをクリア",
+  "clearCacheDesc": "キャッシュされたブックマークデータを削除。GitHubが設定されている場合は自動的に同期します。",
+  "clearCacheSuccess": "キャッシュをクリアしました。",
+  "moveToFolder": "フォルダへ移動",
+  "moveToFolderSuccess": "ブックマークを移動しました",
+  "moveToFolderFailed": "ブックマークの移動に失敗しました",
+  "deleteBookmark": "ブックマークを削除",
+  "deleteBookmarkConfirm": "ブックマーク「{title}」を削除しますか？",
+  "@deleteBookmarkConfirm": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "bookmarkDeleted": "ブックマークを削除しました",
+  "orderUpdated": "順序を更新しました",
+  "rootFolder": "ルートフォルダ",
+  "rootFolderHelp": "サブフォルダがタブになるフォルダを選択。デフォルトではすべてのトップレベルフォルダを表示。",
+  "allFolders": "すべてのフォルダ",
+  "selectRootFolder": "ルートフォルダを選択",
+  "exportPasswordTitle": "エクスポートパスワード",
+  "exportPasswordHint": "暗号化なしのエクスポートは空のままにしてください",
+  "importPasswordTitle": "暗号化ファイル",
+  "importPasswordHint": "暗号化パスワードを入力してください",
+  "importSettingsAction": "設定をインポート",
+  "importingSettings": "設定をインポート中…",
+  "orImportExisting": "または既存の設定をインポート",
+  "wrongPassword": "パスワードが間違っています。もう一度お試しください。",
+  "showSecret": "シークレットを表示",
+  "hideSecret": "シークレットを非表示",
+  "export_": "エクスポート",
+  "resetAll": "すべてのデータをリセット",
+  "resetConfirmTitle": "アプリをリセットしますか？",
+  "resetConfirmMessage": "すべてのプロファイル、設定、キャッシュされたブックマークが削除されます。アプリは初期状態に戻ります。",
+  "resetSuccess": "すべてのデータがリセットされました",
+  "settingsSyncClientName": "クライアント名",
+  "settingsSyncClientNameHint": "例: base-android または laptop-linux",
+  "settingsSyncClientNameRequired": "個別モードのクライアント名を入力してください。",
+  "settingsSyncCreateBtn": "クライアント設定を作成",
+  "generalLanguageTitle": "言語",
+  "generalThemeTitle": "テーマ",
+  "appLanguage": "アプリの言語",
+  "appTheme": "アプリのテーマ",
+  "appLanguageSystem": "システムデフォルト",
+  "appThemeSystem": "システム設定",
+  "appThemeLight": "ライト",
+  "appThemeDark": "ダーク",
+  "appLanguageGerman": "ドイツ語",
+  "appLanguageEnglish": "英語",
+  "appLanguageSpanish": "スペイン語",
+  "appLanguageFrench": "フランス語",
+  "basePathBrowse": "フォルダを参照",
+  "basePathBrowseTitle": "リポジトリフォルダを選択",
+  "subTabFolders": "フォルダ",
+  "appLanguagePortugueseBrazil": "ポルトガル語（ブラジル）",
+  "appLanguageItalian": "イタリア語",
+  "appLanguageJapanese": "日本語",
+  "appLanguageChineseSimplified": "中国語（簡体字）",
+  "appLanguageKorean": "韓国語",
+  "appLanguageRussian": "ロシア語",
+  "appLanguageTurkish": "トルコ語",
+  "appLanguagePolish": "ポーランド語"
+}

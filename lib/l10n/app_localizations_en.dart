@@ -328,6 +328,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tabFiles => 'Files';
 
   @override
+  String get tabGeneral => 'General';
+
+  @override
   String get tabHelp => 'Help';
 
   @override
@@ -384,6 +387,43 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get syncProfileCustom => 'Custom';
+
+  @override
+  String get syncProfileMeaningTitle => 'What these profiles mean:';
+
+  @override
+  String get syncProfileMeaningRealtime =>
+      'Real-time: sync every minute (best freshness, higher battery usage).';
+
+  @override
+  String get syncProfileMeaningFrequent =>
+      'Frequent: sync every 5 minutes (balanced for active usage).';
+
+  @override
+  String get syncProfileMeaningNormal =>
+      'Normal: sync every 15 minutes (recommended default).';
+
+  @override
+  String get syncProfileMeaningPowersave =>
+      'Power save: sync every 60 minutes (lowest battery/network usage).';
+
+  @override
+  String get syncProfileMeaningCustom =>
+      'Custom: choose your own interval in minutes.';
+
+  @override
+  String get customSyncIntervalLabel => 'Custom sync interval (minutes)';
+
+  @override
+  String get customSyncIntervalHint => 'Enter a value between 1 and 1440';
+
+  @override
+  String customSyncIntervalErrorRange(int min, int max) {
+    return 'Please enter a valid interval between $min and $max minutes.';
+  }
+
+  @override
+  String get syncCommit => 'Commit';
 
   @override
   String lastSynced(String time) {
@@ -468,10 +508,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsSyncPull => 'Pull settings';
 
   @override
-  String get settingsSyncModeLabel => 'Sync mode';
+  String get settingsSyncModeLabel => 'Sync mode (individual only)';
 
   @override
-  String get settingsSyncModeGlobal => 'Global — shared across all devices';
+  String get settingsSyncModeGlobal =>
+      'Global — shared across all devices (legacy, migrated)';
 
   @override
   String get settingsSyncModeIndividual => 'Individual — this device only';
@@ -583,6 +624,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get wrongPassword => 'Wrong password. Please try again.';
 
   @override
+  String get showSecret => 'Show secret';
+
+  @override
+  String get hideSecret => 'Hide secret';
+
+  @override
   String get export_ => 'Export';
 
   @override
@@ -597,4 +644,86 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get resetSuccess => 'All data has been reset';
+
+  @override
+  String get settingsSyncClientName => 'Client name';
+
+  @override
+  String get settingsSyncClientNameHint => 'e.g. base-android or laptop-linux';
+
+  @override
+  String get settingsSyncClientNameRequired =>
+      'Please enter a client name for individual mode.';
+
+  @override
+  String get settingsSyncCreateBtn => 'Create my client setting';
+
+  @override
+  String get generalLanguageTitle => 'Language';
+
+  @override
+  String get generalThemeTitle => 'Theme';
+
+  @override
+  String get appLanguage => 'App language';
+
+  @override
+  String get appTheme => 'App theme';
+
+  @override
+  String get appLanguageSystem => 'System default';
+
+  @override
+  String get appThemeSystem => 'System default';
+
+  @override
+  String get appThemeLight => 'Light';
+
+  @override
+  String get appThemeDark => 'Dark';
+
+  @override
+  String get appLanguageGerman => 'Deutsch';
+
+  @override
+  String get appLanguageEnglish => 'English';
+
+  @override
+  String get appLanguageSpanish => 'Español';
+
+  @override
+  String get appLanguageFrench => 'Français';
+
+  @override
+  String get basePathBrowse => 'Browse folders';
+
+  @override
+  String get basePathBrowseTitle => 'Select repository folder';
+
+  @override
+  String get subTabFolders => 'Folders';
+
+  @override
+  String get appLanguagePortugueseBrazil => 'Portuguese (Brazil)';
+
+  @override
+  String get appLanguageItalian => 'Italian';
+
+  @override
+  String get appLanguageJapanese => 'Japanese';
+
+  @override
+  String get appLanguageChineseSimplified => 'Chinese (Simplified)';
+
+  @override
+  String get appLanguageKorean => 'Korean';
+
+  @override
+  String get appLanguageRussian => 'Russian';
+
+  @override
+  String get appLanguageTurkish => 'Turkish';
+
+  @override
+  String get appLanguagePolish => 'Polish';
 }

@@ -32,7 +32,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'GitHub-Verbindung in Einstellungen einrichten';
 
   @override
-  String get sync => 'Sync';
+  String get sync => 'Synchronisieren';
 
   @override
   String get openSettings => 'Einstellungen öffnen';
@@ -74,10 +74,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get githubConnection => 'GitHub-Verbindung';
 
   @override
-  String get personalAccessToken => 'Personal Access Token (PAT)';
+  String get personalAccessToken => 'Persönliches Zugriffstoken (PAT)';
 
   @override
-  String get tokenHint => 'ghp_xxxxxxxxxxxxxxxxxxxx';
+  String get tokenHint => 'gp_xxxxxxxxxxxxxxxxxxxxx';
 
   @override
   String get tokenHelper =>
@@ -93,19 +93,19 @@ class AppLocalizationsDe extends AppLocalizations {
   String get repositoryName => 'Repository-Name';
 
   @override
-  String get repoHint => 'my-bookmarks';
+  String get repoHint => 'meine-lesezeichen';
 
   @override
-  String get branch => 'Branch';
+  String get branch => 'Zweig';
 
   @override
-  String get branchHint => 'main';
+  String get branchHint => 'hauptsächlich';
 
   @override
-  String get basePath => 'Base Path';
+  String get basePath => 'Basispfad';
 
   @override
-  String get basePathHint => 'bookmarks';
+  String get basePathHint => 'Lesezeichen';
 
   @override
   String get displayedFolders => 'Angezeigte Ordner';
@@ -118,10 +118,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get save => 'Speichern';
 
   @override
-  String get testConnection => 'Test Connection';
+  String get testConnection => 'Testverbindung';
 
   @override
-  String get syncBookmarks => 'Sync Bookmarks';
+  String get syncBookmarks => 'Lesezeichen synchronisieren';
 
   @override
   String version(String appVersion) {
@@ -167,7 +167,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'Gib in den Einstellungen Owner, Repo-Name und Branch ein. Dein Repo sollte dem Format von GitSyncMarks entsprechen (Ordner wie toolbar, menu, other mit JSON-Dateien pro Lesezeichen).';
 
   @override
-  String get help3Title => '3. Test Connection';
+  String get help3Title => '3. Testen Sie die Verbindung';
 
   @override
   String get help3Body =>
@@ -181,7 +181,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'Wähle die Ordner aus, die angezeigt werden sollen (z.B. toolbar, mobile). Leere Auswahl bedeutet alle Ordner. Mindestens einer gewählt = nur diese Ordner.';
 
   @override
-  String get help5Title => '5. Sync';
+  String get help5Title => '5. Synchronisieren';
 
   @override
   String get help5Body =>
@@ -195,14 +195,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Das Repo sollte dem Format von GitSyncMarks entsprechen: Base Path (z.B. \"bookmarks\") mit Unterordnern wie toolbar, menu, other, mobile. Jeder Ordner hat _order.json und JSON-Dateien pro Lesezeichen mit title und url.';
 
   @override
-  String get support => 'Support';
+  String get support => 'Unterstützung';
 
   @override
   String get supportText =>
       'Fragen oder Fehlermeldungen? Öffne ein Issue im Projekt-Repository.';
 
   @override
-  String get gitSyncMarksAndroidIssues => 'GitSyncMarks-App (GitHub Issues)';
+  String get gitSyncMarksAndroidIssues => 'GitSyncMarks-App (GitHub-Probleme)';
 
   @override
   String get profiles => 'Profile';
@@ -258,7 +258,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'Das letzte Profil kann nicht gelöscht werden';
 
   @override
-  String get importExport => 'Import / Export';
+  String get importExport => 'Importieren / Exportieren';
 
   @override
   String get importSettings => 'Einstellungen importieren';
@@ -326,10 +326,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get tabGitHub => 'GitHub';
 
   @override
-  String get tabSync => 'Sync';
+  String get tabSync => 'Synchronisieren';
 
   @override
   String get tabFiles => 'Dateien';
+
+  @override
+  String get tabGeneral => 'Allgemein';
 
   @override
   String get tabHelp => 'Hilfe';
@@ -344,7 +347,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get subTabConnection => 'Verbindung';
 
   @override
-  String get subTabExportImport => 'Export / Import';
+  String get subTabExportImport => 'Exportieren / Importieren';
 
   @override
   String get subTabSettings => 'Einstellungen';
@@ -388,6 +391,44 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get syncProfileCustom => 'Benutzerdefiniert';
+
+  @override
+  String get syncProfileMeaningTitle => 'Bedeutung der Profile:';
+
+  @override
+  String get syncProfileMeaningRealtime =>
+      'Echtzeit: Synchronisiert jede Minute (maximale Aktualität, höherer Akkuverbrauch).';
+
+  @override
+  String get syncProfileMeaningFrequent =>
+      'Häufig: Synchronisiert alle 5 Minuten (ausgewogen für aktive Nutzung).';
+
+  @override
+  String get syncProfileMeaningNormal =>
+      'Normal: Synchronisiert alle 15 Minuten (empfohlener Standard).';
+
+  @override
+  String get syncProfileMeaningPowersave =>
+      'Energiesparen: Synchronisiert alle 60 Minuten (geringster Akku-/Netzverbrauch).';
+
+  @override
+  String get syncProfileMeaningCustom =>
+      'Benutzerdefiniert: Wähle ein eigenes Intervall in Minuten.';
+
+  @override
+  String get customSyncIntervalLabel =>
+      'Benutzerdefiniertes Sync-Intervall (Minuten)';
+
+  @override
+  String get customSyncIntervalHint => 'Wert zwischen 1 und 1440 eingeben';
+
+  @override
+  String customSyncIntervalErrorRange(int min, int max) {
+    return 'Bitte ein gültiges Intervall zwischen $min und $max Minuten eingeben.';
+  }
+
+  @override
+  String get syncCommit => 'Begehen';
 
   @override
   String lastSynced(String time) {
@@ -476,10 +517,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get settingsSyncPull => 'Einstellungen laden';
 
   @override
-  String get settingsSyncModeLabel => 'Sync-Modus';
+  String get settingsSyncModeLabel => 'Sync-Modus (nur individuell)';
 
   @override
-  String get settingsSyncModeGlobal => 'Global — für alle Geräte gemeinsam';
+  String get settingsSyncModeGlobal =>
+      'Global — für alle Geräte gemeinsam (Legacy, wird migriert)';
 
   @override
   String get settingsSyncModeIndividual => 'Individuell — nur dieses Gerät';
@@ -593,6 +635,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get wrongPassword => 'Falsches Passwort. Bitte erneut versuchen.';
 
   @override
+  String get showSecret => 'Geheimnis anzeigen';
+
+  @override
+  String get hideSecret => 'Geheimnis ausblenden';
+
+  @override
   String get export_ => 'Exportieren';
 
   @override
@@ -607,4 +655,87 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get resetSuccess => 'Alle Daten wurden zurückgesetzt';
+
+  @override
+  String get settingsSyncClientName => 'Client-Name';
+
+  @override
+  String get settingsSyncClientNameHint =>
+      'z.B. base-android oder laptop-linux';
+
+  @override
+  String get settingsSyncClientNameRequired =>
+      'Bitte einen Client-Namen für den individuellen Modus eingeben.';
+
+  @override
+  String get settingsSyncCreateBtn => 'Meine Client-Einstellung erstellen';
+
+  @override
+  String get generalLanguageTitle => 'Sprache';
+
+  @override
+  String get generalThemeTitle => 'Design';
+
+  @override
+  String get appLanguage => 'App-Sprache';
+
+  @override
+  String get appTheme => 'App-Design';
+
+  @override
+  String get appLanguageSystem => 'Systemstandard';
+
+  @override
+  String get appThemeSystem => 'Systemstandard';
+
+  @override
+  String get appThemeLight => 'Hell';
+
+  @override
+  String get appThemeDark => 'Dunkel';
+
+  @override
+  String get appLanguageGerman => 'Deutsch';
+
+  @override
+  String get appLanguageEnglish => 'Englisch';
+
+  @override
+  String get appLanguageSpanish => 'Spanisch';
+
+  @override
+  String get appLanguageFrench => 'Französisch';
+
+  @override
+  String get basePathBrowse => 'Ordner durchsuchen';
+
+  @override
+  String get basePathBrowseTitle => 'Repository-Ordner auswählen';
+
+  @override
+  String get subTabFolders => 'Ordner';
+
+  @override
+  String get appLanguagePortugueseBrazil => 'Portugiesisch (Brasilien)';
+
+  @override
+  String get appLanguageItalian => 'Italienisch';
+
+  @override
+  String get appLanguageJapanese => 'Japanisch';
+
+  @override
+  String get appLanguageChineseSimplified => 'Chinesisch (Vereinfacht)';
+
+  @override
+  String get appLanguageKorean => 'Koreanisch';
+
+  @override
+  String get appLanguageRussian => 'Russisch';
+
+  @override
+  String get appLanguageTurkish => 'Türkisch';
+
+  @override
+  String get appLanguagePolish => 'Polnisch';
 }

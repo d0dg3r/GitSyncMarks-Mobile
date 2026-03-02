@@ -1,0 +1,344 @@
+{
+  "@@locale": "pt_BR",
+  "appTitle": "GitSyncMarks",
+  "settings": "Configurações",
+  "about": "Sobre",
+  "help": "Ajuda",
+  "noBookmarksYet": "Nenhum favorito ainda",
+  "tapSyncToFetch": "Toque em Sincronizar para buscar favoritos do GitHub",
+  "configureInSettings": "Configure a conexão GitHub nas Configurações",
+  "sync": "Sincronizar",
+  "openSettings": "Abrir Configurações",
+  "error": "Erro",
+  "retry": "Tentar novamente",
+  "couldNotOpenUrl": "Não foi possível abrir {url}",
+  "@couldNotOpenUrl": {
+    "placeholders": {
+      "url": {
+        "type": "Object"
+      }
+    }
+  },
+  "couldNotOpenLink": "Não foi possível abrir o link",
+  "pleaseFillTokenOwnerRepo": "Por favor, preencha Token, Owner e Repo",
+  "settingsSaved": "Configurações salvas",
+  "connectionSuccessful": "Conexão bem-sucedida",
+  "connectionFailed": "Falha na conexão",
+  "syncComplete": "Sincronização concluída",
+  "syncFailed": "Falha na sincronização",
+  "githubConnection": "Conexão GitHub",
+  "personalAccessToken": "Token de Acesso Pessoal (PAT)",
+  "tokenHint": "ghp_xxxxxxxxxxxxxxxxxxxx",
+  "tokenHelper": "PAT Clássico: Escopo 'repo'. Fine-grained: Contents Read. Crie em: GitHub → Settings → Developer settings → Personal access tokens",
+  "repositoryOwner": "Proprietário do Repositório",
+  "ownerHint": "seu-usuario-github",
+  "repositoryName": "Nome do Repositório",
+  "repoHint": "meus-favoritos",
+  "branch": "Branch",
+  "branchHint": "main",
+  "basePath": "Caminho Base",
+  "basePathHint": "favoritos",
+  "displayedFolders": "Pastas Exibidas",
+  "displayedFoldersHelp": "Disponível após Testar Conexão. Seleção vazia = todas as pastas. Pelo menos uma selecionada = apenas essas pastas.",
+  "save": "Salvar",
+  "testConnection": "Testar Conexão",
+  "syncBookmarks": "Sincronizar Favoritos",
+  "version": "Versão {appVersion}",
+  "@version": {
+    "placeholders": {
+      "appVersion": {
+        "type": "String"
+      }
+    }
+  },
+  "authorBy": "Por Joe Mild",
+  "aboutDescription": "Aplicativo móvel para GitSyncMarks – visualize favoritos do seu repositório GitHub e abra-os no navegador.",
+  "projects": "Projetos",
+  "formatFromGitSyncMarks": "O formato de favoritos vem do GitSyncMarks.",
+  "gitSyncMarksDesc": "Baseado no GitSyncMarks – a extensão de navegador para sincronização bidirecional de favoritos. Este projeto foi desenvolvido com GitSyncMarks como referência.",
+  "licenseMit": "Licença: MIT",
+  "quickGuide": "Guia Rápido",
+  "help1Title": "1. Configurar token",
+  "help1Body": "Crie um GitHub Personal Access Token (PAT). PAT Clássico: Escopo 'repo'. Fine-grained: Contents Read. Crie em: GitHub → Settings → Developer settings → Personal access tokens",
+  "help2Title": "2. Conectar repositório",
+  "help2Body": "Insira Owner, nome do Repo e Branch nas Configurações. Seu repositório deve seguir o formato GitSyncMarks (pastas como toolbar, menu, other com arquivos JSON por favorito).",
+  "help3Title": "3. Testar Conexão",
+  "help3Body": "Clique em \"Test Connection\" para verificar o token e o acesso ao repositório. Em caso de sucesso, as pastas raiz disponíveis são mostradas.",
+  "help4Title": "4. Selecionar pastas",
+  "help4Body": "Escolha quais pastas exibir (ex. toolbar, mobile). Seleção vazia = todas. Pelo menos uma selecionada = apenas essas pastas.",
+  "help5Title": "5. Sincronizar",
+  "help5Body": "Clique em \"Sync Bookmarks\" para carregar os favoritos. Arraste para atualizar na tela principal.",
+  "whichRepoFormat": "Qual formato de repositório?",
+  "repoFormatDescription": "O repositório deve seguir o formato GitSyncMarks: Caminho Base (ex. \"bookmarks\") com subpastas como toolbar, menu, other, mobile. Cada pasta tem _order.json e arquivos JSON por favorito com title e url.",
+  "support": "Suporte",
+  "supportText": "Dúvidas ou mensagens de erro? Abra um issue no repositório do projeto.",
+  "gitSyncMarksAndroidIssues": "GitSyncMarks-App (GitHub Issues)",
+  "profiles": "Perfis",
+  "profile": "Perfil",
+  "activeProfile": "Perfil Ativo",
+  "addProfile": "Adicionar Perfil",
+  "renameProfile": "Renomear Perfil",
+  "deleteProfile": "Excluir Perfil",
+  "deleteProfileConfirm": "Excluir perfil \"{name}\"?",
+  "@deleteProfileConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "profileName": "Nome do perfil",
+  "profileCount": "{count}/{max} perfis",
+  "@profileCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "maxProfilesReached": "Número máximo de perfis atingido ({max})",
+  "@maxProfilesReached": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "profileAdded": "Perfil \"{name}\" adicionado",
+  "@profileAdded": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "profileRenamed": "Perfil renomeado para \"{name}\"",
+  "@profileRenamed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "profileDeleted": "Perfil excluído",
+  "cannotDeleteLastProfile": "Não é possível excluir o último perfil",
+  "importExport": "Importar / Exportar",
+  "importSettings": "Importar Configurações",
+  "exportSettings": "Exportar Configurações",
+  "importSettingsDesc": "Importar perfis de um arquivo de configurações GitSyncMarks (JSON)",
+  "exportSettingsDesc": "Exportar todos os perfis como arquivo de configurações GitSyncMarks",
+  "importSuccess": "{count} perfil(s) importado(s)",
+  "@importSuccess": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importFailed": "Falha na importação: {error}",
+  "@importFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "importConfirm": "Importar {count} perfil(s)? Todos os perfis existentes serão substituídos.",
+  "@importConfirm": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "exportSuccess": "Configurações exportadas",
+  "cancel": "Cancelar",
+  "delete": "Excluir",
+  "rename": "Renomear",
+  "add": "Adicionar",
+  "import_": "Importar",
+  "replace": "Substituir",
+  "bookmarks": "Favoritos",
+  "info": "Informações",
+  "connection": "Conexão",
+  "folders": "Pastas",
+  "tabGitHub": "GitHub",
+  "tabSync": "Sincronizar",
+  "tabFiles": "Arquivos",
+  "tabGeneral": "Geral",
+  "tabHelp": "Ajuda",
+  "tabAbout": "Sobre",
+  "subTabProfile": "Perfil",
+  "subTabConnection": "Conexão",
+  "subTabExportImport": "Exportar / Importar",
+  "subTabSettings": "Configurações",
+  "searchPlaceholder": "Pesquisar favoritos...",
+  "noSearchResults": "Nenhum resultado para \"{query}\"",
+  "clearSearch": "Limpar pesquisa",
+  "@noSearchResults": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "automaticSync": "Sincronização automática",
+  "autoSyncActive": "Sincronização automática ativa",
+  "autoSyncDisabled": "Sincronização automática desativada",
+  "nextSyncIn": "Próxima sincronização em {time}",
+  "@nextSyncIn": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "syncProfileRealtime": "Tempo real",
+  "syncProfileFrequent": "Frequente",
+  "syncProfileNormal": "Normal",
+  "syncProfilePowersave": "Economia de energia",
+  "syncProfileCustom": "Personalizado",
+  "syncProfileMeaningTitle": "O que esses perfis significam:",
+  "syncProfileMeaningRealtime": "Tempo real: sincroniza a cada minuto (melhor atualização, maior uso de bateria).",
+  "syncProfileMeaningFrequent": "Frequente: sincroniza a cada 5 minutos (equilibrado para uso ativo).",
+  "syncProfileMeaningNormal": "Normal: sincroniza a cada 15 minutos (padrão recomendado).",
+  "syncProfileMeaningPowersave": "Economia de energia: sincroniza a cada 60 minutos (menor uso de bateria/rede).",
+  "syncProfileMeaningCustom": "Personalizado: escolha seu próprio intervalo em minutos.",
+  "customSyncIntervalLabel": "Intervalo personalizado de sincronização (minutos)",
+  "customSyncIntervalHint": "Insira um valor entre 1 e 1440",
+  "customSyncIntervalErrorRange": "Insira um intervalo válido entre {min} e {max} minutos.",
+  "@customSyncIntervalErrorRange": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "syncCommit": "Commit",
+  "lastSynced": "Última sincronização {time}",
+  "@lastSynced": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "neverSynced": "Nunca sincronizado",
+  "syncOnStart": "Sincronizar ao iniciar o app",
+  "allowMoveReorder": "Permitir mover e reordenar",
+  "allowMoveReorderDesc": "Alças de arrastar e mover para pasta. Desative para visualização somente leitura.",
+  "allowMoveReorderDisable": "Somente leitura (ocultar alças)",
+  "allowMoveReorderEnable": "Ativar edição (mostrar alças)",
+  "bookmarkCount": "{count} favoritos em {folders} pastas",
+  "@bookmarkCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "folders": {
+        "type": "int"
+      }
+    }
+  },
+  "syncNow": "Sincronizar Agora",
+  "addBookmark": "Adicionar favorito",
+  "addBookmarkTitle": "Adicionar Favorito",
+  "bookmarkTitle": "Título do favorito",
+  "selectFolder": "Selecionar pasta",
+  "exportBookmarks": "Exportar favoritos",
+  "settingsSyncToGit": "Sincronizar configurações com Git (criptografado)",
+  "settingsSyncPassword": "Senha de criptografia",
+  "settingsSyncPasswordHint": "Definir uma vez por dispositivo. Deve ser a mesma em todos os dispositivos.",
+  "settingsSyncRememberPassword": "Lembrar senha",
+  "settingsSyncPasswordSaved": "Senha salva (usada para Push/Pull)",
+  "settingsSyncClearPassword": "Limpar senha salva",
+  "settingsSyncSaveBtn": "Salvar senha",
+  "settingsSyncPasswordMissing": "Por favor, insira uma senha.",
+  "settingsSyncWithBookmarks": "Sincronizar configurações ao sincronizar favoritos",
+  "settingsSyncPush": "Enviar configurações",
+  "settingsSyncPull": "Receber configurações",
+  "settingsSyncModeLabel": "Modo de sincronização (somente individual)",
+  "settingsSyncModeGlobal": "Global — compartilhado em todos os dispositivos (legado, migrado)",
+  "settingsSyncModeIndividual": "Individual — somente este dispositivo",
+  "settingsSyncImportTitle": "Importar de outro dispositivo",
+  "settingsSyncLoadConfigs": "Carregar configurações disponíveis",
+  "settingsSyncImport": "Importar",
+  "settingsSyncImportEmpty": "Nenhuma configuração de dispositivo encontrada",
+  "settingsSyncImportSuccess": "Configurações importadas com sucesso",
+  "reportIssue": "Reportar Problema",
+  "documentation": "Documentação",
+  "voteBacklog": "Votar no backlog",
+  "discussions": "Discussões",
+  "moveUp": "Mover para cima",
+  "moveDown": "Mover para baixo",
+  "shareLinkAddBookmark": "Adicionar link compartilhado como favorito",
+  "clearCache": "Limpar cache",
+  "clearCacheDesc": "Remover dados de favoritos em cache. A sincronização será executada automaticamente se o GitHub estiver configurado.",
+  "clearCacheSuccess": "Cache limpo.",
+  "moveToFolder": "Mover para pasta",
+  "moveToFolderSuccess": "Favorito movido",
+  "moveToFolderFailed": "Falha ao mover favorito",
+  "deleteBookmark": "Excluir Favorito",
+  "deleteBookmarkConfirm": "Excluir favorito \"{title}\"?",
+  "@deleteBookmarkConfirm": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "bookmarkDeleted": "Favorito excluído",
+  "orderUpdated": "Ordem atualizada",
+  "rootFolder": "Pasta Raiz",
+  "rootFolderHelp": "Selecione uma pasta cujas subpastas se tornam as abas. O padrão mostra todas as pastas de nível superior.",
+  "allFolders": "Todas as Pastas",
+  "selectRootFolder": "Selecionar Pasta Raiz",
+  "exportPasswordTitle": "Senha de Exportação",
+  "exportPasswordHint": "Deixe vazio para exportação sem criptografia",
+  "importPasswordTitle": "Arquivo Criptografado",
+  "importPasswordHint": "Insira a senha de criptografia",
+  "importSettingsAction": "Importar Configurações",
+  "importingSettings": "Importando configurações…",
+  "orImportExisting": "ou importar configurações existentes",
+  "wrongPassword": "Senha incorreta. Por favor, tente novamente.",
+  "showSecret": "Mostrar segredo",
+  "hideSecret": "Ocultar segredo",
+  "export_": "Exportar",
+  "resetAll": "Redefinir todos os dados",
+  "resetConfirmTitle": "Redefinir App?",
+  "resetConfirmMessage": "Todos os perfis, configurações e favoritos em cache serão excluídos. O app retornará ao estado inicial.",
+  "resetSuccess": "Todos os dados foram redefinidos",
+  "settingsSyncClientName": "Nome do cliente",
+  "settingsSyncClientNameHint": "ex. base-android ou laptop-linux",
+  "settingsSyncClientNameRequired": "Por favor, insira um nome de cliente para o modo individual.",
+  "settingsSyncCreateBtn": "Criar minha configuração de cliente",
+  "generalLanguageTitle": "Idioma",
+  "generalThemeTitle": "Tema",
+  "appLanguage": "Idioma do app",
+  "appTheme": "Tema do app",
+  "appLanguageSystem": "Padrão do sistema",
+  "appThemeSystem": "Padrão do sistema",
+  "appThemeLight": "Claro",
+  "appThemeDark": "Escuro",
+  "appLanguageGerman": "Alemão",
+  "appLanguageEnglish": "Inglês",
+  "appLanguageSpanish": "Espanhol",
+  "appLanguageFrench": "Francês",
+  "basePathBrowse": "Navegar pastas",
+  "basePathBrowseTitle": "Selecionar pasta do repositório",
+  "subTabFolders": "Pastas",
+  "appLanguagePortugueseBrazil": "Português (Brasil)",
+  "appLanguageItalian": "Italiano",
+  "appLanguageJapanese": "Japonês",
+  "appLanguageChineseSimplified": "Chinês (Simplificado)",
+  "appLanguageKorean": "Coreano",
+  "appLanguageRussian": "Russo",
+  "appLanguageTurkish": "Turco",
+  "appLanguagePolish": "Polonês"
+}

@@ -8,6 +8,8 @@ import 'package:provider/provider.dart';
 import 'package:receive_sharing_intent/receive_sharing_intent.dart';
 
 import 'l10n/app_localizations.dart';
+import 'providers/app_locale_controller.dart';
+import 'providers/app_theme_controller.dart';
 import 'providers/bookmark_provider.dart';
 import 'screens/home_screen.dart';
 import 'services/settings_import_export.dart';
@@ -45,23 +47,36 @@ class GitSyncMarksApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bookmarkProvider = provider ?? BookmarkProvider()..loadCredentials();
-    return ChangeNotifierProvider<BookmarkProvider>.value(
-      value: bookmarkProvider,
-      child: MaterialApp(
-        title: 'GitSyncMarks',
-        theme: _buildLightTheme(),
-        darkTheme: _buildDarkTheme(),
-        localizationsDelegates: const [
-          AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: _isMobileShareTarget()
-            ? _ShareIntentWrapper(bookmarkProvider: bookmarkProvider)
-            : const HomeScreen(),
+    final bookmarkProvider = provider ?? BookmarkProvider()
+      ..loadCredentials();
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<BookmarkProvider>.value(value: bookmarkProvider),
+        ChangeNotifierProvider<AppLocaleController>(
+          create: (_) => AppLocaleController()..load(),
+        ),
+        ChangeNotifierProvider<AppThemeController>(
+          create: (_) => AppThemeController()..load(),
+        ),
+      ],
+      child: Consumer2<AppLocaleController, AppThemeController>(
+        builder: (context, localeController, themeController, _) => MaterialApp(
+          title: 'GitSyncMarks',
+          theme: _buildLightTheme(),
+          darkTheme: _buildDarkTheme(),
+          themeMode: themeController.themeMode,
+          locale: localeController.locale,
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: _isMobileShareTarget()
+              ? _ShareIntentWrapper(bookmarkProvider: bookmarkProvider)
+              : const HomeScreen(),
+        ),
       ),
     );
   }
@@ -329,7 +344,8 @@ class _ShareIntentWrapperState extends State<_ShareIntentWrapper> {
     if (files.isEmpty) return;
 
     for (final file in files) {
-      if (file.type == SharedMediaType.text || file.type == SharedMediaType.url) {
+      if (file.type == SharedMediaType.text ||
+          file.type == SharedMediaType.url) {
         final url = _extractUrl(file.path, file.type);
         if (url == null || url.isEmpty) continue;
 

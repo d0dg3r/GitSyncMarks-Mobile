@@ -9,8 +9,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Base path folder browser:** GitHub connection now includes a folder browser to select the repository base path instead of typing paths manually
+- **Settings sync client name flow:** Individual mode now supports explicit client names and a “Create my client setting” action
+- **Custom sync interval input:** Sync profile `Custom` now provides a minutes input (1-1440) with validation
+- **Sync profile guidance:** Sync tab now explains what each profile interval means (real-time, frequent, normal, power save, custom)
+- **Secret field visibility toggle:** Token and password inputs now include an eye button to show/hide sensitive values on demand
+- **App language setting:** Added a new `General` settings tab with app language selection (`System`, `de`, `en`, `es`, `fr`)
+- **App theme setting:** Added theme selection in `Settings > General` with `System`, `Light`, and `Dark`
+- **Full 12-language localization:** All UI strings translated into all 12 supported languages (`en`, `de`, `fr`, `es`, `pt_BR`, `pt`, `it`, `ja`, `zh_CN`, `zh`, `ko`, `ru`, `tr`, `pl`); Traditional Chinese added as bonus locale
+
+### Changed
+
+- **Settings sync storage path:** Individual mode now writes to `profiles/<alias>/settings.enc` (extension-compatible); legacy `settings.enc` and `settings-*.enc` remain readable
+- **Settings sync UX parity:** Import/load/create actions in individual mode are gated by client name and successful actions persist the password for future sync operations
+- **Bookmark metadata handling:** Bookmark write operations now ensure `_index.json` exists with `{ "version": 2 }`
+- **GitHub settings tabs:** Added dedicated `Folders` subtab under GitHub; root-folder selection and displayed-folder filters were moved out of `Connection`
+- **Sync status metadata:** The bookmark status area now shows the short Git commit hash for the last successful sync
+- **Settings sync mode migration:** Global mode is now disabled in-app; stored/global mode values are migrated to individual mode while legacy global files remain readable as fallback
+- **Settings tab spacing:** Reduced horizontal spacing between tab labels in main and sub-tab menus for a denser layout
+- **Settings tab alignment:** Main settings tab row now starts left with a small inset so `GitHub` does not touch the screen edge
+
 ### Fixed
 
+- **Profiles folder hidden from bookmarks UI:** Internal settings-sync directory `profiles/` is no longer shown as a bookmark root folder in Test Connection and folder lists
+- **Theme setting localization parity:** `Settings > General` theme labels (`System`, `Light`, `Dark`) are now translated in all supported app locales
 - **F-Droid:** 0.3.2 build commit in submit metadata now matches v0.3.2 tag (`715e5e2`); was `cecdde3` (wrong commit)
 - **F-Droid check apk:** Removed version 0.3.1 (versionCode 8) from build list – APK contained "Dependency metadata" signing block (fix only in 0.3.2); CI now passes
 

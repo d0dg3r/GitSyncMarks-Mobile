@@ -11,6 +11,9 @@ const _activeProfileIdKey = 'active_profile_id';
 const _settingsSyncPasswordKey = 'settings_sync_password';
 const _syncSettingsToGitKey = 'sync_settings_to_git';
 const _settingsSyncModeKey = 'settings_sync_mode';
+const _settingsSyncClientNameKey = 'settings_sync_client_name';
+const _appLanguageKey = 'app_language';
+const _appThemeModeKey = 'app_theme_mode';
 const _deviceIdKey = 'device_id';
 
 // Legacy single-credential keys (for migration).
@@ -84,7 +87,10 @@ class StorageService {
       try {
         final decoded = json.decode(foldersRaw) as List<dynamic>?;
         if (decoded != null) {
-          folders = decoded.map((e) => e.toString()).where((s) => s.isNotEmpty).toList();
+          folders = decoded
+              .map((e) => e.toString())
+              .where((s) => s.isNotEmpty)
+              .toList();
         }
       } catch (_) {}
     }
@@ -202,14 +208,98 @@ class StorageService {
 
   Future<String> loadSettingsSyncMode() async {
     final v = await _storage.read(key: _settingsSyncModeKey);
-    return (v == 'individual' || v == 'global') ? v! : 'global';
+    // Global mode is deprecated in the app; normalize all states to individual.
+    if (v != 'individual') {
+      await _storage.write(key: _settingsSyncModeKey, value: 'individual');
+    }
+    return 'individual';
   }
 
   Future<void> saveSettingsSyncMode(String value) async {
     await _storage.write(
       key: _settingsSyncModeKey,
-      value: (value == 'individual' || value == 'global') ? value : 'global',
+      value: 'individual',
     );
+  }
+
+  Future<String?> loadSettingsSyncClientName() async {
+    final value = await _storage.read(key: _settingsSyncClientNameKey);
+    final trimmed = value?.trim() ?? '';
+    return trimmed.isEmpty ? null : trimmed;
+  }
+
+  Future<void> saveSettingsSyncClientName(String value) async {
+    final trimmed = value.trim();
+    if (trimmed.isEmpty) {
+      await _storage.delete(key: _settingsSyncClientNameKey);
+      return;
+    }
+    await _storage.write(key: _settingsSyncClientNameKey, value: trimmed);
+  }
+
+  Future<String> loadAppLanguage() async {
+    final value = (await _storage.read(key: _appLanguageKey))?.trim() ?? '';
+    switch (value) {
+      case 'de':
+      case 'en':
+      case 'es':
+      case 'fr':
+      case 'pt_BR':
+      case 'it':
+      case 'ja':
+      case 'zh_CN':
+      case 'ko':
+      case 'ru':
+      case 'tr':
+      case 'pl':
+      case 'system':
+        return value;
+      default:
+        return 'system';
+    }
+  }
+
+  Future<void> saveAppLanguage(String value) async {
+    final normalized = value.trim();
+    final safe = switch (normalized) {
+      'de' ||
+      'en' ||
+      'es' ||
+      'fr' ||
+      'pt_BR' ||
+      'it' ||
+      'ja' ||
+      'zh_CN' ||
+      'ko' ||
+      'ru' ||
+      'tr' ||
+      'pl' ||
+      'system' =>
+        normalized,
+      _ => 'system',
+    };
+    await _storage.write(key: _appLanguageKey, value: safe);
+  }
+
+  Future<String> loadAppThemeMode() async {
+    final value = (await _storage.read(key: _appThemeModeKey))?.trim() ?? '';
+    switch (value) {
+      case 'system':
+      case 'light':
+      case 'dark':
+        return value;
+      default:
+        return 'system';
+    }
+  }
+
+  Future<void> saveAppThemeMode(String value) async {
+    final normalized = value.trim();
+    final safe = switch (normalized) {
+      'system' || 'light' || 'dark' => normalized,
+      _ => 'system',
+    };
+    await _storage.write(key: _appThemeModeKey, value: safe);
   }
 
   /// Returns device ID (UUID). Generates and saves if not present (extension-compatible).
