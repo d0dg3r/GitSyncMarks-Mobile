@@ -16,6 +16,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Fix workspace ownership in container
+        shell: bash
+        run: |
+          chown -R "$(id -u):$(id -g)" "$GITHUB_WORKSPACE" || true
+
       - name: Configure Gradle home in container
         shell: bash
         run: |
