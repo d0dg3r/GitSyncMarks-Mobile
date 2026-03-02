@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Release CI keystore path:** Build workflow now writes and verifies the Android upload keystore at `android/upload-keystore.jks` to match Gradle `storeFile` resolution
 - **Release CI signer check:** Keystore SHA256 normalization now strips `:` so APK and keytool fingerprints are compared in the same format
 - **F-Droid validate parser:** Reproducibility workflow now accepts variant `apksigner` SHA-256 output formats when extracting signer fingerprints
+- **Release reproducibility env:** Tagged build jobs now export `SOURCE_DATE_EPOCH` from the tagged commit timestamp to improve deterministic Flutter/Android outputs across CI systems
 
 ## [0.3.3] - 2026-03-01
 
