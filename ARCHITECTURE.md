@@ -180,9 +180,10 @@ The app uses `provider` with `BookmarkProvider` (ChangeNotifier).
 
 ### Release Workflow (`.github/workflows/release.yml`)
 - **Trigger:** Tag push `v*` (all tags build; `-beta`/`-rc`/`-test` → pre-release; clean versions → latest)
-- **Jobs:** `build-android-linux`, `build-windows`, `build-macos`, `build-flatpak`, `release` (Screenshots lokal, CI deaktiviert)
+- **Jobs:** `build-android`, `build-linux`, `build-windows`, `build-macos`, `build-flatpak`, `release` (Screenshots lokal, CI deaktiviert)
 - **Artifacts:** APK (Android), AAB (Play Store, when signing secrets set), Flatpak + ZIP (Linux), ZIP (Windows, macOS)
 - **Android signing:** `android/key.properties` + upload keystore for release builds; CI uses `ANDROID_KEYSTORE_BASE64`, `KEYSTORE_PASSWORD`, `KEY_PASSWORD`, `KEY_ALIAS` when configured
+- **Android reproducibility parity:** `build-android` runs in `registry.gitlab.com/fdroid/fdroidserver:buildserver-trixie` to align toolchain output with F-Droid build infrastructure
 - **Linux bundle:** Flutter Linux build packed as tar.gz with `--owner=root --group=root`
 - **Screenshots:** Lokal mit `flutter test test/screenshot_test.dart --update-goldens`, dann `flatpak/screenshots/` committen
 
