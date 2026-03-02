@@ -31,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Containerized Flutter extraction prerequisites:** Release workflow now installs `xz-utils` (plus `zip`/`unzip`) so Flutter SDK `.tar.xz` extraction works in the F-Droid build container
 - **Containerized Flutter git safety fix:** Android container job now normalizes ownership of `$FLUTTER_ROOT` after setup to avoid `git dubious ownership` failures during `flutter pub get`
 - **Containerized Android SDK discovery:** Android container job now auto-detects SDK path (`ANDROID_HOME`/`ANDROID_SDK_ROOT`) in the F-Droid build image before APK build
+- **Android container Gradle stability:** Disabled Gradle cache restore in the containerized Android release job to avoid corrupted file-access journal cache failures
 
 ## [0.3.3] - 2026-03-01
 
