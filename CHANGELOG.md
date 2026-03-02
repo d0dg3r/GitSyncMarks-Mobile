@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **F-Droid rewritemeta compliance:** Removed inline comments from app metadata build entries so F-Droid `rewritemeta` formatting check passes for `com.d0dg3r.gitsyncmarks`
+
 ## [0.3.3] - 2026-03-01
 
 ### Added
