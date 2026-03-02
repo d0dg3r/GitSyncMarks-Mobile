@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: registry.gitlab.com/fdroid/fdroidserver:buildserver-trixie
+    env:
+      GRADLE_USER_HOME: ${{ github.workspace }}/.gradle
     steps:
       - uses: actions/checkout@v4
 
@@ -20,6 +22,7 @@ jobs:
         run: |
           apt-get update -y
           apt-get install -y jq xz-utils zip unzip
+          mkdir -p "$GRADLE_USER_HOME"
 
       - name: Export SOURCE_DATE_EPOCH
         run: echo "SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)" >> "$GITHUB_ENV"
