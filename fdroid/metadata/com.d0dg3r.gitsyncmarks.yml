@@ -83,7 +83,7 @@ Builds:
   - versionName: 0.3.3
     versionCode: 10
     # Vor Tag-Release: commit mit "git rev-parse v0.3.3" setzen
-    commit: HEAD
+    commit: 38abc56fe02705cc4c263d299953b0af2981d54e
     output: build/app/outputs/flutter-apk/app-release.apk
     srclibs:
       - flutter@stable
