@@ -54,6 +54,15 @@ git -C "$PROJECT_DIR" fetch --tags --quiet
     sed -i "s/^# *en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/" /etc/locale.gen || true
     locale-gen en_US.UTF-8 || true
 
+    # Diagnostics for repo mount ownership/trust issues on CI runners.
+    echo "Git/container diagnostics:"
+    id
+    ls -ld /repo /repo/.git || true
+    git config --global --add safe.directory /repo
+    git config --global --add safe.directory /repo/.git
+    echo "Configured safe.directory entries:"
+    git config --global --get-all safe.directory || true
+
     for candidate in /opt/android-sdk /usr/lib/android-sdk /home/vagrant/android-sdk /sdk; do
       if [ -d "$candidate" ]; then
         export ANDROID_HOME="$candidate"
@@ -69,7 +78,7 @@ git -C "$PROJECT_DIR" fetch --tags --quiet
     fi
 
     rm -rf /tmp/build
-    git clone /repo /tmp/build
+    git clone --no-local file:///repo /tmp/build
     cd /tmp/build
     git checkout -f "'"$METADATA_COMMIT"'"
 
