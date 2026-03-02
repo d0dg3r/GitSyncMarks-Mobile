@@ -39,6 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Android container Gradle deep clean:** Release job now also clears project-level Gradle caches (`.gradle`, `android/.gradle`) and enables `org.gradle.daemon=false` for deterministic cold startup
 - **Android release debug verbosity:** APK build step now runs with `--verbose` to capture full Gradle diagnostics during CI failure triage
 - **Android container locale pinning:** Release job now exports `LANG/LC_ALL/LANGUAGE=en_US.UTF-8` to prevent empty Java `user.country` values that break Gradle file-access journal initialization
+- **Android deterministic timestamp fix:** Container prerequisites now include `git`, and `SOURCE_DATE_EPOCH` export now fails fast unless a valid commit timestamp is resolved (prevents empty-value Gradle/Java 21 crashes)
 
 ## [0.3.3] - 2026-03-01
 

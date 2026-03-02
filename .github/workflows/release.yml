@@ -30,10 +30,18 @@ jobs:
       - name: Install container prerequisites
         run: |
           apt-get update -y
-          apt-get install -y jq xz-utils zip unzip
+          apt-get install -y git jq xz-utils zip unzip
 
       - name: Export SOURCE_DATE_EPOCH
-        run: echo "SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)" >> "$GITHUB_ENV"
+        shell: bash
+        run: |
+          set -euo pipefail
+          SOURCE_DATE_EPOCH="$(git show -s --format=%ct "${GITHUB_SHA}")"
+          if [ -z "$SOURCE_DATE_EPOCH" ]; then
+            echo "::error::Failed to resolve SOURCE_DATE_EPOCH from git."
+            exit 1
+          fi
+          echo "SOURCE_DATE_EPOCH=${SOURCE_DATE_EPOCH}" >> "$GITHUB_ENV"
 
       - name: Get version from tag
         id: version
