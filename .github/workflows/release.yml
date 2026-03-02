@@ -13,16 +13,21 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: registry.gitlab.com/fdroid/fdroidserver:buildserver-trixie
-    env:
-      GRADLE_USER_HOME: ${{ github.workspace }}/.gradle
     steps:
       - uses: actions/checkout@v4
+
+      - name: Configure Gradle home in container
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "GRADLE_USER_HOME=$GITHUB_WORKSPACE/.gradle" >> "$GITHUB_ENV"
+          echo "GRADLE_OPTS=-Dorg.gradle.vfs.watch=false" >> "$GITHUB_ENV"
+          mkdir -p "$GITHUB_WORKSPACE/.gradle"
 
       - name: Install container prerequisites
         run: |
           apt-get update -y
           apt-get install -y jq xz-utils zip unzip
-          mkdir -p "$GRADLE_USER_HOME"
 
       - name: Export SOURCE_DATE_EPOCH
         run: echo "SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)" >> "$GITHUB_ENV"
@@ -81,6 +86,15 @@ jobs:
           keyAlias=${{ secrets.KEY_ALIAS }}
           storeFile=../upload-keystore.jks
           EOF
+
+      - name: Reset Gradle journal/cache internals
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf "$GRADLE_USER_HOME/caches/journal-1" || true
+          if [ -d "$GRADLE_USER_HOME/caches" ]; then
+            find "$GRADLE_USER_HOME/caches" -type f -name "file-access.bin" -delete || true
+          fi
 
       - name: Build APK
         run: flutter build apk --release --target-platform android-arm64

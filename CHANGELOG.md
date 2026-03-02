@@ -33,6 +33,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Containerized Android SDK discovery:** Android container job now auto-detects SDK path (`ANDROID_HOME`/`ANDROID_SDK_ROOT`) in the F-Droid build image before APK build
 - **Android container Gradle stability:** Disabled Gradle cache restore in the containerized Android release job to avoid corrupted file-access journal cache failures
 - **Android container Gradle home isolation:** Android release job now uses workspace-local `GRADLE_USER_HOME` to avoid inherited broken global Gradle cache journals
+- **Android container Gradle env pinning:** `GRADLE_USER_HOME` is now exported from `$GITHUB_WORKSPACE` at runtime and `GRADLE_OPTS` disables VFS file watching
+- **Android container Gradle journal reset:** Release job now removes `journal-1` and `file-access.bin` artifacts before APK build to prevent bootstrap journal parse crashes
 
 ## [0.3.3] - 2026-03-01
 
