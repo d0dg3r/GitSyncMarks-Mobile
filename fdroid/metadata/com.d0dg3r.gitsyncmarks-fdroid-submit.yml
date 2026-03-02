@@ -34,6 +34,7 @@ Builds:
       - .pub-cache
     build:
       - export PUB_CACHE=$(pwd)/.pub-cache
+      - export SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)
       - $$flutter$$/bin/flutter build apk --release --target-platform android-arm64
 
 AllowedAPKSigningKeys: ceffc9aadd2e0a2a40176bb5c146a6833ed375de87fb19d7e8b270449c71da29
