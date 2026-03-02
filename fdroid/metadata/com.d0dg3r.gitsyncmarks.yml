@@ -15,7 +15,7 @@ AllowedAPKSigningKeys: ceffc9aadd2e0a2a40176bb5c146a6833ed375de87fb19d7e8b270449
 Builds:
   - versionName: 0.3.3
     versionCode: 10
-    commit: 07a6425aaf907e5ad0231b4fb6ba6c1e9a7f614d
+    commit: 1eec81223bc120ac97ecedbb6739bc7a6fe10578
     output: build/app/outputs/flutter-apk/app-release.apk
     binary:
       https://github.com/d0dg3r/GitSyncMarks-App/releases/download/v%v/GitSyncMarks-App-%v.apk
