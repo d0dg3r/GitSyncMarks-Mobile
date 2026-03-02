@@ -13,7 +13,7 @@ Repo: https://github.com/d0dg3r/GitSyncMarks-App
 Builds:
   - versionName: 0.3.3
     versionCode: 10
-    commit: 32ac32f7e368a9bdebc1fdd93b3785dc7d6c366a
+    commit: 00633ee086a6e73a53841f96bdbb4b58b130c987
     output: build/app/outputs/flutter-apk/app-release.apk
     binary: 
       https://github.com/d0dg3r/GitSyncMarks-App/releases/download/v%v/GitSyncMarks-App-%v.apk
