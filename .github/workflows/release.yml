@@ -171,6 +171,8 @@ jobs:
           export GRADLE_USER_HOME=/tmp/build/.gradle-home
           export GRADLE_OPTS="-Dorg.gradle.vfs.watch=false -Dorg.gradle.daemon=false"
           rm -rf .gradle android/.gradle "$GRADLE_USER_HOME"
+          flutter pub get
+          flutter gen-l10n
           flutter build apk --release --target-platform android-arm64 --no-pub --verbose
           mkdir -p "$GITHUB_WORKSPACE/build/app/outputs/flutter-apk"
           cp build/app/outputs/flutter-apk/app-release.apk \
