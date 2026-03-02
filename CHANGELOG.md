@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Release reproducibility env:** Tagged build jobs now export `SOURCE_DATE_EPOCH` from the tagged commit timestamp to improve deterministic Flutter/Android outputs across CI systems
 - **F-Droid build reproducibility env:** Metadata build step now also exports `SOURCE_DATE_EPOCH` from the source commit timestamp so F-Droid and GitHub builds use the same deterministic epoch input
 - **Containerized Android CI bootstrap:** Release workflow now installs `jq` in the F-Droid build container before running `subosito/flutter-action`
+- **Containerized Flutter extraction prerequisites:** Release workflow now installs `xz-utils` (plus `zip`/`unzip`) so Flutter SDK `.tar.xz` extraction works in the F-Droid build container
 
 ## [0.3.3] - 2026-03-01
 
