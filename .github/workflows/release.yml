@@ -349,12 +349,20 @@ jobs:
       - name: Build Windows
         run: flutter build windows --release
 
-      - name: Prepare Windows ZIP
+      - name: Compile Inno Setup Installer
+        uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
+        with:
+          path: windows/gitsyncmarks.iss
+
+      - name: Prepare Windows Release Artifacts
         shell: pwsh
         run: |
           $version = "${{ github.ref_name }}".TrimStart('v')
           New-Item -ItemType Directory -Force -Path build/release | Out-Null
+          # Zip the portable version
           Compress-Archive -Path build/windows/x64/runner/Release/* -DestinationPath "build/release/GitSyncMarks-App-$version-windows-x64.zip"
+          # Copy the installer
+          Copy-Item -Path "build/windows/installer/GitSyncMarks-Setup.exe" -Destination "build/release/GitSyncMarks-App-$version-windows-setup.exe"
 
       - name: Upload Windows
         uses: actions/upload-artifact@v4
@@ -512,15 +520,17 @@ jobs:
             |----------|------|
             | Android (APK) | `GitSyncMarks-App-${{ steps.version.outputs.VERSION }}.apk` |
             | Android (AAB, Play Store) | `GitSyncMarks-App-${{ steps.version.outputs.VERSION }}.aab` |
-            | Windows | `GitSyncMarks-App-${{ steps.version.outputs.VERSION }}-windows-x64.zip` |
+            | Windows (Installer) | `GitSyncMarks-App-${{ steps.version.outputs.VERSION }}-windows-setup.exe` |
+            | Windows (Portable ZIP) | `GitSyncMarks-App-${{ steps.version.outputs.VERSION }}-windows-x64.zip` |
             | macOS | `GitSyncMarks-App-${{ steps.version.outputs.VERSION }}-macos.zip` |
             | Linux (Flatpak) | `GitSyncMarks-App-${{ github.ref_name }}.flatpak` |
             | Linux (ZIP) | `GitSyncMarks-App-${{ steps.version.outputs.VERSION }}-linux-x64.zip` |
 
             ### Installation
-
+            
+            - **Windows (Recommended)**: Download and run `GitSyncMarks-App-${{ steps.version.outputs.VERSION }}-windows-setup.exe`. This will automatically install any missing dependencies (like Visual C++ Redistributable).
             - **Android**: Download APK, open on device (allow from unknown sources if prompted), install
-            - **Windows**: Extract ZIP, run `gitsyncmarks.exe`
+            - **Windows (Portable)**: Extract ZIP, run `gitsyncmarks.exe` (requires manual VC Redist installation if missing)
             - **macOS**: Extract ZIP, move `gitsyncmarks.app` to Applications (or run from Downloads)
             - **Linux (Flatpak)**: `flatpak install --user ./GitSyncMarks-App-${{ github.ref_name }}.flatpak` then `flatpak run io.github.d0dg3r.GitSyncMarksApp`
             - **Linux (ZIP)**: Extract ZIP, run `./gitsyncmarks_app`
