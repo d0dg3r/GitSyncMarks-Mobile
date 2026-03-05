@@ -2,7 +2,7 @@
 
 app-id: io.github.d0dg3r.GitSyncMarksApp
 runtime: org.freedesktop.Platform
-runtime-version: '25.08'
+runtime-version: "25.08"
 sdk: org.freedesktop.Sdk
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.llvm20
@@ -41,9 +41,8 @@ modules:
       - install -Dm644 flatpak/io.github.d0dg3r.GitSyncMarksApp.desktop -t /app/share/applications/
       - install -Dm644 flatpak/io.github.d0dg3r.GitSyncMarksApp.metainfo.xml -t /app/share/metainfo/
     sources:
-      - type: git
-        url: https://github.com/d0dg3r/GitSyncMarks-App.git
-        tag: v0.3.4
+      - type: dir
+        path: ..
       - generated/sources/pubspec.json
     modules:
       - generated/modules/flutter-sdk-3.41.2.json
