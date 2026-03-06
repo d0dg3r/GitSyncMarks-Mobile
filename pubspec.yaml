@@ -1,12 +1,12 @@
 name: gitsyncmarks
 description: A cross-platform bookmark sync app for GitSyncMarks
 
-publish_to: 'none'
+publish_to: "none"
 
 version: 0.3.4+11
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   flutter:
@@ -36,28 +36,6 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^3.0.0
   golden_toolkit: ^0.15.0
-  flutter_launcher_icons: ^0.13.1
-
-flutter_launcher_icons:
-  android: "launcher_icon"
-  ios: true
-  image_path: "assets/images/logo.png"
-  min_sdk_android: 21
-  web:
-    generate: true
-    image_path: "assets/images/logo.png"
-    background_color: "#ffffff"
-    theme_color: "#ffffff"
-  windows:
-    generate: true
-    image_path: "assets/images/logo.png"
-    icon_size: 48
-  macos:
-    generate: true
-    image_path: "assets/images/logo.png"
-  linux:
-    generate: true
-    image_path: "assets/images/logo.png"
 
 flutter:
   uses-material-design: true
