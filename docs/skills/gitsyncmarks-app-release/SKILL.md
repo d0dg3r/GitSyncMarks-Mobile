@@ -55,6 +55,8 @@ git push origin vX.Y.Z
 - The script records `C1 = HEAD` at run time (the **release** commit), then runs `scripts/patch-fdroid-metadata-commits.py`: submit YAML gets its single `commit:` set to `C1`; dev YAML gets **only the last** `commit:` updated (older build blocks keep historical SHAs).
 - With `--tag`, it creates an **annotated** tag `v{version from pubspec}` on `C1` (not on the metadata-only follow-up).
 
+If you add more commits **after** the first metadata patch (e.g. Flatpak metainfo), run `./scripts/finish-release-fdroid-commit.sh` again so `commit:` matches the new tip that should be built.
+
 ## Order of operations (checklist)
 
 1. **Branch:** e.g. `release/v0.3.5` or work on `main` per team rules.
