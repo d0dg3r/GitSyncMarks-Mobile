@@ -11,8 +11,8 @@ RepoType: git
 Repo: https://github.com/d0dg3r/GitSyncMarks-App
 
 Builds:
-  - versionName: 0.3.6
-    versionCode: 13
+  - versionName: 0.3.7
+    versionCode: 14
     commit: 9aae1ba1a0f4b104496b9cc5d7fc0371382678fe
     output: build/app/outputs/flutter-apk/app-release.apk
     binary: 
@@ -66,5 +66,5 @@ AllowedAPKSigningKeys: ceffc9aadd2e0a2a40176bb5c146a6833ed375de87fb19d7e8b270449
 AutoUpdateMode: Version
 UpdateCheckMode: Tags ^v[0-9.]+$
 UpdateCheckData: pubspec.yaml|version:\s.+\+(\d+)|.|version:\s(.+)\+
-CurrentVersion: 0.3.6
-CurrentVersionCode: 13
+CurrentVersion: 0.3.7
+CurrentVersionCode: 14

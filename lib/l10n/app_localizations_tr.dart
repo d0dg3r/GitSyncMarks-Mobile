@@ -164,7 +164,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get help2Body =>
-      'Ayarlar\'da Owner, Repo adı ve Branch\'i girin. Deponuz GitSyncMarks formatını takip etmelidir (toolbar, menu, other gibi klasörlerde yer işareti başına JSON dosyaları).';
+      'Ayarlar\'da Owner, Repo adı ve Branch\'i girin. Deponuz GitSyncMarks formatını takip etmelidir: kök klasörler toolbar ve other (tarayıcı uzantısının oluşturduğu, ör. 2.7.x), her birinde _order.json ve yer imi başına bir JSON dosyası.';
 
   @override
   String get help3Title => '3. Bağlantıyı Test Edin';
@@ -178,7 +178,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get help4Body =>
-      'Hangi klasörlerin görüntüleneceğini seçin (örn. toolbar, mobile). Boş seçim = hepsi. En az bir seçili = yalnızca bu klasörler.';
+      'Hangi kök klasörlerin görüntüleneceğini seçin (örn. toolbar, other). Boş seçim = hepsi. En az bir seçili = yalnızca bu klasörler.';
 
   @override
   String get help5Title => '5. Senkronize Edin';
@@ -192,7 +192,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get repoFormatDescription =>
-      'Depo GitSyncMarks formatını takip etmelidir: Base Path (örn. \"bookmarks\") ile toolbar, menu, other, mobile gibi alt klasörler. Her klasörde title ve url içeren yer imi başına _order.json ve JSON dosyaları bulunur.';
+      'Depo GitSyncMarks formatını takip etmelidir: Base Path (örn. \"bookmarks\") ve alt klasörler toolbar ve other (uzantı menu/mobile’ı kök olarak eşitlemez). Her klasörde _order.json ve title, url içeren JSON dosyaları. GitSyncMarks tarayıcı uzantısı (örn. 2.7.x) ile uyumludur.';
 
   @override
   String get support => 'Destek';

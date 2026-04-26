@@ -163,7 +163,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get help2Body =>
-      'Introduce Owner, nombre del Repo y Branch en Ajustes. Tu repositorio debe seguir el formato GitSyncMarks (carpetas como toolbar, menu, other con archivos JSON por marcador).';
+      'Introduce Owner, nombre del Repo y Branch en Ajustes. El repositorio debe seguir el formato GitSyncMarks: carpetas raíz toolbar y other (como crea la extensión del navegador, p. ej. 2.7.x), cada una con _order.json y un archivo JSON por marcador.';
 
   @override
   String get help3Title => '3. Conexión de prueba';
@@ -177,7 +177,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get help4Body =>
-      'Elige qué carpetas mostrar (ej. toolbar, mobile). Selección vacía = todas. Al menos una seleccionada = solo esas carpetas.';
+      'Elige qué carpetas raíz mostrar (ej. toolbar, other). Selección vacía = todas. Al menos una seleccionada = solo esas carpetas.';
 
   @override
   String get help5Title => '5. Sincronizar';
@@ -191,7 +191,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get repoFormatDescription =>
-      'El repositorio debe seguir el formato GitSyncMarks: Base Path (ej. \"bookmarks\") con subcarpetas como toolbar, menu, other, mobile. Cada carpeta tiene _order.json y archivos JSON por marcador con title y url.';
+      'El repositorio debe seguir el formato GitSyncMarks: Base Path (ej. \"bookmarks\") con subcarpetas toolbar y other (la extensión no sincroniza menu ni mobile como raíces). Cada carpeta tiene _order.json y archivos JSON por marcador con title y url. Compatible con la extensión GitSyncMarks (p. ej. 2.7.x).';
 
   @override
   String get support => 'Soporte';

@@ -44,11 +44,12 @@ This document captures the context and decisions from when the project was creat
 
 The repo contains:
 - `bookmarks/` (or custom base path)
-  - `toolbar/`, `other/`, `menu/`, `mobile/` – root folders
+  - **Synced root folders (extension + app):** `toolbar/` and `other/` only.
+  - Legacy or unused top-level roles `menu/`, `mobile/` may exist in old repos; the current browser extension does not sync them, and the app’s parser matches the extension (`syncRoles`).
   - Each folder: `_order.json` (ordering) + `*.json` (one per bookmark)
   - Bookmark JSON: `{ "title": "...", "url": "https://..." }`
 
-See [BOOKMARK-FORMAT.md](BOOKMARK-FORMAT.md) for full spec.
+**Extension compatibility:** Bookmark layout and diff-ignored files are kept aligned with **GitSyncMarks 2.7.x** (see parent repo’s `package.json` / releases). See [BOOKMARK-FORMAT.md](BOOKMARK-FORMAT.md) and [EXTENSION-SYNC-VERIFY.md](EXTENSION-SYNC-VERIFY.md) for format details and a manual interop checklist.
 
 ## GitHub API
 
@@ -69,7 +70,7 @@ Token: GitHub PAT with `repo` scope.
 ## UI Decisions
 
 - **Bookmark list:** Expandable tree (folders + bookmarks), ReorderableListView, move-to-folder (long-press), delete (long-press)
-- **Folder picker:** Hierarchical picker for move; root folder tabs (toolbar, menu, other, mobile); configurable root folder
+- **Folder picker:** Hierarchical picker for move; root folder tabs for **toolbar** and **other** (synced roots), plus virtual folders when enabled; configurable root folder
 - **Settings:** Token, Owner, Repo, Branch, Base Path, Browser choice; 5 tabs (GitHub, Sync, Files, Help, About)
 - **Edit mode:** Lock/unlock icon in AppBar; auto-locks after 60s inactivity; defaults to locked
 - **Export/Import:** Password-protected (AES-256-GCM); desktop uses FilePicker, mobile uses Share

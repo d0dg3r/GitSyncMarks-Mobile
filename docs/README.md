@@ -12,6 +12,7 @@ When opening this project fresh: read CONTEXT.md and PLAN.md first so you have f
 | [PLAN.md](PLAN.md) | Implementation plan, phases, next steps |
 | [ROADMAP.md](../ROADMAP.md) | Milestones, current status, future vision |
 | [BOOKMARK-FORMAT.md](BOOKMARK-FORMAT.md) | GitSyncMarks repo structure (JSON format, API) |
+| [EXTENSION-SYNC-VERIFY.md](EXTENSION-SYNC-VERIFY.md) | Manual checklist: browser extension ↔ app sync interop |
 | [RELEASE-CHECKLIST.md](RELEASE-CHECKLIST.md) | Mandatory release order, gates, and recovery commands |
 | [skills/gitsyncmarks-app-release/SKILL.md](skills/gitsyncmarks-app-release/SKILL.md) | Stable release + F-Droid workflow (copy to Cursor skills if desired) |
 | [ARCHITECTURE.md](../ARCHITECTURE.md) | Technical architecture, CI/Release |
@@ -19,7 +20,7 @@ When opening this project fresh: read CONTEXT.md and PLAN.md first so you have f
 | [BETA_JOIN.md](../BETA_JOIN.md) | Beta testing signup (Google Play launch) |
 | [AGENTS.md](../AGENTS.md) | AI agent guidance (Cursor rules, workflow) |
 
-## Current Status (v0.3.5)
+## Current Status (v0.3.7)
 
 - **Sync:** Git Data API, atomic commits, three-way merge, conflicts (force push/pull), sync history (preview / restore / undo)
 - Bookmark move, reorder, delete, add (share + FAB), **edit**, **create folder**

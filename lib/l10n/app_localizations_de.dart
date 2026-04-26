@@ -164,7 +164,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get help2Body =>
-      'Gib in den Einstellungen Owner, Repo-Name und Branch ein. Dein Repo sollte dem Format von GitSyncMarks entsprechen (Ordner wie toolbar, menu, other mit JSON-Dateien pro Lesezeichen).';
+      'Gib in den Einstellungen Owner, Repo-Name und Branch ein. Dein Repo sollte dem GitSyncMarks-Format entsprechen: Wurzelordner toolbar und other (wie von der Browser-Extension angelegt, z. B. 2.7.x), jeweils mit _order.json und je Lesezeichen eine JSON-Datei.';
 
   @override
   String get help3Title => '3. Testen Sie die Verbindung';
@@ -178,7 +178,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get help4Body =>
-      'Wähle die Ordner aus, die angezeigt werden sollen (z.B. toolbar, mobile). Leere Auswahl bedeutet alle Ordner. Mindestens einer gewählt = nur diese Ordner.';
+      'Wähle die Wurzelordner, die angezeigt werden sollen (z. B. toolbar, other). Leere Auswahl bedeutet alle Ordner. Mindestens einer gewählt = nur diese Ordner.';
 
   @override
   String get help5Title => '5. Synchronisieren';
@@ -192,7 +192,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get repoFormatDescription =>
-      'Das Repo sollte dem Format von GitSyncMarks entsprechen: Base Path (z.B. \"bookmarks\") mit Unterordnern wie toolbar, menu, other, mobile. Jeder Ordner hat _order.json und JSON-Dateien pro Lesezeichen mit title und url.';
+      'Das Repo sollte dem GitSyncMarks-Format entsprechen: Base Path (z. B. \"bookmarks\") mit den Unterordnern toolbar und other. Die Extension synchronisiert menu/mobile nicht als Wurzeln. Jeder Ordner hat _order.json und JSON-Dateien pro Lesezeichen mit title und url. Kompatibel mit der GitSyncMarks-Browser-Extension (z. B. 2.7.x).';
 
   @override
   String get support => 'Unterstützung';

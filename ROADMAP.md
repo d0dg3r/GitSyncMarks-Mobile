@@ -64,11 +64,16 @@ import on empty state, golden_toolkit for screenshots, F-Droid screenshots/icon
 - Edit / add / create folder, generated files, extra export formats
 - GitHub Repos & Linkwarden (optional), UI density, debug log, What’s New, sync on resume
 
+### v0.3.6–0.3.7
+
+- **0.3.6:** Layered `POST /git/trees` uploads (large push efficiency; extension-aligned)
+- **0.3.7:** Bookmarks format docs + all locales: only `toolbar` / `other` as synced roots; [EXTENSION-SYNC-VERIFY](docs/EXTENSION-SYNC-VERIFY.md); merge duplicate same-title folders on serialize; golden/screenshot test harness; F-Droid submit & repro tooling fixes
+
 ---
 
-## Current (post-v0.3.5)
+## Current (post-v0.3.7)
 
-- **Features:** Same stack as v0.3.5; companion app aligned with GitSyncMarks extension sync model on GitHub
+- **Features:** Git Data API / three-way merge as in v0.3.5+; v0.3.7 documentation and in-app text aligned with extension roots (`toolbar` / `other` only); see [docs/EXTENSION-SYNC-VERIFY.md](docs/EXTENSION-SYNC-VERIFY.md)
 - **Platforms:** Android (beta), iOS, Windows, macOS, Linux (alpha)
 - **Release:** Stable tags (`vX.Y.Z`); F-Droid metadata `commit:` must reference the release source commit (see `scripts/finish-release-fdroid-commit.sh`)
 

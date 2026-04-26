@@ -13,6 +13,14 @@ const _kLastSeenVersionKey = 'whats_new_last_seen_version';
 
 const List<WhatsNewEntry> whatsNewEntries = [
   WhatsNewEntry(
+    version: '0.3.7',
+    items: [
+      'Help & docs match the browser extension (toolbar and other roots only)',
+      'Serializing merges duplicate same-name folders (extension parity)',
+      'F-Droid submit & reproducibility tooling improvements',
+    ],
+  ),
+  WhatsNewEntry(
     version: '0.3.5',
     items: [
       'Atomic Git commits via Git Data API',

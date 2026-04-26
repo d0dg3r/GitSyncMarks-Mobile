@@ -164,7 +164,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get help2Body =>
-      'Introduza Owner, nome do Repo e Branch nas Definições. O seu repositório deve seguir o formato GitSyncMarks (pastas como toolbar, menu, other com ficheiros JSON por marcador).';
+      'Introduza Owner, nome do Repo e Branch nas Definições. O repositório deve seguir o formato GitSyncMarks: pastas raiz toolbar e other (como criadas pela extensão do navegador, ex. 2.7.x), cada uma com _order.json e um ficheiro JSON por marcador.';
 
   @override
   String get help3Title => '3. Testar Ligação';
@@ -178,7 +178,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get help4Body =>
-      'Escolha quais as pastas a apresentar (ex. toolbar, mobile). Seleção vazia = todas. Pelo menos uma selecionada = apenas essas pastas.';
+      'Escolha quais as pastas raiz a apresentar (ex. toolbar, other). Seleção vazia = todas. Pelo menos uma selecionada = apenas essas pastas.';
 
   @override
   String get help5Title => '5. Sincronizar';
@@ -192,7 +192,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get repoFormatDescription =>
-      'O repositório deve seguir o formato GitSyncMarks: Caminho Base (ex. \"bookmarks\") com subpastas como toolbar, menu, other, mobile. Cada pasta tem _order.json e ficheiros JSON por marcador com title e url.';
+      'O repositório deve seguir o formato GitSyncMarks: Caminho Base (ex. \"bookmarks\") com subpastas toolbar e other (a extensão não sincroniza menu ou mobile como raiz). Cada pasta tem _order.json e ficheiros JSON com title e url. Compatível com a extensão GitSyncMarks (ex. 2.7.x).';
 
   @override
   String get support => 'Suporte';
@@ -901,7 +901,7 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get help2Body =>
-      'Insira Owner, nome do Repo e Branch nas Configurações. Seu repositório deve seguir o formato GitSyncMarks (pastas como toolbar, menu, other com arquivos JSON por favorito).';
+      'Insira Owner, nome do Repo e Branch nas Configurações. O repositório deve seguir o formato GitSyncMarks: pastas raiz toolbar e other (como criadas pela extensão do navegador, ex. 2.7.x), cada uma com _order.json e um arquivo JSON por favorito.';
 
   @override
   String get help3Title => '3. Testar Conexão';
@@ -915,7 +915,7 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get help4Body =>
-      'Escolha quais pastas exibir (ex. toolbar, mobile). Seleção vazia = todas. Pelo menos uma selecionada = apenas essas pastas.';
+      'Escolha quais pastas raiz exibir (ex. toolbar, other). Seleção vazia = todas. Pelo menos uma selecionada = apenas essas pastas.';
 
   @override
   String get help5Title => '5. Sincronizar';
@@ -929,7 +929,7 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get repoFormatDescription =>
-      'O repositório deve seguir o formato GitSyncMarks: Caminho Base (ex. \"bookmarks\") com subpastas como toolbar, menu, other, mobile. Cada pasta tem _order.json e arquivos JSON por favorito com title e url.';
+      'O repositório deve seguir o formato GitSyncMarks: Caminho Base (ex. \"bookmarks\") com subpastas toolbar e other (a extensão não sincroniza menu ou mobile como raiz). Cada pasta tem _order.json e arquivos JSON com title e url. Compatível com a extensão GitSyncMarks (ex. 2.7.x).';
 
   @override
   String get support => 'Suporte';

@@ -160,7 +160,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get help2Body =>
-      '設定でOwner、Repo名、Branchを入力してください。リポジトリはGitSyncMarks形式（toolbar、menu、otherなどのフォルダにブックマークごとのJSONファイル）に従う必要があります。';
+      '設定でOwner、Repo名、Branchを入力してください。リポジトリはGitSyncMarks形式（ブラウザ拡張機能が作成するルートフォルダ toolbar と other、例: 2.7.x。各フォルダに _order.json とブックマークごとのJSON）に従う必要があります。';
 
   @override
   String get help3Title => '3. 接続テスト';
@@ -174,7 +174,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get help4Body =>
-      '表示するフォルダを選択してください（例: toolbar、mobile）。空の選択 = すべて。1つ以上選択 = 選択したフォルダのみ。';
+      '表示するルートフォルダを選択してください（例: toolbar、other）。空の選択 = すべて。1つ以上選択 = 選択したフォルダのみ。';
 
   @override
   String get help5Title => '5. 同期';
@@ -188,7 +188,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get repoFormatDescription =>
-      'リポジトリはGitSyncMarks形式に従う必要があります: Base Path（例: \"bookmarks\"）にtoolbar、menu、other、mobileなどのサブフォルダ。各フォルダには_order.jsonとtitleとurlを含むブックマークごとのJSONファイルがあります。';
+      'リポジトリはGitSyncMarks形式に従います: Base Path（例: \"bookmarks\"）にサブフォルダ toolbar と other（拡張機能は menu/mobile をルートとして同期しません）。各フォルダに_order.jsonとブックマークごとのJSON（title、url）。GitSyncMarks ブラウザ拡張（例: 2.7.x）と互換です。';
 
   @override
   String get support => 'サポート';

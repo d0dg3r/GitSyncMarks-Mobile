@@ -223,7 +223,7 @@ The app uses `provider` with `BookmarkProvider` (ChangeNotifier).
 ### Integration Tests
 - (Future) End-to-end user flows
 
-## Features (v0.3.5 snapshot)
+## Features (v0.3.7 snapshot)
 
 - Git Data API atomic sync, three-way merge, conflict banner, sync history (restore / undo)
 - Edit bookmark, FAB add / create folder, generated companion files, multi-format export
