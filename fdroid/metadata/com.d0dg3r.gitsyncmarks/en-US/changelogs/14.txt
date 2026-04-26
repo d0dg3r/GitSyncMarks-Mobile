@@ -1,0 +1,1 @@
+Extension-aligned docs and help (toolbar/other roots), folder merge on save, golden screenshot test fixes, F-Droid & CI release tooling.

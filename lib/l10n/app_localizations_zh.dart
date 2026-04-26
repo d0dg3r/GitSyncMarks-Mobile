@@ -159,7 +159,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get help2Body =>
-      '在設定中輸入 Owner、Repo 名稱和 Branch。您的儲存庫應遵循 GitSyncMarks 格式（toolbar、menu、other 等資料夾，每個書籤一個 JSON 檔案）。';
+      '在設定中輸入 Owner、Repo 名稱和 Branch。儲存庫應符合 GitSyncMarks 格式：根資料夾 toolbar 與 other（由瀏覽器擴充功能建立，例如 2.7.x），各含 _order.json 與每則書籤一個 JSON 檔。';
 
   @override
   String get help3Title => '3. 測試連線';
@@ -172,7 +172,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get help4Body =>
-      '選擇要顯示的資料夾（如 toolbar、mobile）。空選擇 = 全部。至少選一個 = 僅這些資料夾。';
+      '選擇要顯示的根資料夾（如 toolbar、other）。空選擇 = 全部。至少選一個 = 僅這些資料夾。';
 
   @override
   String get help5Title => '5. 同步';
@@ -185,7 +185,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get repoFormatDescription =>
-      '儲存庫應遵循 GitSyncMarks 格式：Base Path（如「bookmarks」），包含 toolbar、menu、other、mobile 等子資料夾。每個資料夾有 _order.json 和每個書籤的 JSON 檔案（含 title 和 url）。';
+      '儲存庫應符合 GitSyncMarks 格式：Base Path（如「bookmarks」）下為子資料夾 toolbar 與 other（擴充功能不同步 menu/mobile 作為根）。每個資料夾有 _order.json 與書籤 JSON（title、url）。與 GitSyncMarks 瀏覽器擴充功能（例如 2.7.x）相容。';
 
   @override
   String get support => '支援';
@@ -863,7 +863,7 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String get help2Body =>
-      '在设置中输入 Owner、Repo 名称和 Branch。您的仓库应遵循 GitSyncMarks 格式（toolbar、menu、other 等文件夹，每个书签一个 JSON 文件）。';
+      '在设置中输入 Owner、Repo 名称和 Branch。仓库应符合 GitSyncMarks 格式：根文件夹 toolbar 与 other（由浏览器扩展创建，例如 2.7.x），各含 _order.json 与每个书签一个 JSON 文件。';
 
   @override
   String get help3Title => '3. 测试连接';
@@ -876,7 +876,7 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String get help4Body =>
-      '选择要显示的文件夹（如 toolbar、mobile）。空选择 = 全部。至少选一个 = 仅这些文件夹。';
+      '选择要显示的根文件夹（如 toolbar、other）。空选择 = 全部。至少选一个 = 仅这些文件夹。';
 
   @override
   String get help5Title => '5. 同步';
@@ -889,7 +889,7 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String get repoFormatDescription =>
-      '仓库应遵循 GitSyncMarks 格式：Base Path（如「bookmarks」），包含 toolbar、menu、other、mobile 等子文件夹。每个文件夹有 _order.json 和每个书签的 JSON 文件（含 title 和 url）。';
+      '仓库应符合 GitSyncMarks 格式：Base Path（如「bookmarks」）下为子文件夹 toolbar 与 other（扩展不将 menu/mobile 作为根同步）。每个文件夹有 _order.json 和书签 JSON（title、url）。与 GitSyncMarks 浏览器扩展（如 2.7.x）兼容。';
 
   @override
   String get support => '支持';

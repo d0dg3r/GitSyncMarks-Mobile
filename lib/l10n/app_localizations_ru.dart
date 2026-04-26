@@ -163,7 +163,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get help2Body =>
-      'Введите Owner, имя Repo и Branch в Настройках. Ваш репозиторий должен соответствовать формату GitSyncMarks (папки toolbar, menu, other с JSON-файлами для каждой закладки).';
+      'Введите Owner, имя Repo и Branch в Настройках. Репозиторий должен соответствовать GitSyncMarks: корневые папки toolbar и other (как создаёт расширение, напр. 2.7.x), в каждой — _order.json и JSON на закладку.';
 
   @override
   String get help3Title => '3. Проверьте подключение';
@@ -177,7 +177,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get help4Body =>
-      'Выберите, какие папки отображать (например, toolbar, mobile). Пустой выбор = все. Хотя бы одна выбрана = только эти папки.';
+      'Выберите, какие корневые папки отображать (например, toolbar, other). Пустой выбор = все. Хотя бы одна выбрана = только эти папки.';
 
   @override
   String get help5Title => '5. Синхронизируйте';
@@ -191,7 +191,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get repoFormatDescription =>
-      'Репозиторий должен соответствовать формату GitSyncMarks: Base Path (например, \"bookmarks\") с подпапками toolbar, menu, other, mobile. В каждой папке есть _order.json и JSON-файлы для каждой закладки с title и url.';
+      'Репозиторий в формате GitSyncMarks: Base Path (например, \"bookmarks\") с подпапками toolbar и other (расширение не синхронизирует menu/mobile как корни). В папке — _order.json и JSON с title и url. Совместимо с GitSyncMarks 2.7.x.';
 
   @override
   String get support => 'Поддержка';

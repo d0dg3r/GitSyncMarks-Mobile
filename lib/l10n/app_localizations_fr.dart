@@ -164,7 +164,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get help2Body =>
-      'Entrez Owner, nom du Repo et Branch dans Paramètres. Votre dépôt doit suivre le format GitSyncMarks (dossiers comme toolbar, menu, other avec fichiers JSON par favori).';
+      'Entrez Owner, nom du Repo et Branch dans Paramètres. Votre dépôt doit suivre le format GitSyncMarks : dossiers racine toolbar et other (comme créés par l’extension navigateur, ex. 2.7.x), chacun avec _order.json et un fichier JSON par favori.';
 
   @override
   String get help3Title => '3. Tester la connexion';
@@ -178,7 +178,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get help4Body =>
-      'Choisissez les dossiers à afficher (ex. toolbar, mobile). Sélection vide = tous. Au moins un sélectionné = uniquement ces dossiers.';
+      'Choisissez les dossiers racine à afficher (ex. toolbar, other). Sélection vide = tous. Au moins un sélectionné = uniquement ces dossiers.';
 
   @override
   String get help5Title => '5. Synchronisation';
@@ -192,7 +192,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get repoFormatDescription =>
-      'Le dépôt doit suivre le format GitSyncMarks: Base Path (ex. \"bookmarks\") avec des sous-dossiers comme toolbar, menu, other, mobile. Chaque dossier a _order.json et des fichiers JSON par favori avec title et url.';
+      'Le dépôt doit suivre le format GitSyncMarks : Base Path (ex. \"bookmarks\") avec les sous-dossiers toolbar et other (l’extension ne synchronise pas menu ni mobile en racine). Chaque dossier a _order.json et des JSON par favori (title, url). Compatible avec l’extension GitSyncMarks (ex. 2.7.x).';
 
   @override
   String get support => 'Soutien';

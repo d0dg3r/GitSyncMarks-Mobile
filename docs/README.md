@@ -12,14 +12,16 @@ When opening this project fresh: read CONTEXT.md and PLAN.md first so you have f
 | [PLAN.md](PLAN.md) | Implementation plan, phases, next steps |
 | [ROADMAP.md](../ROADMAP.md) | Milestones, current status, future vision |
 | [BOOKMARK-FORMAT.md](BOOKMARK-FORMAT.md) | GitSyncMarks repo structure (JSON format, API) |
+| [EXTENSION-SYNC-VERIFY.md](EXTENSION-SYNC-VERIFY.md) | Manual checklist: browser extension ↔ app sync interop |
 | [RELEASE-CHECKLIST.md](RELEASE-CHECKLIST.md) | Mandatory release order, gates, and recovery commands |
+| [../fdroid/README.md](../fdroid/README.md) | F-Droid submit flow; [listing paused →](../fdroid/README.md#listing-status-paused) |
 | [skills/gitsyncmarks-app-release/SKILL.md](skills/gitsyncmarks-app-release/SKILL.md) | Stable release + F-Droid workflow (copy to Cursor skills if desired) |
 | [ARCHITECTURE.md](../ARCHITECTURE.md) | Technical architecture, CI/Release |
 | [CHANGELOG.md](../CHANGELOG.md) | Version history |
 | [BETA_JOIN.md](../BETA_JOIN.md) | Beta testing signup (Google Play launch) |
 | [AGENTS.md](../AGENTS.md) | AI agent guidance (Cursor rules, workflow) |
 
-## Current Status (v0.3.5)
+## Current Status (v0.3.7)
 
 - **Sync:** Git Data API, atomic commits, three-way merge, conflicts (force push/pull), sync history (preview / restore / undo)
 - Bookmark move, reorder, delete, add (share + FAB), **edit**, **create folder**
@@ -30,7 +32,7 @@ When opening this project fresh: read CONTEXT.md and PLAN.md first so you have f
 - Configurable root folder, auto-lock edit mode, Hive cache, profiles, 12 locales, themes
 - **Platforms:** Android (stable), iOS, Windows, macOS, Linux (alpha)
 - **Release:** Tag `v*` → artifacts; use `scripts/finish-release-fdroid-commit.sh` after the release commit so F-Droid `commit:` matches the tagged tree (see [skills/gitsyncmarks-app-release/SKILL.md](skills/gitsyncmarks-app-release/SKILL.md))
-- **F-Droid:** Metadata + `en-US/changelogs/<versionCode>.txt` per release; `./fdroid/submit-to-gitlab.sh --validate-only` before submit
+- **F-Droid:** [Listing paused](../fdroid/README.md#listing-status-paused) (previous fdroiddata MR removed); metadata and scripts kept for a future resubmit. When resuming: changelogs + `submit-to-gitlab.sh --validate-only` as before.
 
 ## Related Repos
 

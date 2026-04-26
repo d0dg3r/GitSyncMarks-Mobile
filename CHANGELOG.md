@@ -9,16 +9,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Fixed
+### Documentation
 
-- **F-Droid / repro proof:** Parse `flutter-version` from `.github/workflows/release.yml` when the value uses double quotes (matches `release.yml`); F-Droid `prebuild` sed updated accordingly. **`./fdroid/submit-to-gitlab.sh`** compares the release tag to metadata using the peeled commit (`vX.Y.Z^{commit}`) so annotated tags match `commit:`.
+- **F-Droid:** Document that the app is not listed on F-Droid (fdroiddata MR was closed). Metadata in `fdroid/` is retained for a future resubmit. See [fdroid/README.md](fdroid/README.md#listing-status-paused).
+
+## [0.3.7] - 2026-04-26
 
 ### Changed
 
-- **Android-only manual CI mode:** `Build & Release` now supports `workflow_dispatch` with `build_scope=android-only`, so only `build-android` runs while desktop/flatpak/release jobs are skipped.
-- **Android container build workspace sync:** APK build now re-runs `flutter pub get` and `flutter gen-l10n` inside `/tmp/build` before `--no-pub` compile, preventing missing plugin directories after workspace copy.
-- **Serialized release validation flow:** `F-Droid Validate` no longer starts on metadata push/PR events and now runs automatically only after successful `Build & Release` completion (manual `workflow_dispatch` remains available).
-- **Container Git safety in libapp proof:** `scripts/fdroid-repro-proof.sh` now configures `git safe.directory` for `/repo` in the buildserver container and clones via `file:///repo` to avoid CI ownership trust failures (`exit 128`) before reproducibility checks.
+- **GitSyncMarks extension interop (docs + in-app help):** [docs/BOOKMARK-FORMAT.md](docs/BOOKMARK-FORMAT.md) and [docs/CONTEXT.md](docs/CONTEXT.md) state that only **`toolbar` and `other`** are synced roots, with a legacy note for `menu`/`mobile`. New [docs/EXTENSION-SYNC-VERIFY.md](docs/EXTENSION-SYNC-VERIFY.md) checklist. All 14 locales updated.
+- **Serialize parity with the extension:** [bookmark_parser.dart](lib/services/bookmark_parser.dart) merges sibling folders that share the same display title in `bookmarkTreeToFileMap`. “Add bookmark” default roots: `toolbar` and `other` only. [test/bookmark_parser_test.dart](test/bookmark_parser_test.dart)
+- **Screenshot / golden tests:** [test/screenshot_test.dart](test/screenshot_test.dart) supplies `AppDensityController` and mocks `shared_preferences` and `package_info`. Regenerated [test/goldens/](test/goldens/), [flatpak/screenshots/](flatpak/screenshots/), and F-Droid `en-US/images/phoneScreenshots/`.
+
+### Fixed
+
+- **F-Droid metadata:** `binary:` is a one-line URL in YAML (unambiguous string value).
+- **F-Droid / repro proof:** Parse `flutter-version` from `.github/workflows/release.yml` when the value uses double quotes (matches `release.yml`); F-Droid `prebuild` sed updated. **`./fdroid/submit-to-gitlab.sh`** matches the tag using a peeled ref (`vX.Y.Z^{commit}`) to `commit:` in metadata. [scripts/fdroid-repro-proof.sh](scripts/fdroid-repro-proof.sh) sets `git safe.directory` in the build container.
+- **Serialize merge:** Merged same-title folders keep `dirName: existing.dirName ?? child.dirName` so a non-null on-disk name from a later duplicate is not lost.
+- **screenshot_test:** `package_info` mock uses `0.3.7` / `14` to match [pubspec.yaml](pubspec.yaml); goldens refreshed if version text is visible.
+
+### Changed (CI / build)
+
+- **Build & Release:** `workflow_dispatch` with `build_scope=android-only` runs only the Android job. `F-Droid Validate` no longer starts on raw metadata events alone; it runs automatically only after successful `Build & Release` (manual `workflow_dispatch` remains). Android job re-runs `flutter pub get` and `flutter gen-l10n` in the `/tmp/build` copy before `flutter build apk --no-pub`. 
 
 ## [0.3.6] - 2026-03-28
 

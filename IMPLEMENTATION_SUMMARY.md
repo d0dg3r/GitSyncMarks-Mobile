@@ -1,7 +1,7 @@
 # Implementation Summary
 
 ## Overview
-Successfully implemented a cross-platform Flutter application (Android, iOS, Windows, macOS, Linux) that syncs and displays bookmarks from the GitSyncMarks GitHub repository. As of **v0.3.5**, bookmark I/O uses the **GitHub Git Data API** (atomic commits, three-way merge, sync history) in line with the browser extension, plus optional GitHub Repos / Linkwarden virtual folders, generated companion files, multi-format export, and UX polish (density, debug log, What’s New).
+Successfully implemented a cross-platform Flutter application (Android, iOS, Windows, macOS, Linux) that syncs and displays bookmarks from the GitSyncMarks GitHub repository. As of **v0.3.7**, bookmark I/O uses the **GitHub Git Data API** (atomic commits, three-way merge, sync history) in line with the browser extension, plus optional GitHub Repos / Linkwarden virtual folders, generated companion files, multi-format export, and docs/UI text aligned with extension sync roots (`toolbar` / `other` only, see `docs/BOOKMARK-FORMAT.md`). UX polish: density, debug log, What’s New.
 
 ## v0.3.0 Additions
 

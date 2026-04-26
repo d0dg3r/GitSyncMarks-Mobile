@@ -160,7 +160,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get help2Body =>
-      '설정에서 Owner, Repo 이름, Branch를 입력하세요. 저장소는 GitSyncMarks 형식(toolbar, menu, other 등의 폴더에 북마크당 JSON 파일)을 따라야 합니다.';
+      '설정에서 Owner, Repo 이름, Branch를 입력하세요. 저장소는 GitSyncMarks 형식(브라우저 확장이 만드는 루트 폴더 toolbar와 other, 예: 2.7.x, 각각 _order.json과 북마크당 JSON)을 따라야 합니다.';
 
   @override
   String get help3Title => '3. 연결 테스트';
@@ -174,7 +174,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get help4Body =>
-      '표시할 폴더를 선택하세요 (예: toolbar, mobile). 빈 선택 = 모두. 하나 이상 선택 = 선택한 폴더만.';
+      '표시할 루트 폴더를 선택하세요 (예: toolbar, other). 빈 선택 = 모두. 하나 이상 선택 = 선택한 폴더만.';
 
   @override
   String get help5Title => '5. 동기화';
@@ -188,7 +188,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get repoFormatDescription =>
-      '저장소는 GitSyncMarks 형식을 따라야 합니다: Base Path (예: \"bookmarks\")에 toolbar, menu, other, mobile 같은 하위 폴더. 각 폴더에는 _order.json과 title, url이 있는 북마크당 JSON 파일이 있습니다.';
+      '저장소는 GitSyncMarks 형식을 따릅니다: Base Path(예: \"bookmarks\")에 하위 폴더 toolbar와 other(확장 기능은 menu/mobile을 루트로 동기화하지 않음). 각 폴더에 _order.json과 북마크당 JSON(title, url). GitSyncMarks 브라우저 확장(예: 2.7.x)과 호환됩니다.';
 
   @override
   String get support => '지원';

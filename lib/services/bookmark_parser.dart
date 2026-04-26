@@ -239,13 +239,39 @@ Bookmark? _parseBookmarkJson(String content, [String? filename]) {
 // Tree -> File map
 // ---------------------------------------------------------------------------
 
+/// Merges sibling [BookmarkFolder] children that share the same [BookmarkFolder.title]
+/// (parity with the extension’s `processFolder` — avoids duplicate on-disk folder names).
+List<BookmarkNode> _mergeSiblingFoldersByTitle(List<BookmarkNode> children) {
+  final result = <BookmarkNode>[];
+  final titleToIndex = <String, int>{};
+  for (final child in children) {
+    if (child is Bookmark) {
+      result.add(child);
+    } else if (child is BookmarkFolder) {
+      if (titleToIndex.containsKey(child.title)) {
+        final idx = titleToIndex[child.title]!;
+        final existing = result[idx] as BookmarkFolder;
+        result[idx] = BookmarkFolder(
+          title: existing.title,
+          dirName: existing.dirName ?? child.dirName,
+          children: [...existing.children, ...child.children],
+        );
+      } else {
+        titleToIndex[child.title] = result.length;
+        result.add(child);
+      }
+    }
+  }
+  return result;
+}
+
 void _processFolder(
   BookmarkFolder folder,
   String dirPath,
   Map<String, String> files,
 ) {
   final order = <dynamic>[];
-  for (final child in folder.children) {
+  for (final child in _mergeSiblingFoldersByTitle(folder.children)) {
     switch (child) {
       case Bookmark():
         final filename = child.filename ??

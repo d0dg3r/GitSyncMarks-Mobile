@@ -12,6 +12,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:gitsyncmarks/app.dart';
 import 'package:gitsyncmarks/models/bookmark_node.dart';
@@ -20,6 +21,7 @@ import 'package:gitsyncmarks/screens/bookmark_list_screen.dart';
 import 'package:gitsyncmarks/screens/settings_screen.dart';
 
 import 'package:gitsyncmarks/l10n/app_localizations.dart';
+import 'package:gitsyncmarks/providers/app_density_controller.dart';
 
 final _sampleFolders = [
   const BookmarkFolder(
@@ -64,17 +66,36 @@ const _width = 480.0;
 const _height = 960.0;
 const _pixelRatio = 2.0;
 
+/// Keep in sync with [pubspec.yaml] `version:` for What’s New / any version UI in goldens.
+const _mockPackageInfoVersion = '0.3.7';
+const _mockPackageInfoBuild = '14';
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences.setMockInitialValues({});
 
   setUpAll(() {
-    const channel = MethodChannel('plugins.flutter.io/path_provider');
+    const pathChannel = MethodChannel('plugins.flutter.io/path_provider');
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
-        .setMockMethodCallHandler(channel, (call) async {
+        .setMockMethodCallHandler(pathChannel, (call) async {
       if (call.method == 'getTemporaryDirectory' ||
           call.method == 'getApplicationSupportDirectory' ||
           call.method == 'getApplicationDocumentsDirectory') {
         return '/tmp/test_screenshots';
+      }
+      return null;
+    });
+
+    const packageInfoChannel = MethodChannel('dev.fluttercommunity.plus/package_info');
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(packageInfoChannel, (call) async {
+      if (call.method == 'getAll') {
+        return <String, dynamic>{
+          'appName': 'gitsyncmarks',
+          'packageName': 'com.d0dg3r.gitsyncmarks',
+          'version': _mockPackageInfoVersion,
+          'buildNumber': _mockPackageInfoBuild,
+        };
       }
       return null;
     });
@@ -123,8 +144,13 @@ void _goldenTest(
         localizationsDelegates: _localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         locale: const Locale('en'),
-        home: ChangeNotifierProvider<BookmarkProvider>.value(
-          value: provider,
+        home: MultiProvider(
+          providers: [
+            ChangeNotifierProvider<BookmarkProvider>.value(value: provider),
+            ChangeNotifierProvider<AppDensityController>(
+              create: (_) => AppDensityController(),
+            ),
+          ],
           child: content,
         ),
       ),

@@ -161,7 +161,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get help2Body =>
-      'Enter Owner, Repo name, and Branch in Settings. Your repo should follow the GitSyncMarks format (folders like toolbar, menu, other with JSON files per bookmark).';
+      'Enter Owner, Repo name, and Branch in Settings. Your repo should follow the GitSyncMarks format: root folders toolbar and other (as created by the browser extension, e.g. 2.7.x), each with _order.json and one JSON file per bookmark.';
 
   @override
   String get help3Title => '3. Test Connection';
@@ -175,7 +175,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get help4Body =>
-      'Choose which folders to display (e.g. toolbar, mobile). Empty selection = all folders. At least one selected = only these folders.';
+      'Choose which root folders to display (e.g. toolbar, other). Empty selection = all folders. At least one selected = only these folders.';
 
   @override
   String get help5Title => '5. Sync';
@@ -189,7 +189,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get repoFormatDescription =>
-      'The repo should follow the GitSyncMarks format: Base Path (e.g. \"bookmarks\") with subfolders like toolbar, menu, other, mobile. Each folder has _order.json and JSON files per bookmark with title and url.';
+      'The repo should follow the GitSyncMarks format: a Base Path (e.g. \"bookmarks\") with toolbar and other subfolders (the extension does not sync menu or mobile as root folders). Each folder has _order.json and JSON files per bookmark with title and url. Compatible with the GitSyncMarks browser extension (e.g. 2.7.x).';
 
   @override
   String get support => 'Support';

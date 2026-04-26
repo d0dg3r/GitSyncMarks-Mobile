@@ -45,7 +45,7 @@ class _AddBookmarkDialogState extends State<AddBookmarkDialog> {
     final creds = widget.provider.credentials;
     if (creds == null) return [];
     final names = widget.provider.availableRootFolderNames;
-    if (names.isEmpty) return ['toolbar', 'other', 'menu', 'mobile'];
+    if (names.isEmpty) return ['toolbar', 'other'];
     return names;
   }
 

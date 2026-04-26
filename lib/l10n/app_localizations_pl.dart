@@ -163,7 +163,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get help2Body =>
-      'Wprowadź Owner, nazwę Repo i Branch w Ustawieniach. Twoje repozytorium powinno być zgodne z formatem GitSyncMarks (foldery jak toolbar, menu, other z plikami JSON na zakładkę).';
+      'Wprowadź Owner, nazwę Repo i Branch w Ustawieniach. Repozytorium powinno być zgodne z formatem GitSyncMarks: foldery główne toolbar i other (tworzone przez rozszerzenie przeglądarki, np. 2.7.x), każdy z _order.json i jednym plikiem JSON na zakładkę.';
 
   @override
   String get help3Title => '3. Testuj połączenie';
@@ -177,7 +177,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get help4Body =>
-      'Wybierz, które foldery wyświetlać (np. toolbar, mobile). Puste zaznaczenie = wszystkie. Przynajmniej jeden wybrany = tylko te foldery.';
+      'Wybierz, które foldery główne wyświetlać (np. toolbar, other). Puste zaznaczenie = wszystkie. Przynajmniej jeden wybrany = tylko te foldery.';
 
   @override
   String get help5Title => '5. Synchronizuj';
@@ -191,7 +191,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get repoFormatDescription =>
-      'Repozytorium powinno być zgodne z formatem GitSyncMarks: Base Path (np. bookmarks) z podfolderami jak toolbar, menu, other, mobile. Każdy folder ma _order.json i pliki JSON na zakładkę z title i url.';
+      'Repozytorium powinno być zgodne z formatem GitSyncMarks: Base Path (np. \"bookmarks\") z podfolderami toolbar i other (rozszerzenie nie synchronizuje menu/mobile jako głównych). Każdy folder ma _order.json i pliki JSON z title i url. Zgodne z rozszerzeniem GitSyncMarks (np. 2.7.x).';
 
   @override
   String get support => 'Wsparcie';
